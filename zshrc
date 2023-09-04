@@ -19,7 +19,7 @@ alias ls='ls -lAFh'
 # %1~ => use tilde for home dir
 # %# => end the prompt with percent sign
 PROMPT=' 
-%n@%m %L %1~ %# 
+%1~ %L $
 '
 
 # right prompt 
