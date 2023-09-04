@@ -1,0 +1,39 @@
+[user]
+	email = 62659262+m-gris@users.noreply.github.com
+	name = Marc GRIS
+[color]
+     interactive = always
+[color "interactive"]
+     error = red bold
+[alias]
+	change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+[merge "ours"]
+	driver = true
+[core]
+	excludesfile = /Users/marc/.gitignore_global
+	pager = 
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
+
+# MARC ADD: 28FEB23... Trying to gain SSH acces & dvc push/pull
+; [credential "https://github.com"]
+; 	username = m-gris
+
+# ADDED BY MARC 12JUL22
+# TO USE DIFFTOOL
+# source https://github.com/macvim-dev/macvim/issues/658
+[difftool "mvimdiff"]
+    cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
+[init]
+	defaultBranch = main
