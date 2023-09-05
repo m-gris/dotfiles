@@ -6,10 +6,16 @@
 
 - clean: ['~']
 
+########## LINKS
+# specify how files and directories should be symbolically linked
+# specified as a dictionary mapping TARGET : SOURCE. (counter-intuitive)
+
 - link:
+    # reminder: the key is the TARGET and the value is the SOURCE !!!
     ~/.zshrc: zshrc
     ~/.zshrc.bak: zshrc.bak
     ~/.gitconfig: gitconfig
+    ~/.config: config
     #   ~/.tmux.conf: tmux.conf
     #   ~/.vim: vim
     #   ~/.vimrc: vimrc

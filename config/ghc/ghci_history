@@ -1,0 +1,100 @@
+foldr (*) 1 [2, 2, 2]
+fold (*) 1 [2, 2, 2]
+import Data.Map (fold)
+:l functors.hs 
+:l functors.hs 
+greetUser 6
+greetUser 3
+("hello" ++ )("you") 
+("hello" ++ )("you") 
+("hello", ++) ("you") 
+("hello") (++) ("you") 
+("hello" ++ )("you") 
+"hello" + "you" 
+"hello" ++ "you" 
+greetUser 3
+greetUser 2
+greetUser 1 
+greeUser 3
+greeUser 1
+:l functors.hs 
+:l functors.hs 
+:l functors.hs 
+:type look
+lookup 0 database 
+lookup 1 database 
+lookup 2 database 
+lookup 3  database 
+lookup 6 database 
+look 2 database 
+look 1 database 
+database 
+:type lookup
+:l functors.hs 
+import Data (Sum) 
+:type Sum
+fold (*) 1 [ ] 
+fold (*) [ ] 
+fold (*) []
+fold [] 
+:type fold
+import Data.Foldable (fold) 
+:type fold
+:type foldr
+import fold
+:type fold
+myProd2 [1, 2, 3, 4] 
+:l fold.hs 
+myProduct [1, 2, 3, 4]
+:l fold.hs 
+myProduct [1, 2, 3, 4]
+:l fold.hs 
+mySum [1, 2, 3]
+:l fold.hs 
+:l fold.hs 
+myAll1 (<3) [1, 2, 1] 
+myAll2 (>3) [4, 5, 6]
+myAll2 (>3) [1, 2, 3] 
+:l fold.hs 
+all (<3) (cycle [1, 2, 3]) 
+clear
+cycle [1, 2, 3]
+myFoldr (>5) (cycle [1, 2, 3]) 
+:l fold.hs 
+myFoldr (>3) cycle([1, 2, 3])
+myFoldr (>3) (cycle [1, 2, 3])
+myFoldr (>3) cycle [1, 2, 3]
+:l fold.hs 
+:l fold.hs 
+mySum [1, 2, 3]
+mySum [1, 2]
+:l fold.hs 
+:l fold.hs 
+:l fold.hs 
+:l fold.hs 
+:l fold.hs 
+myFoldr (+) 1 [1, 2, 3] 
+myFoldr (+) 0 [1, 2, 3] 
+:l fold.hs 
+myFoldr (+) 1 [1, 2, 3] 
+myFoldr (+) 0 [1, 2, 3] 
+:l fold.hs 
+:l fold.hs 
+myAny (== True) [True, False]
+myAny (== True) [True, True]
+myAll (== True) [True, True]
+myAll (== True) [True, False, True]
+myAll (== True) [True, False]
+myAll (== True) [True]
+myAll [True]
+:l fold.hs 
+exit
+myAny (>3) [1, 2, 3] 
+myAny (>2) [1, 2, 3] 
+ myAny [True, False] 
+:l fold.hs 
+myAll (>0) [1, 2, 3]
+:l fold.hs 
+myAll (>0) [1, 2, 3]
+myAll (>0) [1, 2, 3]
+myAll (lli) [1, 2, 3]
