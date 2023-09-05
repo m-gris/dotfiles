@@ -11,3 +11,5 @@ Inspired by [dotfiles.eieio.xyz](http://dotfiles.eieio.xyz).
 - Trackpad (3 fingers drag & tap to click)
 - .zshrc
 - Git (config and SSH)
+- Homebrew Installation
+
