@@ -1,9 +1,17 @@
 echo "Hello from .zshrc_course"
 
 
-# SET VARIABLES
-# CHANGE ZSH OPTIONS
+###########################################
+# SET VARIABLES - Start
+###########################################
 
+# Use bat for syntax highlighting of man pages
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+
+###########################################
+# SET VARIABLES - End
+###########################################
 
 # CREATE ALIASES
 alias ls='ls -lAFh'
