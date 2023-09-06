@@ -39,15 +39,15 @@ return require('packer').startup(function(use)
         -- TREE-SITTER PLAYGROUND
         -- Gives access to the entire AST of the code 
         -- with ':TSPlaygroundToggle
-        use('nvim-treesitter/playground') 
+        use('nvim-treesitter/playground')
 
         -- HARPOON (for file navigation)
-        use('theprimeagen/harpoon') 
+        use('theprimeagen/harpoon')
 
-        use('mbbill/undotree') 
+        use('mbbill/undotree')
 
         -- GIT pluggin
-        use('tpope/vim-fugitive') 
+        use('tpope/vim-fugitive')
 
 
         --  LSP ZERO (linting, autocompletion, debugger...)
