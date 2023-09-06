@@ -24,7 +24,7 @@
 #:     italic_font      Operator Mono Book Italic
 #:     bold_italic_font Operator Mono Medium Italic
 
-# font_size 11.0
+font_size 16.0
 
 #: Font size (in pts)
 
@@ -1066,7 +1066,7 @@
 
 #: The foreground and background colors.
 
-# background_opacity 1.0
+## background_opacity 0.9
 
 #: The opacity of the background. A number between zero and one, where
 #: one is opaque and zero is fully transparent. This will only work if
@@ -1087,7 +1087,7 @@
 #: this option when reloading the config will only work if
 #: dynamic_background_opacity was enabled in the original config.
 
-# background_image none
+# background_image /Users/marc/wallpapers/orange-pink-wallpaper.png
 
 #: Path to a background image. Must be in PNG format.
 
@@ -2341,3 +2341,9 @@
 #: }}}
 
 #: }}}
+
+
+# BEGIN_KITTY_THEME
+# Catppuccin-Latte
+include current-theme.conf
+# END_KITTY_THEME
