@@ -71,6 +71,8 @@ return require('packer').startup(function(use)
         -- Ass seen on: https://www.youtube.com/watch?v=NhTPVXP8n7w
         use {'tpope/vim-dadbod'}
 
+        use {'tpope/vim-commentary'}
+        --
         -- MARC ADD: easymotion for neovim
         -- trigger: s   
         -- 'sab' will move the cursor to the first occurence of 'ab'
