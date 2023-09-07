@@ -1,12 +1,17 @@
 echo "Hello from .zshrc_course"
 
-
 ###########################################
 # SET VARIABLES - Start
 ###########################################
 
 # Use bat for syntax highlighting of man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Warning: Homebrew's "sbin" was not found in your PATH 
+# but you have installed formulae that put executables in /usr/local/sbin.
+#Consider setting your PATH for example like so:
+#  echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zshrc
+export PATH="/usr/local/sbin:$PATH"
 
 
 ###########################################
