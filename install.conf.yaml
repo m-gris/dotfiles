@@ -11,12 +11,16 @@
 # specified as a dictionary mapping TARGET : SOURCE. (counter-intuitive)
 
 - link:
-    # reminder: the key is the TARGET and the value is the SOURCE !!!
+    # reminder:
+    # TARGET : SOURCE
     ~/.zshrc: zshrc
-    ~/.zshrc.bak: zshrc.bak
-    ~/.gitconfig: gitconfig
-    ~/.config: config
+    # IF SAME "ROOT NAME" (IGNORING the . FOR THE TARGET)
+    # THE KEY ALONE IS ENOUGH
+    ~/.zshrc.bak: 
+    ~/.gitconfig: 
+    ~/.config: 
     ~/.hammerspoon:
+
     #   ~/.tmux.conf: tmux.conf
     #   ~/.vim: vim
     #   ~/.vimrc: vimrc
