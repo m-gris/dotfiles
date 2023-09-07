@@ -16,6 +16,7 @@
     ~/.zshrc.bak: zshrc.bak
     ~/.gitconfig: gitconfig
     ~/.config: config
+    ~/.hammerspoon:
     #   ~/.tmux.conf: tmux.conf
     #   ~/.vim: vim
     #   ~/.vimrc: vimrc
