@@ -79,6 +79,46 @@ function parse_ini() {
 ## Marc Add-ons
 ############################################
 
+
+###############################################################################
+########### NEOVIM CONFIG SWITCHER - Start
+###############################################################################
+# Source: https://www.youtube.com/watch?v=LkHjJlSgKZY
+# https://gist.github.com/elijahmanor/b279553c0132bfad7eae23e34ceb593b
+# LEVERAGES THE FOLLOWING FEATURE 
+# https://github.com/neovim/neovim/pull/22128
+alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+alias nvim-kick="NVIM_APPNAME=KickStart nvim"
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+
+function nvims() {
+  items=("default" "KickStart" "LazyVim" "NvChad" "AstroNvim", "NeuralNineVim")
+  # USE FZF
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  #
+  # SET THE NVIM APP NAME ACCORDINGLY
+  NVIM_APPNAME=$config nvim $@
+}
+
+## Launch nvim switcher with ctrl-a
+# bindkey -s ^a "nvims\n"
+
+###############################################################################
+########### NEOVIM CONFIG SWITCHER - End 
+###############################################################################
+
+
+
+
+
 ## If you come from bash you might have to change your $PATH.
 ## export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -202,30 +242,9 @@ function parse_ini() {
 ## alias dots='/usr/bin/git --git-dir=/Users/marc/dotfiles/ --work-tree=/Users/marc'
 
 
-########### START: NeoVim Config Switcher 
-## Source: https://www.youtube.com/watch?v=LkHjJlSgKZY
-## https://gist.github.com/elijahmanor/b279553c0132bfad7eae23e34ceb593b
-## LEVERAGES THE FOLLOWING FEATURE 
-## https://github.com/neovim/neovim/pull/22128
-##alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
-##alias nvim-kick="NVIM_APPNAME=kickstart nvim"
-##alias nvim-chad="NVIM_APPNAME=NvChad nvim"
-##alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
 
-## function nvims() {
-##   items=("default" "kickstart" "LazyVim" "NvChad" "AstroNvim", "NeuralNineVim")
-##   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
-##   if [[ -z $config ]]; then
-##     echo "Nothing selected"
-##     return 0
-##   elif [[ $config == "default" ]]; then
-##     config=""
-##   fi
-##   NVIM_APPNAME=$config nvim $@
-## }
 
-## bindkey -s ^a "nvims\n"
-########### END: NeoVim Config Switcher 
+
 
 ##### POETRY
 ## export PATH="$HOME/.local/bin/poetry:$PATH"    # $HOME not interpolated properly
