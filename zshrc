@@ -73,7 +73,8 @@ function parse_ini() {
 # USE ZSH PLUGINS
 # ... OTHER SURPRISES
 #
-
+# Add Visual Studio Code (code)
+export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 ############################################
 ## Marc Add-ons
