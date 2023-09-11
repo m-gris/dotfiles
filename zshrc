@@ -87,13 +87,14 @@ function parse_ini() {
 # https://gist.github.com/elijahmanor/b279553c0132bfad7eae23e34ceb593b
 # LEVERAGES THE FOLLOWING FEATURE 
 # https://github.com/neovim/neovim/pull/22128
+alias nvim-lazy="NVIM_APPNAME=PrimeVim nvim"
 alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
 alias nvim-kick="NVIM_APPNAME=KickStart nvim"
 alias nvim-chad="NVIM_APPNAME=NvChad nvim"
 alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
 
 function nvims() {
-  items=("default" "KickStart" "LazyVim" "NvChad" "AstroNvim", "NeuralNineVim")
+  items=("default" "PrimeVim" "KickStart" "LazyVim" "NvChad" "AstroNvim" "NeuralNineVim")
   # USE FZF
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
 
