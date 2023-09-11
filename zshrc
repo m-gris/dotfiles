@@ -44,11 +44,24 @@ RPROMPT='%*'
 ###########################################
 
 
-# ADD LOCATIONS TO $PATH
+
+###########################################
+# ADD LOCATIONS TO $PATH - Start
+###########################################
+
 # MARC ADD 
 # make executables installed by Homebrew take precedence over system ones
 # motivation: use git installed by brew instead of "system git"
 export PATH="/usr/local/bin:$PATH"
+
+
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+###########################################
+# ADD LOCATIONS TO $PATH - Start
+###########################################
+
 
 
 ###########################################
@@ -73,8 +86,6 @@ function parse_ini() {
 # USE ZSH PLUGINS
 # ... OTHER SURPRISES
 #
-# Add Visual Studio Code (code)
-export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 ############################################
 ## Marc Add-ons
