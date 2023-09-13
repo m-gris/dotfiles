@@ -18,8 +18,16 @@ export PATH="/usr/local/sbin:$PATH"
 # SET VARIABLES - End
 ###########################################
 
+
+
+
 # CREATE ALIASES
 alias ls='ls -lAFh'
+
+
+
+
+
 
 
 ###########################################
@@ -39,9 +47,9 @@ PROMPT='
 # %* => time of cmd execution
 RPROMPT='%*'
 
-###########################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # CUSTOMIZE PROMPTS - End
-###########################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 
@@ -56,7 +64,7 @@ export PATH="/usr/local/bin:$PATH"
 
 
 # Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 ###########################################
 # ADD LOCATIONS TO $PATH - Start
@@ -91,6 +99,9 @@ function parse_ini() {
 ## Marc Add-ons
 ############################################
 
+# Enable extended pattern matching features in Zsh
+# Allows use of advanced globbing patterns like !(pattern) for negation
+setopt extendedglob
 
 ###############################################################################
 ########### NEOVIM CONFIG SWITCHER - Start
