@@ -7,6 +7,8 @@ echo "Hello from .zshrc_course"
 # Use bat for syntax highlighting of man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+export HOMEBREW_CASK_OPTS="--no-quarantine" # bypass / turn off macos Gatekeeper
+
 # Warning: Homebrew's "sbin" was not found in your PATH 
 # but you have installed formulae that put executables in /usr/local/sbin.
 #Consider setting your PATH for example like so:
