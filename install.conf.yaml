@@ -31,7 +31,6 @@
 
 - shell:
     # - [git submodule update --init --recursive, Installing submodules]
-    - sleep 2
     -
       command: ./setup_homebrew.zsh
       stdout: true
