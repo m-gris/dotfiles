@@ -7,4 +7,5 @@ echo "\n <<< Starting HOMEBREW setup >>>\n"
 brew install httpie
 brew install bat 
 
-brew install visual-studio-code
+# --no-quarantine: arg that will bypass / turn-off macOs "gatekeeper" ("Are you sure you want to install X...")
+brew install --no-quarantine visual-studio-code
