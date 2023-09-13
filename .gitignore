@@ -1,1 +1,4 @@
 .nvimlog
+
+# created by 'brew bundle' cmd... does not need VCS
+Brewfile.lock.json
