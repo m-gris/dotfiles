@@ -1,4 +1,3 @@
-# TAPS => REPOS
 tap "clojure/tools"
 tap "coursier/formulas"
 tap "d12frosted/emacs-plus"
@@ -10,9 +9,6 @@ tap "jesseduffield/lazygit"
 tap "microsoft/git"
 tap "microsoft/mssql-release"
 tap "scalacenter/bloop"
-
-# BREWS => PACKAGES
-brew "exa"
 brew "openssl@1.1"
 brew "readline"
 brew "xz"
@@ -36,7 +32,6 @@ brew "automake"
 brew "bash"
 brew "bash-completion", link: false
 brew "bat"
-brew "openjdk"
 brew "bfg"
 brew "bison"
 brew "chruby"
@@ -45,12 +40,11 @@ brew "coreutils"
 brew "curl"
 brew "direnv"
 brew "gcc"
-brew "openblas"
+brew "libgit2"
 brew "numpy", link: false
 brew "pygit2"
 brew "dvc"
 brew "enchant"
-brew "libgit2"
 brew "exa"
 brew "exercism"
 brew "fd"
@@ -112,9 +106,6 @@ brew "jesseduffield/lazygit/lazygit"
 brew "microsoft/mssql-release/msodbcsql18"
 brew "microsoft/mssql-release/mssql-tools18"
 brew "scalacenter/bloop/bloop"
-
-
-# CASKS => APPS
 cask "alacritty"
 cask "amethyst"
 cask "db-browser-for-sqlite"
@@ -132,8 +123,6 @@ cask "postman"
 cask "visual-studio-code"
 cask "whichspace"
 cask "wine-stable"
-
-# VSCODE EXTENSIONS
 vscode "aaron-bond.better-comments"
 vscode "alexcvzz.vscode-sqlite"
 vscode "alfnielsen.vsc-rename-files"
