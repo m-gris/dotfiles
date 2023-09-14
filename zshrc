@@ -105,6 +105,14 @@ function parse_ini() {
 # Allows use of advanced globbing patterns like !(pattern) for negation
 setopt extendedglob
 
+# LAUNCH TMUX AUTOMATICALLY
+# LAUNCH TMUX AUTOMATICALLY
+if [ "$TMUX" = "" ]; then tmux; fi
+
+
+if [ "$TMUX" = "" ]; then tmux; fi
+
+
 ###############################################################################
 ########### NEOVIM CONFIG SWITCHER - Start
 ###############################################################################
@@ -329,10 +337,6 @@ function nvims() {
 
 ## CUSTOMER ENV VARIABLES 
 #export DODO_DATA_DIR=/Users/marc/DODOBIRD/DATASETS/REES46
-
-## LAUNCH TMUX AUTOMATICALLY
-#if [ "$TMUX" = "" ]; then tmux; fi
-
 
 ## CUSTOM "CLI COMMANDS" FROM PYTHON SCRIPTS
 #replace_whitespace() {
