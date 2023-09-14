@@ -24,7 +24,9 @@ export PATH="/usr/local/sbin:$PATH"
 
 
 # CREATE ALIASES
-alias ls='ls -lAFh'
+#alias ls='ls -lAFh'
+alias ls='exa -laFh --git'
+alias exa='exa -laFh --git'
 
 
 
