@@ -49,6 +49,8 @@ brew "openjdk@17"
 brew "apache-spark"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
+# Text processing scripting language
+brew "awk"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Programmable completion for Bash 3.2
