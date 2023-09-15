@@ -73,6 +73,8 @@ brew "leiningen"
 brew "libomp"
 brew "libpq"
 brew "luv"
+# Mac App Store command-line interface
+brew "mas"
 brew "ncurses"
 brew "neovim"
 brew "ninja"
