@@ -55,6 +55,8 @@ brew "bash"
 brew "bash-completion", link: false
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Bash scripts that integrate bat with various command-line tools
+brew "bat-extras"
 # Remove large files or passwords from Git history like git-filter-branch
 brew "bfg"
 # Parser generator
