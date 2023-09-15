@@ -5,7 +5,9 @@ echo "Hello from .zshrc_course"
 ###########################################
 
 # Use bat for syntax highlighting of man pages
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# COMMENTED: we will alias the man command with batman
+#export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export HOMEBREW_CASK_OPTS="--no-quarantine" # bypass / turn off macos Gatekeeper
 
@@ -27,6 +29,7 @@ export PATH="/usr/local/sbin:$PATH"
 #alias ls='ls -lAFh'
 alias ls='exa -laFh --git'
 alias exa='exa -laFh --git'
+alias man=batman
 
 
 
