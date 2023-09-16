@@ -16,7 +16,7 @@
     ~/.zshrc: zshrc
     # IF SAME "ROOT NAME" (IGNORING the . FOR THE TARGET)
     # THE KEY ALONE IS ENOUGH
-    ~/.zshrc.bak: 
+    ~/.zshenv: 
     ~/.gitconfig: 
     ~/.config: 
     ~/.hammerspoon:
