@@ -22,6 +22,7 @@ hs.hotkey.bind({"alt", "ctrl"}, "A", open_app("Alacritty"))
 hs.hotkey.bind({"alt", "ctrl"}, "N", open_app("Notion"))
 hs.hotkey.bind({"alt", "ctrl"}, "M", open_app("Microsoft Teams"))
 hs.hotkey.bind({"alt", "ctrl"}, "T", open_app("Kitty"))
+hs.hotkey.bind({"alt", "ctrl"}, "Z", open_app("zoom.us"))
 
 
 ----------------------------------
