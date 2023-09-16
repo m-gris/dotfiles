@@ -111,11 +111,15 @@ function parse_ini() {
 setopt extendedglob
 
 # LAUNCH TMUX AUTOMATICALLY
-# LAUNCH TMUX AUTOMATICALLY
 if [ "$TMUX" = "" ]; then tmux; fi
 
+# VIM MOTIONS 
+bindkey -v
+VI_MODE_SET_CURSOR=true
 
-if [ "$TMUX" = "" ]; then tmux; fi
+# from https://github.com/jeffreytse/zsh-vi-mode
+# installed via brew
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 
 ###############################################################################
@@ -234,9 +238,9 @@ function nvims() {
 ## Custom plugins may be added to $ZSH_CUSTOM/plugins/
 ## Example format: plugins=(rails git textmate ruby lighthouse)
 ## Add wisely, as too many plugins slow down shell startup.
-#plugins=(
-#  git
-#  vi-mode
+plugins=(
+  git
+  vi-mode)
 #  zsh-interactive-cd
 #  zsh-syntax-highlighting
 #  #zsh-autosuggestions
@@ -247,7 +251,6 @@ function nvims() {
 #  docker-compose
 #)
 
-#VI_MODE_SET_CURSOR=true
 
 
 ## User configuration
