@@ -195,6 +195,8 @@ brew "yamllint"
 brew "yarn"
 # General-purpose lossless data-compression library
 brew "zlib"
+# Better and friendly vi(vim) mode plugin for ZSH
+brew "zsh-vi-mode"
 # The Clojure Programming Language
 brew "clojure/tools/clojure"
 # Launcher for Coursier
