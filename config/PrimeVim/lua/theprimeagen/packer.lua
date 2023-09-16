@@ -70,7 +70,9 @@ return require('packer').startup(function(use)
         -- MARC ADD: for databases etc... 
         -- Ass seen on: https://www.youtube.com/watch?v=NhTPVXP8n7w
         use {'tpope/vim-dadbod'}
-
+        use {'kristijanhusak/vim-dadbod-ui'}
+        use {'kristijanhusak/vim-dadbod-completion'}
+       
         use {'tpope/vim-commentary'}
         --
         -- MARC ADD: easymotion for neovim

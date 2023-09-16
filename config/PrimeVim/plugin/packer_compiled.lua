@@ -171,6 +171,16 @@ _G.packer_plugins = {
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-dadbod",
     url = "https://github.com/tpope/vim-dadbod"
   },
+  ["vim-dadbod-completion"] = {
+    loaded = true,
+    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-dadbod-completion",
+    url = "https://github.com/kristijanhusak/vim-dadbod-completion"
+  },
+  ["vim-dadbod-ui"] = {
+    loaded = true,
+    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-dadbod-ui",
+    url = "https://github.com/kristijanhusak/vim-dadbod-ui"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-fugitive",
