@@ -48,7 +48,7 @@ return require('packer').startup(function(use)
 
         -- GIT pluggin
         use('tpope/vim-fugitive')
-        use('ewis6991/gitsigns.nvim')
+        use('lewis6991/gitsigns.nvim')
 
 
 
