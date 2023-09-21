@@ -242,6 +242,8 @@ cask "miniconda"
 cask "postbird"
 # Collaboration platform for API development
 cask "postman"
+# Music streaming service
+cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
 # Active space menu bar icon
