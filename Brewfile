@@ -145,6 +145,8 @@ brew "luv"
 brew "mas"
 # Text-based UI library
 brew "ncurses"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Small build system for use with gyp or CMake
