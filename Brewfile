@@ -135,6 +135,10 @@ brew "krb5"
 brew "lastpass-cli"
 # Build tool for Clojure
 brew "leiningen"
+# Text-based UI library
+brew "ncurses"
+# Pager program similar to more
+brew "less"
 # LLVM's OpenMP runtime library
 brew "libomp"
 # Postgres C API library
@@ -143,8 +147,6 @@ brew "libpq"
 brew "luv"
 # Mac App Store command-line interface
 brew "mas"
-# Text-based UI library
-brew "ncurses"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
 # Ambitious Vim-fork focused on extensibility and agility
