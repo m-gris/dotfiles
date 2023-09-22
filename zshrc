@@ -26,11 +26,17 @@ export PATH="/usr/local/sbin:$PATH"
 
 
 # CREATE ALIASES
-#alias ls='ls -lAFh'
+# USE exa instead of ls
 alias ls='exa -laFh --git'
 alias exa='exa -laFh --git'
+
+# USE batman instead of man to have syntax highlighted manuals
 alias man=batman
+
+# Create alias to dump the Brewfile
 alias bbd='brew bundle dump --force --describe'
+
+# Create alias to "pretty print" the PATH (newline per path)
 alias ppath='<<<${(F)path}'
 
 
