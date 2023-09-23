@@ -17,7 +17,12 @@ return require('packer').startup(function(use)
     -- TELESCOPE SORTER 
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
-
+    -- TELESCOPE FILE BROWER (to be able to search and land in dirs)
+    use {
+        "nvim-telescope/telescope-file-browser.nvim",
+        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    }
+    
     -- COLOR-THEME: ROSE-PINE
 
     use({ 
