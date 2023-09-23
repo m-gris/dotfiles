@@ -102,3 +102,9 @@ vim.api.nvim_set_keymap('n', '<leader>cp', ':let @+=expand("%:p")<CR>', { norema
 -- SPLIT PANES VERITCALLY & HORIZONTALLY (IN THE SAME PATH AS THE ORIGINAL WINDOW / PANE)
 vim.api.nvim_set_keymap('n', '<C-W>\\', ':split<CR>:lcd %:p:h<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-W>|', ':vsplit<CR>:lcd %:p:h<CR>', { noremap = true, silent = true })
+
+
+-- switch between git-worktrees
+vim.keymap.set("n", "<Leader>ft", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
+-- create a new git-worktree
+vim.keymap.set("n", "<Leader>fT", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
