@@ -49,8 +49,7 @@ return require('packer').startup(function(use)
         -- GIT pluggin
         use('tpope/vim-fugitive')
         use('lewis6991/gitsigns.nvim')
-
-
+        use('ThePrimeagen/git-worktree.nvim')
 
         --  LSP ZERO (linting, autocompletion, debugger...)
         use {
