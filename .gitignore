@@ -2,3 +2,6 @@
 
 # created by 'brew bundle' cmd... does not need VCS
 Brewfile.lock.json
+
+# according to chatGPT: no need to track this one... 
+/config/configstore/update-notifier-npm.json
