@@ -25,7 +25,9 @@ export PATH="/usr/local/sbin:$PATH"
 
 
 
-# CREATE ALIASES
+###########################################
+# CREATE ALIASES - Start
+###########################################
 # USE exa instead of ls
 alias ls='exa -laFh --git'
 alias exa='exa -laFh --git'
@@ -38,6 +40,18 @@ alias bbd='brew bundle dump --force --describe'
 
 # Create alias to "pretty print" the PATH (newline per path)
 alias ppath='<<<${(F)path}'
+
+# Git Aliases
+alias gs='git status' 
+alias ga='git add' 
+alias gc='git commit' 
+alias gca='git commit --amend'
+alias gcane='git commit --amend --no-edit' 
+
+
+###########################################
+# CREATE ALIASES - End
+###########################################
 
 
 ###########################################
