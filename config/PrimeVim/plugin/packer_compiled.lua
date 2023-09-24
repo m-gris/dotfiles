@@ -104,16 +104,15 @@ _G.packer_plugins = {
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/harpoon",
     url = "https://github.com/theprimeagen/harpoon"
   },
-  ["hop.nvim"] = {
-    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tkeys\28etovxqpdygfblzhckisuran\nsetup\bhop\frequire\0" },
-    loaded = true,
-    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/hop.nvim",
-    url = "https://github.com/phaazon/hop.nvim"
-  },
   ["lsp-zero.nvim"] = {
     loaded = true,
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/lsp-zero.nvim",
     url = "https://github.com/VonHeikemen/lsp-zero.nvim"
+  },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
@@ -139,6 +138,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/opt/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -204,14 +209,15 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-sneak",
     url = "https://github.com/justinmk/vim-sneak"
+  },
+  ["vim-tpipeline"] = {
+    loaded = true,
+    path = "/Users/marc/.local/share/PrimeVim/site/pack/packer/start/vim-tpipeline",
+    url = "https://github.com/vimpostor/vim-tpipeline"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: hop.nvim
-time([[Config for hop.nvim]], true)
-try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\tkeys\28etovxqpdygfblzhckisuran\nsetup\bhop\frequire\0", "config", "hop.nvim")
-time([[Config for hop.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
