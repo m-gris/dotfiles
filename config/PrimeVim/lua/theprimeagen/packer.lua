@@ -46,58 +46,68 @@ return require('packer').startup(function(use)
             ts_update()
         end,}
 
-        -- TREE-SITTER PLAYGROUND
-        -- Gives access to the entire AST of the code 
-        -- with ':TSPlaygroundToggle
-        use('nvim-treesitter/playground')
+    -- TREE-SITTER PLAYGROUND
+    -- Gives access to the entire AST of the code 
+    -- with ':TSPlaygroundToggle
+    use('nvim-treesitter/playground')
 
-        -- HARPOON (for file navigation)
-        use('theprimeagen/harpoon')
+    -- HARPOON (for file navigation)
+    use('theprimeagen/harpoon')
 
-        use('mbbill/undotree')
+    use('mbbill/undotree')
 
-        -- GIT pluggin
-        use('tpope/vim-fugitive')
-        use('lewis6991/gitsigns.nvim')
-        use('ThePrimeagen/git-worktree.nvim')
+    -- GIT pluggin
+    use('tpope/vim-fugitive')
+    use('lewis6991/gitsigns.nvim')
+    use('ThePrimeagen/git-worktree.nvim')
 
-        --  LSP ZERO (linting, autocompletion, debugger...)
-        use {
-            'VonHeikemen/lsp-zero.nvim',
-            branch = 'v2.x',
-            requires = {
-                -- LSP Support
-                {'neovim/nvim-lspconfig'},             -- Required
-                {'williamboman/mason.nvim'},           -- Optional
-                {'williamboman/mason-lspconfig.nvim'}, -- Optional
+    --  LSP ZERO (linting, autocompletion, debugger...)
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
+        requires = {
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},             -- Required
+            {'williamboman/mason.nvim'},           -- Optional
+            {'williamboman/mason-lspconfig.nvim'}, -- Optional
 
-                -- Autocompletion
-                {'hrsh7th/nvim-cmp'},     -- Required
-                {'hrsh7th/cmp-nvim-lsp'}, -- Required
-                {'L3MON4D3/LuaSnip'},     -- Required
-            }
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},     -- Required
+            {'hrsh7th/cmp-nvim-lsp'}, -- Required
+            {'L3MON4D3/LuaSnip'},     -- Required
         }
+    }
 
-        -- MARC ADD: for databases etc... 
-        -- Ass seen on: https://www.youtube.com/watch?v=NhTPVXP8n7w
-        use {'tpope/vim-dadbod'}
-        use {'kristijanhusak/vim-dadbod-ui'}
-        use {'kristijanhusak/vim-dadbod-completion'}
-       
-        use {'tpope/vim-commentary'}
-        --
-        -- MARC ADD: easymotion for neovim
-        -- trigger: s   
-        -- 'sab' will move the cursor to the first occurence of 'ab'
-        use 'justinmk/vim-sneak'
+    -- MARC ADD: for databases etc... 
+    -- Ass seen on: https://www.youtube.com/watch?v=NhTPVXP8n7w
+    use {'tpope/vim-dadbod'}
+    use {'kristijanhusak/vim-dadbod-ui'}
+    use {'kristijanhusak/vim-dadbod-completion'}
+   
+    use {'tpope/vim-commentary'}
+    
+    
+    -- STATUS BAR FOR NVIM
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
+    -- Embed your vim statusline in the tmux statusline!
+    use 'vimpostor/vim-tpipeline'
+    
+    -- MARC ADD: easymotion for neovim
+    -- trigger: s   
+    -- 'sab' will move the cursor to the first occurence of 'ab'
+    use 'justinmk/vim-sneak'
 
-        -- MARC ADD: another easymotion like plugging
-        use {
-            'phaazon/hop.nvim',
-            branch = 'v2', -- optional but strongly recommended
-            config = function()
-                -- you can configure Hop the way you like here; see :h hop-config
-                require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-            end
-        }
+    -- MARC ADD: another easymotion like plugging
+    -- use {
+    --     'phaazon/hop.nvim',
+    --     branch = 'v2', -- optional but strongly recommended
+    --     config = function()
+    --         -- you can configure Hop the way you like here; see :h hop-config
+    --         require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    --     end
+
+    -- }
     end)
