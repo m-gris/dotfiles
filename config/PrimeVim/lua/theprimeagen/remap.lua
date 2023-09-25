@@ -108,3 +108,20 @@ vim.api.nvim_set_keymap('n', '<C-W>|', ':vsplit<CR>:lcd %:p:h<CR>', { noremap = 
 vim.keymap.set("n", "<Leader>ft", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
 -- create a new git-worktree
 vim.keymap.set("n", "<Leader>fT", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
+
+
+-- use telescope file-browser to EXPLORE DIRECTORIES
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fd",
+  ":Telescope file_browser<CR>",
+  { noremap = true }
+)
+
+-- use telescope file-browser to EXPLORE CURRENT DIRECTORY
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>fD",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
