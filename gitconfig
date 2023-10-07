@@ -12,6 +12,48 @@
 [core]
 	excludesfile = /Users/marc/.gitignore_global
 
+# MARC ADD: 26SEP23
+# 4 way merge tool
+# inspi: https://www.youtube.com/watch?v=57x4ZzzCr2Y
+# source: https://github.com/SeniorMars/dotfiles/blob/master/.config/git/config#LL6C1-L50C22
+
+[core]
+	pager = delta
+	editor = nvim
+[credential]
+	helper = cache
+[diff]
+	algorithm = patience
+	compactionHeuristic = true
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd L\"
+[merge]
+	tool = nvimdiff4
+	prompt = false
+[mergetool "nvimdiff4"]
+	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = side-by-side line-numbers decorations
+	navigate = true
+	whitespace-error-style = 22 reverse
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+[interactive]
+	diffFilter = delta --color-only
+[mergetool]
+	keepBackup = false
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+
+
+
 # MARC ADD: 28FEB23... Trying to gain SSH acces & dvc push/pull
 ; [credential "https://github.com"]
 ; 	username = m-gris
