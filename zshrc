@@ -38,6 +38,8 @@ alias man=batman
 
 # Create alias to dump the Brewfile
 alias bbd='brew bundle dump --force --describe'
+alias sshdodo='ssh dodomac@192.168.100.60'
+alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
 
 # Create alias to "pretty print" the PATH (newline per path)
 alias ppath='<<<${(F)path}'
