@@ -1,4 +1,5 @@
 echo "Hello from .zshrc_course"
+echo "Hello from .zshrc"
 
 ###########################################
 # SET VARIABLES - Start
