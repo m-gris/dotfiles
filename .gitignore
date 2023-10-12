@@ -5,3 +5,4 @@ Brewfile.lock.json
 
 # according to chatGPT: no need to track this one... 
 /config/configstore/update-notifier-npm.json
+config/nvim/plugin/packer_compiled.lua
