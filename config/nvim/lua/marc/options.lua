@@ -159,6 +159,9 @@ vim.cmd('syntax on')
 vim.g.vimwiki_list = {{path = '~/Documents/Obsidian/obsidian-test', syntax = 'markdown', ext = '.md'}}
 -- !!!!!! FOR VIMWIKI
 
+vim.opt.foldlevel = 1
+vim.opt.foldmethod = 'indent'
+
 
 -- to toggle inline linting errors etc... 
 -- source: 
