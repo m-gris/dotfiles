@@ -78,24 +78,6 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 
 
 
-###########################################
-# WRITE HANDY FUNCTIONS -  Start
-###########################################
-
-# Make Dir & CD into it
-function mkcd() { 
-    # $@ => the arg passed to mkcd
-    mkdir -p "$@" && cd "$_";
-}
-
-# GET KEYS FROM INI FILE (EX. gitconfig ...)
-function parse_ini() {
-  sed -n "/\[$1\]/,/\[.*\]/p" ~/.gitconfig | sed '$d'
-}
-
-###########################################
-# WRITE HANDY FUNCTIONS -  End
-###########################################
 #
 # USE ZSH PLUGINS
 # ... OTHER SURPRISES
