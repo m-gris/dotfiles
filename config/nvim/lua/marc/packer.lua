@@ -29,7 +29,6 @@ return require('packer').startup(function(use)
     -- OIL
     use {
         'stevearc/oil.nvim',
-
         config = function() require('oil').setup() end
     }
 
@@ -45,15 +44,6 @@ return require('packer').startup(function(use)
     -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     -- COLOR-THEME: Catpuccin of course
-
-    -- PRIME CHOICE
-    -- use({ 
-    --     'rose-pine/neovim', 
-    --     as = 'rose-pine',
-    --     config = function() 
-    --         vim.cmd('colorscheme rose-pine')
-    --     end
-    -- })
 
     -- MY CHOICE 
     use { "catppuccin/nvim", as = "catppuccin" }
@@ -123,8 +113,6 @@ return require('packer').startup(function(use)
     }
     
     
-
-
     -- STATUS BAR FOR NVIM
     use {
         'nvim-lualine/lualine.nvim',
@@ -168,4 +156,8 @@ return require('packer').startup(function(use)
     
     use "christoomey/vim-tmux-navigator"
 
+    use {
+        'glacambre/firenvim',
+        run = function() vim.fn['firenvim#install'](0) end 
+    }
     end)
