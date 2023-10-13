@@ -1,14 +1,8 @@
-echo "Hello from .zshrc_course"
 echo "Hello from .zshrc"
 
 ###########################################
-# SET VARIABLES - Start
+# VARIABLES 
 ###########################################
-
-# Use bat for syntax highlighting of man pages
-
-# COMMENTED: we will alias the man command with batman
-#export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export HOMEBREW_CASK_OPTS="--no-quarantine" # bypass / turn off macos Gatekeeper
 
@@ -24,16 +18,17 @@ export PATH="/usr/local/sbin:$PATH"
 ###########################################
 
 
+###########################################
+# ALIASES 
+source ~/.dotfiles/aliases.sh
+###########################################
 
 
 ###########################################
-# CREATE ALIASES - Start
+# FUNCTIONS 
+source ~/.dotfiles/functions.sh
 ###########################################
 
-
-###########################################
-# CREATE ALIASES - End
-###########################################
 
 
 ###########################################
@@ -94,13 +89,14 @@ setopt extendedglob
 # LAUNCH TMUX AUTOMATICALLY
 if [ "$TMUX" = "" ]; then tmux; fi
 
+# !!! COMMENTED BECAUSE I WANT VIM MOTIONS TO BE HANDLED BY TMUX
+# !!! MOTIVATION: when ssh into remote with bash !!!
 # VIM MOTIONS 
-bindkey -v
-VI_MODE_SET_CURSOR=true
-
+# bindkey -v
+# VI_MODE_SET_CURSOR=true
 # from https://github.com/jeffreytse/zsh-vi-mode
 # installed via brew
-source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 
 ###############################################################################
