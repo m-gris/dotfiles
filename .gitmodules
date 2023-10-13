@@ -2,9 +2,15 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "config/PrimeVim/pack/packer/start/packer.nvim"]
-	path = config/PrimeVim/pack/packer/start/packer.nvim
-	url = https://github.com/wbthomason/packer.nvim
+
+
+; KEPT HERE BECAUSE I HAVE NO IDEA IF THIS SHOULD BE HERE OR NOT...
+; [submodule "config/nvim/pack/packer/start/packer.nvim"]
+; 	path = config/nvim/pack/packer/start/packer.nvim
+; 	url = https://github.com/wbthomason/packer.nvim
+
+
+
 [submodule "config/NvChad"]
 	path = config/NvChad
 	url = https://github.com/m-gris/NvChad
