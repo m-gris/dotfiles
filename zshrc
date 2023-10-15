@@ -47,6 +47,9 @@ PROMPT='
 # %* => time of cmd execution
 RPROMPT='%*'
 
+# ABOVE OVERRIDEN BY STARSHIP
+eval "$(starship init zsh)"
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # CUSTOMIZE PROMPTS - End
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
