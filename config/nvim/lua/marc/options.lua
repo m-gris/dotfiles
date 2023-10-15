@@ -175,3 +175,7 @@ vim.api.nvim_create_user_command("DiagnosticToggle", function()
 		signs = not vt,
 	}
 end, { desc = "toggle diagnostic" })
+
+
+--- trying to make neovim "transparent", by inheriting Kitty's settings
+vim.cmd[[hi Normal guibg=NONE ctermbg=NONE]]
