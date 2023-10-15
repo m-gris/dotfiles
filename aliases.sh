@@ -1,7 +1,7 @@
 
 # USE exa instead of ls
-alias ls='exa -laFh --git'
-alias exa='exa -laFh --git'
+alias ls='exa -laFh --git --group-directories-first --sort=name'
+alias exa='exa -laFh --git --group-directories-first --sort=name'
 
 # USE batman instead of man to have syntax highlighted manuals
 alias man=batman
