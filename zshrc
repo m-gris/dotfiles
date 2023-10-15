@@ -1,4 +1,3 @@
-echo "Hello from .zshrc"
 
 ###########################################
 # VARIABLES 

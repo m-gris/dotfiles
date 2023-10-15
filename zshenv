@@ -1,4 +1,3 @@
-echo "\nHello from .zhsenv \n" 
 
 function exists() {
     # EXPLAINING THE FUNCTION
