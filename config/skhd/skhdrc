@@ -1,0 +1,79 @@
+# CHANGE WINDOW FOCUS
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - h : yabai -m window --focus west
+alt - l : yabai -m window --focus east
+
+# CHANGE DISPLAY FOCUS 
+alt - s : yabai -m display --focus west
+alt - g : yabai -m display --focus east
+
+#######################################
+#  LAYOUT
+# Rotate Clockwise
+shift + alt - r : yabai -m space --rotate 270
+# Flip along the Y-axis
+shift + alt - y : yabai -m space --mirror y-axis
+# FLip along the X-axis
+shift + alt - x : yabai -m space --mirror x-axis
+# Toggle window float
+shift + alt - f : yabai -m window --toggle float --grid 4:4:1:1:2:2
+#######################################
+
+
+#######################################
+#  WINDOW SIZE
+# Maximize (back & forth)
+shift + alt - m : yabai -m window --toggle zoom-fullscreen
+# Equalize / balance windows sizes
+shift + alt - e : yabai -m space --balance
+#######################################
+
+
+#######################################
+# SWAPPING WINDOWS
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - h : yabai -m window --swap west
+shift + alt - l : yabai -m window --swap east
+#######################################
+
+
+#######################################
+# MOVE WINDOWS & SPLIT
+cmd + alt - j : yabai -m window --warp south
+cmd + alt - k : yabai -m window --warp north
+cmd + alt - h : yabai -m window --warp west
+cmd + alt - l : yabai -m window --warp east
+#######################################
+
+#######################################
+# MOVE WINDOWS TO DISPLAYS (LEFT & RIGHT)
+shift + alt - s : yabai -m window --display west; yabai -m display --focus west;
+shift + alt - g : yabai -m window --display east; yabai -m display --focus east;
+#######################################
+
+
+#######################################
+# MOVE WINDOWS TO SPACES
+
+shift + alt - n : yabai -m window --space next;
+shift + alt - p : yabai -m window --space prev;
+
+shift + alt - 1 : yabai -m window --space 1;
+shift + alt - 2 : yabai -m window --space 2;
+shift + alt - 3 : yabai -m window --space 3;
+shift + alt - 4 : yabai -m window --space 4;
+shift + alt - 5 : yabai -m window --space 5;
+shift + alt - 6 : yabai -m window --space 6;
+shift + alt - 7 : yabai -m window --space 7;
+shift + alt - 8 : yabai -m window --space 8;
+shift + alt - 9 : yabai -m window --space 9;
+#######################################
+
+
+#######################################
+# START / STOP YABAI
+#esc - s : skhd --start-service
+#cmd + ctrl + shift + alt - q : skhd --stop-service
+#######################################
