@@ -6,6 +6,8 @@ alias exa='exa -laFh --git --group-directories-first --sort=name'
 # USE batman instead of man to have syntax highlighted manuals
 alias man=batman
 
+alias cd=z
+
 # Create alias to dump the Brewfile
 alias bbd='brew bundle dump --force --describe'
 alias sshdodo='ssh dodomac@192.168.100.60'
