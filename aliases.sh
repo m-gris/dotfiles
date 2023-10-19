@@ -43,5 +43,6 @@ alias tproj=taskprojectfunction
 alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
 # SOURCE configs Aliases
-alias srcz='source ~/.zshrc' 
-alias srct='tmux source-file ~/.config/tmux/tmux.conf'
+alias zrc='source ~/.zshrc' 
+alias tconf='tmux source-file ~/.config/tmux/tmux.conf'
+
