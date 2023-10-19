@@ -16,6 +16,11 @@ alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' do
 # Create alias to "pretty print" the PATH (newline per path)
 alias ppath='<<<${(F)path}'
 
+# PYTHON VENVS
+alias mkv='python -m venv .venv'
+alias venv='source .venv/bin/activate'
+
+
 # Git Aliases
 alias gs='git status' 
 alias ga='git add' 
