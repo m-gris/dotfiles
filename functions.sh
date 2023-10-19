@@ -18,3 +18,13 @@ function fuzzy_dirs() {
     (find . -type d -print | fzf)
 }
 
+function kitty_theme() {
+    # will apply a color theme to a single window
+    kitty +kitten themes $1
+}
+
+function kitty_all_theme() {
+    # will apply a color theme to ALL windows
+    kitty +kitten themes --reload-in=all $1
+}
+
