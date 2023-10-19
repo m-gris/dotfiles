@@ -14,3 +14,7 @@ function docker_find_image() {
     docker images | head -n 1 && docker images | grep $1
 }
 
+function fuzzy_dirs() {
+    (find . -type d -print | fzf)
+}
+
