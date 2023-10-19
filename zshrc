@@ -20,6 +20,24 @@ export NULLCMD=bat
 ###########################################
 
 
+# Created by Zap installer
+[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+
+plug "zap-zsh/supercharge"
+plug "zap-zsh/completions"
+plug "zsh-users/zsh-syntax-highlighting"
+plug "hlissner/zsh-autopair"
+
+plug "Aloxaf/fzf-tab"
+
+# I DO NOT LIKE THESE 2: 
+# CREATES TOO MUCH NOISE & AGITATION ON THE SCREEN
+# plug 'marlonrichert/zsh-autocomplete'
+#plug "zsh-users/zsh-autosuggestions"
+
+# TOO SLOW ...
+# plug "zap-zsh/zap-prompt"
+
 ###########################################
 # ALIASES 
 source ~/.dotfiles/aliases.sh
