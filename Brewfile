@@ -33,18 +33,12 @@ brew "grpc"
 brew "thrift"
 # Columnar in-memory analytics layer designed to accelerate big data
 brew "apache-arrow"
-# GNU database manager
-brew "gdbm"
 # GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
 # Core application library for C
 brew "glib"
-# Portable Foreign Function Interface library
-brew "libffi"
 # Manage compile and link flags for libraries
 brew "pkg-config"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Development kit for the Java programming language
@@ -59,6 +53,8 @@ brew "awk"
 brew "bash"
 # Programmable completion for Bash 3.2
 brew "bash-completion", link: false
+# C library of Git core methods that is re-entrant and linkable
+brew "libgit2"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
@@ -67,6 +63,10 @@ brew "bat-extras"
 brew "bfg"
 # Parser generator
 brew "bison"
+# Elegant Lua unit testing
+brew "busted"
+# Text-based personal organizer
+brew "calcurse"
 # Ruby environment tool
 brew "chruby"
 # Cross-platform make
@@ -79,8 +79,6 @@ brew "curl"
 brew "direnv"
 # GNU compiler collection
 brew "gcc"
-# C library of Git core methods that is re-entrant and linkable
-brew "libgit2"
 # Package for scientific computing with Python
 brew "numpy", link: false
 # Bindings to the libgit2 shared library
@@ -89,6 +87,8 @@ brew "pygit2"
 brew "dvc"
 # Spellchecker wrapping library
 brew "enchant"
+# Run arbitrary commands when files change
+brew "entr"
 # Modern replacement for 'ls'
 brew "exa"
 # Command-line tool to interact with exercism.io
@@ -113,12 +113,20 @@ brew "ffmpeg"
 brew "libtool"
 # Libraries to talk to Microsoft SQL Server and Sybase databases
 brew "freetds"
+# Monitor a directory for changes and run a shell command
+brew "fswatch"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU database manager
+brew "gdbm"
 # GitHub command-line tool
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Render markdown on the CLI
+brew "glow"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Generate introspection data for GObject libraries
@@ -127,10 +135,12 @@ brew "gobject-introspection"
 brew "librsvg"
 # Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
+# CLI email client written in Rust
+brew "himalaya"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Platform built on V8 to build network applications
-brew "node"
+brew "node", link: false
 # High precision scientific calculator with support for physical units
 brew "insect"
 # Lightweight and flexible command-line JSON processor
@@ -145,24 +155,42 @@ brew "leiningen"
 brew "ncurses"
 # Pager program similar to more
 brew "less"
+# Portable Foreign Function Interface library
+brew "libffi"
 # LLVM's OpenMP runtime library
 brew "libomp"
-# Postgres C API library
-brew "libpq"
+# Package manager for the Lua programming language
+brew "luarocks"
 # Bare libuv bindings for lua
 brew "luv"
 # Mac App Store command-line interface
 brew "mas"
+# Remote terminal application
+brew "mosh"
+# Powerful paging program
+brew "most"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# NCurses Disk Usage
+brew "ncdu"
+# Cross-platform ncurses Spotify client written in Rust
+brew "ncspot"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Statically typed compiled systems programming language
+brew "nim"
 # Small build system for use with gyp or CMake
 brew "ninja"
 # Manage multiple Node.js versions
 brew "nvm"
+# OCaml package manager
+brew "opam"
 # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
 brew "openvpn"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Password manager
+brew "pass"
 # General-purpose scripting language
 brew "php"
 # Python dependency management tool
@@ -172,7 +200,7 @@ brew "pipx"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Object-relational database system
-brew "postgresql@14", restart_service: true
+brew "postgresql@14"
 # Modern replacement for ps written by Rust
 brew "procs"
 # Python version management
@@ -181,30 +209,52 @@ brew "pyenv"
 brew "pyenv-virtualenv"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Install Ruby, JRuby, Rubinius, TruffleRuby, or mruby
 brew "ruby-install"
+# Rust toolchain installer
+brew "rustup-init"
 # JVM-based programming language
 brew "scala"
+# Command-line interface for https://speedtest.net bandwidth tests
+brew "speedtest-cli"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Feature-rich console based todo list manager
+brew "task"
+# Shell wrapper for Taskwarrior commands
+brew "tasksh"
+# Terminal user interface for taskwarrior
+brew "taskwarrior-tui"
 # Simplified and community-driven man pages
 brew "tldr"
 # Terminal multiplexer
 brew "tmux"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
+# Full-screen terminal interface for Taskwarrior
+brew "vit"
 # Internet file retriever
 brew "wget"
+# Show the current WiFi network password
+brew "wifi-password"
+# Access X11 clipboards from the command-line
+brew "xclip"
+# Hackable, minimal, fast TUI file explorer
+brew "xplr"
 # Fast CSV toolkit written in Rust
 brew "xsv"
 # Linter for YAML files
 brew "yamllint"
 # JavaScript package manager
 brew "yarn"
+# Download YouTube videos from the command-line
+brew "youtube-dl", args: ["HEAD"], link: false
 # General-purpose lossless data-compression library
 brew "zlib"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Better and friendly vi(vim) mode plugin for ZSH
 brew "zsh-vi-mode"
 # The Clojure Programming Language
@@ -212,26 +262,39 @@ brew "clojure/tools/clojure"
 # Launcher for Coursier
 brew "coursier/formulas/coursier"
 brew "d12frosted/emacs-plus/emacs-plus@28"
+# Custom macOS statusbar with shell plugin, interaction and graph support
+brew "felixkratz/formulae/sketchybar"
 # Vault
 brew "hashicorp/tap/vault"
 # A simple terminal UI for git commands, written in Go
 brew "jesseduffield/lazygit/lazygit"
+# Simple hotkey-daemon for macOS.
+brew "koekeishiya/formulae/skhd"
+# A tiling window manager for macOS based on binary space partitioning.
+brew "koekeishiya/formulae/yabai"
 # ODBC Driver for Microsoft(R) SQL Server(R)
 brew "microsoft/mssql-release/msodbcsql18"
 # Sqlcmd and Bcp for Microsoft(R) SQL Server(R)
 brew "microsoft/mssql-release/mssql-tools18"
 # Installs the Bloop CLI for Bloop, a build server to compile, test and run Scala fast
 brew "scalacenter/bloop/bloop"
+# Find & fix known vulnerabilities in open-source dependencies
+brew "snyk/tap/snyk"
+brew "yakitrak/yakitrak/obs"
 # GPU-accelerated terminal emulator
 cask "alacritty"
-# Automatic tiling window manager similar to xmonad
-cask "amethyst"
+# Memory training application
+cask "anki"
+# Graphical configurator for Dygma Raise keyboards
+cask "bazecor"
 # Browser for SQLite databases
 cask "db-browser-for-sqlite"
 # Universal database tool and SQL client
 cask "dbeaver-community"
 # Utilities designed to make common development tasks easier
 cask "devtoys"
+# Keyboard-only application launcher
+cask "dmenu-mac"
 # Web browser
 cask "firefox"
 # Developer targeted fonts with a high number of glyphs
@@ -246,16 +309,24 @@ cask "gitkraken"
 cask "hammerspoon"
 # Keyboard customizer
 cask "karabiner-elements"
+# Open-source keystroke visualizer
+cask "keycastr"
+# Screen and video recording software
+cask "loom"
 # Minimal installer for conda
 cask "miniconda"
 # Open-source PostgreSQL GUI client
 cask "postbird"
 # Collaboration platform for API development
 cask "postman"
+# Keyboard-driven, vim-like browser based on PyQt5
+cask "qutebrowser"
 # Music streaming service
 cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Active space menu bar icon
 cask "whichspace"
 # Compatibility layer to run Windows applications
@@ -263,6 +334,7 @@ cask "wine-stable"
 mas "1Blocker", id: 1365531024
 mas "1Password 7", id: 1333542190
 mas "Apnea Trainer", id: 1216253186
+mas "Endel", id: 1346247457
 mas "Express Scribe Transcription", id: 1163880535
 mas "Freeze", id: 1046095491
 mas "GarageBand", id: 682658836
@@ -275,14 +347,16 @@ mas "Magnet", id: 441258766
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft Word", id: 462054704
 mas "MindNode", id: 1289197285
+mas "Noizio Lite", id: 1481029536
 mas "Notability", id: 360593530
 mas "Notion Web Clipper", id: 1559269364
 mas "Numbers", id: 409203825
 mas "OneDrive", id: 823766827
 mas "Pages", id: 409201541
-mas "PDF Reader Pro Lite", id: 919472673
+mas "PDF Reader", id: 615956269
 mas "PocketTube", id: 1533703891
 mas "Prime Video", id: 545519333
+mas "QuickShade", id: 931571202
 mas "Save to Raindrop.io", id: 1549370672
 mas "Skitch", id: 425955336
 mas "Slack", id: 803453959
@@ -292,6 +366,7 @@ mas "Time Out", id: 402592703
 mas "Toggl Track", id: 1291898086
 mas "Transcriptions", id: 911974149
 mas "Trello", id: 1278508951
+mas "Twingate", id: 1501592214
 vscode "aaron-bond.better-comments"
 vscode "alexcvzz.vscode-sqlite"
 vscode "alfnielsen.vsc-rename-files"
