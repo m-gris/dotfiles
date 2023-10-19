@@ -1,14 +1,18 @@
 tap "clojure/tools"
 tap "coursier/formulas"
 tap "d12frosted/emacs-plus"
+tap "felixkratz/formulae"
 tap "hashicorp/tap"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "jesseduffield/lazygit"
+tap "koekeishiya/formulae"
 tap "microsoft/git"
 tap "microsoft/mssql-release"
 tap "scalacenter/bloop"
+tap "snyk/tap"
+tap "yakitrak/yakitrak"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Library for command-line editing
