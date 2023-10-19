@@ -39,6 +39,8 @@ taskprojectfunction () {
 }
 alias tproj=taskprojectfunction
 
+# the var must be set for pass-import to work
+alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
 # SOURCE configs Aliases
 alias srcz='source ~/.zshrc' 
