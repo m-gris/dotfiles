@@ -11,6 +11,9 @@ export HOMEBREW_CASK_OPTS="--no-quarantine" # bypass / turn off macos Gatekeeper
 #  echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zshrc
 export PATH="/usr/local/sbin:$PATH"
 
+# NULCMD is the command used for redirection (heredoc, herewords)
+# when no command is specified. Defaults to `cat`
+export NULLCMD=bat
 
 ###########################################
 # SET VARIABLES - End
