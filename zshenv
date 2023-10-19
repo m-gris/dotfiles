@@ -1,4 +1,3 @@
-
 function exists() {
     # EXPLAINING THE FUNCTION
     # `command -v` is similar to `which` (but more "robust" apparently)
