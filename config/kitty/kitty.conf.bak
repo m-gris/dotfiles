@@ -819,7 +819,7 @@ window_padding_width 4
 #: Fade the text in inactive windows by the specified amount (a number
 #: between zero and one, with zero being fully faded).
 
-# hide_window_decorations no
+hide_window_decorations yes
 
 #: Hide the window decorations (title-bar and window borders) with
 #: yes. On macOS, titlebar-only can be used to only hide the titlebar.
@@ -1066,7 +1066,8 @@ window_padding_width 4
 
 #: The foreground and background colors.
 
-## background_opacity 0.9
+background_opacity 0.6
+fullscreen_opacity 0.6
 
 #: The opacity of the background. A number between zero and one, where
 #: one is opaque and zero is fully transparent. This will only work if
@@ -1101,7 +1102,7 @@ window_padding_width 4
 #: When background image is scaled, whether linear interpolation
 #: should be used.
 
-# dynamic_background_opacity no
+dynamic_background_opacity yes
 
 #: Allow changing of the background_opacity dynamically, using either
 #: keyboard shortcuts (increase_background_opacity and
@@ -1669,7 +1670,7 @@ window_padding_width 4
 #: The full list of actions that can be mapped to key presses is
 #: available here <https://sw.kovidgoyal.net/kitty/actions/>.
 
-# kitty_mod ctrl+shift
+kitty_mod ctrl+shift
 
 #: Special modifier key alias for default shortcuts. You can change
 #: the value of this option to alter all default shortcuts that use
@@ -2344,6 +2345,6 @@ window_padding_width 4
 
 
 # BEGIN_KITTY_THEME
-# Catppuccin-Latte
+# Dracula
 include current-theme.conf
 # END_KITTY_THEME
