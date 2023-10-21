@@ -11,7 +11,6 @@ end
 
 -- --- quick open applications
 hs.hotkey.bind({"alt", "ctrl"}, "2", open_app("Mail")) 
-hs.hotkey.bind({"alt", "ctrl"}, "3", open_app("LastPass")) 
 hs.hotkey.bind({"alt", "ctrl"}, "K", open_app("Slack")) 
 hs.hotkey.bind({"alt", "ctrl"}, "V", open_app("Visual Studio Code"))
 hs.hotkey.bind({"alt", "ctrl"}, "G", open_app("Google Chrome"))
