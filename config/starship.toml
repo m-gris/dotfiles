@@ -601,7 +601,7 @@ threshold = 33
 format = "RAM $symbol[$ram( | $swap)]($style) "
 style = "white bold dimmed"
 symbol = "🐏 "
-disabled = false
+disabled = true
 
 [meson]
 truncation_length = 4294967295
