@@ -2,7 +2,7 @@
 # Make Dir & CD into it
 function mkcd() { 
     # $@ => the arg passed to mkcd
-    mkdir -p "$@" && cd "$_";
+    mkdir -p "$@" && \cd "$_";
 }
 
 # GET KEYS FROM INI FILE (EX. gitconfig ...)
