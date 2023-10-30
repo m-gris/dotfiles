@@ -26,7 +26,8 @@ return require('packer').startup(function(use)
         requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
     }
    
-    -- OIL
+    -- OIL (to manipulate file systems like text 
+    -- i.e delete a file with 'dd' then save with :w
     use {
         'stevearc/oil.nvim',
         config = function() require('oil').setup() end
@@ -43,15 +44,26 @@ return require('packer').startup(function(use)
     -- FILE EXPLORATION: End
     -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-    -- COLOR-THEME: Catpuccin of course
-
-    -- MY CHOICE 
+    -- COLOR-THEMES
     use { "catppuccin/nvim", as = "catppuccin" }
+    use "rebelot/kanagawa.nvim"
+    -- Melange was designed with one idea in mind: 
+    -- Control flow should use warm colors 
+    -- and data should use cold colors; 
+    use "savq/melange-nvim"
+    use({ 'rose-pine/neovim', as = 'rose-pine' })
+    use "EdenEast/nightfox.nvim"
+    use "romainl/Apprentice"
 
+
+    -- PYTHON VIRTUAL ENV SWITCHER 
+    use 'AckslD/swenv.nvim'
 
     -- TREE-SITTER
     use {
         'nvim-treesitter/nvim-treesitter',
+        -- IF BREAKING CHANGE... ROLL BACK TO 
+        -- commit = f636d58c8d5780
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
@@ -122,7 +134,7 @@ return require('packer').startup(function(use)
     use 'vimpostor/vim-tpipeline'
     
     -- MARC ADD: easymotion for neovim
-    use {
+   use {
         'ggandor/leap.nvim',
         requires = { {'tpope/vim-repeat'} }
     }
@@ -148,7 +160,7 @@ return require('packer').startup(function(use)
     -- email in nimv !!! (requires soywood/himalaya cli installed)
     use "https://git.sr.ht/~soywod/himalaya-vim"
 
-    use "lukas-reineke/indent-blankline.nvim"
+    -- use "lukas-reineke/indent-blankline.nvim"
 
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
@@ -160,4 +172,72 @@ return require('packer').startup(function(use)
         'glacambre/firenvim',
         run = function() vim.fn['firenvim#install'](0) end 
     }
+
+    -- FOR MARKDOWN PREVIEW
+    --  COMMENTED => check if conflict with something else 
+    -- use({
+    --     "iamcco/markdown-preview.nvim",
+    --     run = function() vim.fn["mkdp#util#install"]() end,
+    -- })
+    -- use "masukomi/vim-markdown-folding"
+    
+    -- use {
+    --     -- displays a popup with possible keybindings 
+    --     -- of the command you started typing
+    --     "folke/which-key.nvim",
+    --     config = function()
+    --         vim.o.timeout = true
+    --         vim.o.timeoutlen = 2000
+    --         require("which-key").setup {
+    --             -- your configuration comes here
+    --             -- or leave it empty to use the default settings
+    --             -- refer to the configuration section below
+    --         }
+    --     end
+    -- }
+
+
+    -- use GX to open links (URLs, github, brewfiles etc...)
+    use {
+        "chrishrb/gx.nvim",
+        event = "BufEnter",
+        requires = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("gx").setup {
+                open_browser_app = "open",
+                open_browser_args = { "--background" },
+                handlers = {
+                    plugin = true,
+                    github = true,
+                    brewfile = true,
+                    package_json = true,
+                    search = true,
+                },
+                handler_options = {
+                    search_engine = "google",
+                },
+            }
+        end
+    }
+    
+    -- search text on the web 
+    -- :BrowserSearch
+    -- custom binding:  <learder>w
+   use 'voldikss/vim-browser-search'
+    
+
+   use {
+       'francoiscabrol/ranger.vim', 
+       requires = { {'rbgrouleff/bclose.vim'} }
+   }
+
+   use 'mhinz/vim-startify'
+
+    -- @@@@@@@@@@@ NOTEBOOK STYLE 
+    use {'jpalardy/vim-slime', ft = 'python'} use {'hanschen/vim-ipython-cell', ft = 'python'}
+
+
+    --- GLOW: for markdown rendering
+    use {"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
+
     end)

@@ -1,5 +1,7 @@
-require("marc")
+require("marc.options")
 require("marc.packer")
+require("marc.remap")
+
 
 require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
@@ -19,7 +21,8 @@ require("nvim-tree").setup()
 require('lualine').setup()
 
 -- for 'indentation blank lines' (i.e vertical gray lines to show indent lvls)
-require("ibl").setup()
+-- require("ibl").setup() -- to thick and white-ish...
+
 -- for easy motion like (and better) behavior 
 require('leap').add_default_mappings()
 require("toggleterm").setup()
@@ -109,4 +112,14 @@ require('gitsigns').setup {
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
+
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- FOR FLOATING WINDOW WITH PROJECT NAME
+-- Create a new highlight group
+vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", false)
+-- Update the winhl option to use this new highlight group
+-- vim.api.nvim_win_set_option(win, 'winhl', 'Normal:MyLargeFont')
+
+
 

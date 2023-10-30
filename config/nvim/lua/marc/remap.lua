@@ -24,8 +24,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- Keep the cursor in the middle of the screen
 -- when searching
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- vim.keymap.set("n", "n", "nzzzv")
+-- vim.keymap.set("n", "N", "Nzzzv")
 
 -- greatest remap ever
 -- paste on highlited text
@@ -161,3 +161,14 @@ local keymap = vim.api.nvim_set_keymap
 -- Stay in indent mode (otherwise must re-select after each indent) 
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
+
+
+-- RUN PYTHON SCRIPT
+vim.api.nvim_set_keymap('n', '<leader>rp',
+    ":update<CR>:exec '!python3' shellescape(@%, 1)<CR>", 
+    { noremap = true, silent = false })
+
+-- Search highlited text on google 
+vim.api.nvim_set_keymap('x', '<Leader>w', '<Plug>SearchVisual', { silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>w', '<Plug>SearchNormal', { silent = true })
+
