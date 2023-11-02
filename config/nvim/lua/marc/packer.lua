@@ -240,4 +240,4 @@ return require('packer').startup(function(use)
     --- GLOW: for markdown rendering
     use {"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
 
-    end)
+end)
