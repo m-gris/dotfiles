@@ -1,10 +1,12 @@
-
-# USE exa instead of ls
 alias ls='exa -laFh --git --group-directories-first --sort=name'
 alias exa='exa -laFh --git --group-directories-first --sort=name'
 
 # USE batman instead of man to have syntax highlighted manuals
 alias man=batman
+
+# macOS sed does not behave like GNU-sed found on other UNIX systems
+# let's get things "homogeneous" 
+alias sed=gsed 
 
 alias cd=z
 
@@ -17,8 +19,8 @@ alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' do
 alias ppath='<<<${(F)path}'
 
 # PYTHON VENVS
-alias mkv='python -m venv .venv'
 alias venv='source .venv/bin/activate'
+alias mkv='python -m venv .venv && venv'
 
 
 # Git Aliases
@@ -28,7 +30,7 @@ alias gc='git commit'
 alias gca='git commit --amend'
 alias gcane='git commit --amend --no-edit' 
 
-# SSH Aliases
+# Path aliases
 alias cdot='cd ~/.dotfiles' 
 alias cdodo='cd ~/DODOBIRD/DODO_CODE'
 
@@ -39,10 +41,22 @@ taskprojectfunction () {
 }
 alias tproj=taskprojectfunction
 
+
+
+# PASSWORD-STORE
 # the var must be set for pass-import to work
 alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
 # SOURCE configs Aliases
 alias zrc='source ~/.zshrc' 
 alias tconf='tmux source-file ~/.config/tmux/tmux.conf'
+
+alias deskhide='defaults write com.apple.finder CreateDesktop false; killall Finder'
+alias deskshow='defaults write com.apple.finder CreateDesktop false; killall Finder'
+
+alias v="nvim"
+
+# FUZZY STUFFS 
+#  TLDR / CHEATSHEETS
+alias tldrf="tldr --list | fzf --preview 'tldr {1} --color-always' --preview-window=right,70% | xargs tldr"
 
