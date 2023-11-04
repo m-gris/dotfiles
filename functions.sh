@@ -15,7 +15,18 @@ function docker_find_image() {
 }
 
 function fuzzy_dirs() {
-    (find . -type d -print | fzf)
+    (fd --type d | fzf)
+}
+
+
+function fuzzy_json() {
+    echo '' | fzf-tmux -p '80%' --print-query --preview "cat ${1} | jq {q}"
+}
+
+function my_select_col() {
+    # XSV SELECT COLUMNS
+    xsv headers $1 | awk '{print $2}' | fzf
+
 }
 
 function kitty_theme() {
