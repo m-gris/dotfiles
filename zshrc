@@ -26,7 +26,6 @@ export OPENAI_API_KEY=$(pass "api-keys/openai/for-chatblade-cli")
 
 plug "zap-zsh/supercharge"
 plug "zap-zsh/completions"
-plug "zsh-users/zsh-syntax-highlighting"
 plug "hlissner/zsh-autopair"
 
 plug "Aloxaf/fzf-tab"
@@ -42,7 +41,6 @@ plug "Aloxaf/fzf-tab"
 ###########################################
 # ALIASES 
 source ~/.dotfiles/aliases.sh
-alias ls='exa -laFh --git'
 ###########################################
 
 
@@ -54,29 +52,6 @@ source ~/.dotfiles/functions.sh
 
 
 
-###########################################
-# CUSTOMIZE PROMPTS - Start
-###########################################
-# Left prompt
-# %n => user
-# %m => host
-# %L prints SHLVL, i.e the shell level
-# %1~ => use tilde for home dir
-# %# => end the prompt with percent sign
-PROMPT=' 
-%1~ %L $
-'
-
-# right prompt 
-# %* => time of cmd execution
-RPROMPT='%*'
-
-# ABOVE OVERRIDEN BY STARSHIP
-eval "$(starship init zsh)"
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# CUSTOMIZE PROMPTS - End
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 
@@ -102,6 +77,12 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 ############################################
 ## Marc Add-ons
 ############################################
+
+
+# edit command line with vim (actual buffer not just motions)
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^x^x' edit-command-line
 
 # Enable extended pattern matching features in Zsh
 # Allows use of advanced globbing patterns like !(pattern) for negation
@@ -211,5 +192,46 @@ bashcompinit
 eval "$(register-python-argcomplete pipx)"
 
 
+# for tmuxp (tmux session manager in pyton )
+export DISABLE_AUTO_TITLE='true'
 
+
+# for broot (fuzzy / dynamic tree / file explorer)
+source /Users/marc/.config/broot/launcher/bash/br
+
+plug "zsh-users/zsh-syntax-highlighting"
+
+
+# to have fzf at the top 
+FZF_DEFAULT_OPTS=--reverse
+
+###########################################
+# CUSTOMIZE PROMPTS - Start
+###########################################
+# Left prompt
+# %n => user
+# %m => host
+# %L prints SHLVL, i.e the shell level
+# %1~ => use tilde for home dir
+# %# => end the prompt with percent sign
+PROMPT=' 
+%1~ %L $
+'
+
+# right prompt 
+# %* => time of cmd execution
+RPROMPT='%*'
+
+# ABOVE OVERRIDEN BY STARSHIP
+eval "$(starship init zsh)"
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# CUSTOMIZE PROMPTS - End
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+# AUTO VENV ACTIVATION 
+add-zsh-hook chpwd auto_activate_venv
+auto_activate_venv
 
