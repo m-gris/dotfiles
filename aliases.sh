@@ -1,22 +1,13 @@
 alias ls='exa -laFh --git --group-directories-first --sort=name'
 alias exa='exa -laFh --git --group-directories-first --sort=name'
-
-# USE batman instead of man to have syntax highlighted manuals
-alias man=batman
-
-# macOS sed does not behave like GNU-sed found on other UNIX systems
-# let's get things "homogeneous" 
-alias sed=gsed 
-
+alias man=batman # for syntax highlighted manuals
+alias sed=gsed # macOs sed != GNU-sed on other UNIX systems. Let's homogeneize
 alias cd=z
-
-# Create alias to dump the Brewfile
+alias youtube-dl="yt-dlp"  # better fork
 alias bbd='brew bundle dump --force --describe'
 alias sshdodo='ssh dodomac@192.168.100.60'
 alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
-
-# Create alias to "pretty print" the PATH (newline per path)
-alias ppath='<<<${(F)path}'
+alias ppath='<<<${(F)path}' # pretty print PATH variable
 
 # PYTHON VENVS
 alias venv='source .venv/bin/activate'
@@ -41,8 +32,6 @@ taskprojectfunction () {
 }
 alias tproj=taskprojectfunction
 
-
-
 # PASSWORD-STORE
 # the var must be set for pass-import to work
 alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
@@ -60,3 +49,7 @@ alias v="nvim"
 #  TLDR / CHEATSHEETS
 alias tldrf="tldr --list | fzf --preview 'tldr {1} --color-always' --preview-window=right,70% | xargs tldr"
 
+
+alias fd="fd -HI"   # for hidden files and "git-ignored" files to be included.
+
+alias XL='open -a "Microsoft Excel"'
