@@ -39,3 +39,11 @@ function kitty_all_theme() {
     kitty +kitten themes --reload-in=all $1
 }
 
+
+function auto_activate_venv() {
+  if [[ -d ".venv" ]]; then
+    source .venv/bin/activate
+  fi
+}
+
+
