@@ -14,6 +14,8 @@ export PATH="/usr/local/sbin:$PATH"
 # when no command is specified. Defaults to `cat`
 export NULLCMD=bat
 
+export OPENAI_API_KEY=$(pass "api-keys/openai/for-chatblade-cli")
+
 ###########################################
 # SET VARIABLES - End
 ###########################################
