@@ -87,3 +87,7 @@ uda.githubnamespace.label=Github Namespace
 uda.githubstate.type=string
 uda.githubstate.label=GitHub State
 # END Bugwarrior UDAs
+context.perso.read=-dodo -work
+context.now.read=+now
+context.now.write=+now
+context=now
