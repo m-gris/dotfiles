@@ -61,7 +61,7 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 
 -- ????
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+-- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 ---  FOR QUICKFIX navigation
 -- to checkout out (so good according to him
@@ -82,9 +82,9 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/marc/packer.lua<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
+-- vim.keymap.set("n", "<leader><leader>", function()
+--     vim.cmd("so")
+-- end)
 
 
 -- MARC
@@ -172,3 +172,33 @@ vim.api.nvim_set_keymap('n', '<leader>rp',
 vim.api.nvim_set_keymap('x', '<Leader>w', '<Plug>SearchVisual', { silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>w', '<Plug>SearchNormal', { silent = true })
 
+-- DASH DOCUMENTATION
+vim.api.nvim_set_keymap('n', '<Leader>d', ':Dash<cr>', {noremap = true})
+
+-- DEBUG shortcuts / bindings 
+vim.api.nvim_set_keymap("n", "<leader>dt", ":lua require('dapui').open()<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset = true})<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>dk", ":lua require('dapui').close()<CR>", {noremap = true})
+
+
+-- Unbind to default vim bindings (to allows use by tmux) 
+-- vim.api.nvim_del_keymap('n', '<C-[>')
+-- vim.api.nvim_del_keymap('n', '<C-]>')
+
+
+-- TOGGLETERM WITH APPS / CMD 
+vim.api.nvim_set_keymap('n', '<leader>sd', '<cmd>lua _NCDU_TOGGLE()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>lua _HTOP_TOGGLE()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sp', '<cmd>lua _PYTHON_TOGGLE()<CR>', { noremap = true, silent = true })
+
+
+-- TODO navigation  
+vim.keymap.set("n", "]t", function() require("todo-comments").jump_next() end, { desc = "Next todo comment" })
+vim.keymap.set("n", "[t", function() require("todo-comments").jump_prev() end, { desc = "Previous todo comment" })
+
+-- BUFFER NAVIGATION 
+vim.keymap.set("n", "<leader>bn", ":bnext<CR>")
+vim.keymap.set("n", "<leader>bp", ":bprevious<CR>")
+vim.keymap.set("n", "<leader>bd", ":bd<CR>")

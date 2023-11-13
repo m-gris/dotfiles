@@ -133,11 +133,6 @@ return require('packer').startup(function(use)
     -- Embed your vim statusline in the tmux statusline!
     use 'vimpostor/vim-tpipeline'
     
-    -- MARC ADD: easymotion for neovim
-   use {
-        'ggandor/leap.nvim',
-        requires = { {'tpope/vim-repeat'} }
-    }
 
     -- trigger: s   
     -- 'sab' will move the cursor to the first occurence of 'ab'
@@ -162,9 +157,7 @@ return require('packer').startup(function(use)
 
     -- use "lukas-reineke/indent-blankline.nvim"
 
-    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-        require("toggleterm").setup()
-    end}
+    use "akinsho/toggleterm.nvim"
     
     use "christoomey/vim-tmux-navigator"
 
@@ -231,6 +224,7 @@ return require('packer').startup(function(use)
        requires = { {'rbgrouleff/bclose.vim'} }
    }
 
+   -- STARTIFY => "PROJECT Management for vim" (recent files etc...)
    use 'mhinz/vim-startify'
 
     -- @@@@@@@@@@@ NOTEBOOK STYLE 
@@ -239,5 +233,93 @@ return require('packer').startup(function(use)
 
     --- GLOW: for markdown rendering
     use {"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
+    
+    -- DEBUGGER Setup (fomr DevopsToolbox)  
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use 'theHamsta/nvim-dap-virtual-text'
+    use 'mfussenegger/nvim-dap-python'
+    -- use 'LiadOz/nvim-dap-repl-highlights'
+
+
+    -- SURROUNDS (quotes, parens etc...)
+    use 'machakann/vim-sandwich'
+
+    -- TO CHANGE DIRS WITH TELESCOPE / FZF 
+    use 'zane-/cder.nvim'
+    use({
+        "princejoogie/dir-telescope.nvim",
+        -- telescope.nvim is a required dependency
+        requires = {"nvim-telescope/telescope.nvim"},
+        config = function()
+            require("dir-telescope").setup({
+                -- these are the default options set
+                hidden = true,
+                no_ignore = false,
+                show_preview = true,
+            })
+        end,
+    })
+
+    -- FOR CSV PREVIEW
+    -- use 'mechatroner/rainbow_csv'
+    -- use 'chrisbra/csv.vim' 
+    use 'VidocqH/data-viewer.nvim'
+    use 'dhruvasagar/vim-table-mode'
+    
+    -- FOR DOCUMENTATIONS
+    use 'rizzatti/dash.vim'
+    
+    -- SC-IM  (only for markdown in VIM for now, not csv etc...)
+    use 'mipmip/vim-scimark'
+
+
+    -- FOR CLOJURE 
+    use 'Olical/conjure'
+    -- Structural editing, optional
+    use 'guns/vim-sexp'
+    use 'tpope/vim-sexp-mappings-for-regular-people'
+    use 'tpope/vim-repeat'
+    
+
+    -- TODOS highlighs etc... 
+    use({
+        'folke/todo-comments.nvim',
+        requires = {'nvim-lua/plenary.nvim'}, 
+    })
+
+    use ({"folke/trouble.nvim",
+        requires = { "nvim-tree/nvim-web-devicons" },
+ })
+
+   -- AUTOSAVING 
+   use({
+	"Pocco81/auto-save.nvim",
+	config = function()
+		 require("auto-save").setup {
+			-- your config goes here
+			-- or just leave it empty :)
+		 }
+	end,
+})
+
+-- USEFULL Paired-mappings by T-Popehttps://github.com/ 
+use 'tpope/vim-unimpaired'
+
+-- -- 
+use 'folke/flash.nvim'
+-- -- easymotion for neovim
+-- use {
+    --     'ggandor/leap.nvim',
+    --     requires = { {'tpope/vim-repeat'} }
+    -- }
+
+
+    -- TRIM WHITESPACES 
+    use({
+        "cappyzawa/trim.nvim",
+        config = function()
+            require("trim").setup({})
+        end
+    })
 
 end)

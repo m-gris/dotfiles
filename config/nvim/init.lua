@@ -2,10 +2,25 @@ require("marc.options")
 require("marc.packer")
 require("marc.remap")
 
-
 require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
+require("telescope").load_extension('cder')
+require("telescope").load_extension("dir")
+
 require("oil").setup()
+
+require("todo-comments").setup()
+require("flash").setup( {
+    opts = {}, -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
+  }
+)
 
 -- DOING THIS BECAUSE WE GOT 
 -- Spawning the language server with cmd: lua-language-server failed. 
@@ -24,10 +39,12 @@ require('lualine').setup()
 -- require("ibl").setup() -- to thick and white-ish...
 
 -- for easy motion like (and better) behavior 
-require('leap').add_default_mappings()
-require("toggleterm").setup()
+-- require('leap').add_default_mappings()
 
-
+-- DEBUGGER
+require("dapui").setup()
+require('dap-python').setup('~/.pyenv/versions/debugpy/bin/python')
+-- require('nvim-dap-repl-highlights').setup()
 
 require('gitsigns').setup {
     signs = {  
@@ -114,6 +131,7 @@ require('gitsigns').setup {
 }
 
 
+
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 -- FOR FLOATING WINDOW WITH PROJECT NAME
 -- Create a new highlight group
@@ -121,5 +139,11 @@ vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", 
 -- Update the winhl option to use this new highlight group
 -- vim.api.nvim_win_set_option(win, 'winhl', 'Normal:MyLargeFont')
 
-
+-- LOCAL LEADER 
+-- the localleader is a variable that provides a
+-- way to define custom key mappings in a buffer-local
+-- context. It allows users to create mappings that are
+-- specific to a particular filetype or buffer.
+-- ex: we could have   ,r     to run python files...
+vim.g.maplocalleader = ','
 

@@ -150,22 +150,23 @@ vim.keymap.set('n', '<leader>a', ':keepjumps normal! ggVG<cr>')
 -- vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
+vim.cmd("colorscheme kanagawa")
 
 -- @@@@ DYNAMIC - PER LANGUAGE COLORSCHEMES @@@@
+-- local cmd_str = [[
+--   autocmd BufEnter * if &ft == 'lua'     | colorscheme duskfox      | 
+--               \ elseif &ft == 'ocaml'    | colorscheme melange      | 
+--               \ elseif &ft == 'python'   | colorscheme catppuccin   | 
+--               \ elseif &ft == 'markdown' | colorscheme apprentice   | 
+--               \ else                     | colorscheme kanagawa     | 
+--               \ endif
+-- ]]
+--
+-- vim.cmd[[ augroup MyColors ]]
+-- vim.cmd[[   autocmd! ]]
+-- vim.cmd("   " .. cmd_str)
+-- vim.cmd[[ augroup END ]]
 
-local cmd_str = [[
-  autocmd BufEnter * if &ft == 'lua'     | colorscheme duskfox      | 
-              \ elseif &ft == 'ocaml'    | colorscheme melange      | 
-              \ elseif &ft == 'python'   | colorscheme catppuccin   | 
-              \ elseif &ft == 'markdown' | colorscheme apprentice   | 
-              \ else                     | colorscheme kanagawa     | 
-              \ endif
-]]
-
-vim.cmd[[ augroup MyColors ]]
-vim.cmd[[   autocmd! ]]
-vim.cmd("   " .. cmd_str)
-vim.cmd[[ augroup END ]]
 
 
 
@@ -278,7 +279,8 @@ vim.cmd[[hi Normal guibg=NONE ctermbg=NONE]]
 
 vim.o.timeoutlen = 2000
 
-
+-- for CSV plugin (vim shall detect csv and use the plugin automatically)
+vim.cmd('filetype plugin on')   
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 --------- NOTEBOOK / IPYTHON CELLS -----------
 

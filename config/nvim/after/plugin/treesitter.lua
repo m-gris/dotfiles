@@ -4,9 +4,20 @@ require'nvim-treesitter.configs'.setup {
 			-- below are Marc' adds
 			-- "help",  does not work... 
 			"python", 
+            "comment", 
 			"yaml", 
 			"toml", 
 			"sql",
+            'cpp', 
+            'go', 
+            'rust', 
+            'tsx', 
+            'typescript', 
+            'markdown', 
+            'bash', 
+            'html', 
+            'css', 
+            'clojure'
    },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
