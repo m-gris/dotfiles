@@ -10,6 +10,7 @@ require("telescope").load_extension("dir")
 require("oil").setup()
 
 require("todo-comments").setup()
+
 require("flash").setup( {
     opts = {}, -- stylua: ignore
   keys = {
@@ -22,8 +23,8 @@ require("flash").setup( {
   }
 )
 
--- DOING THIS BECAUSE WE GOT 
--- Spawning the language server with cmd: lua-language-server failed. 
+-- DOING THIS BECAUSE WE GOT
+-- Spawning the language server with cmd: lua-language-server failed.
 -- The language server is not either installed, missing the path or not executable.
 -- source: https://github.com/williamboman/nvim-lsp-installer/discussions/509
 require("mason").setup({
@@ -38,7 +39,7 @@ require('lualine').setup()
 -- for 'indentation blank lines' (i.e vertical gray lines to show indent lvls)
 -- require("ibl").setup() -- to thick and white-ish...
 
--- for easy motion like (and better) behavior 
+-- for easy motion like (and better) behavior
 -- require('leap').add_default_mappings()
 
 -- DEBUGGER
@@ -47,7 +48,7 @@ require('dap-python').setup('~/.pyenv/versions/debugpy/bin/python')
 -- require('nvim-dap-repl-highlights').setup()
 
 require('gitsigns').setup {
-    signs = {  
+    signs = {
         add          = { text = '+' },
         change       = { text = '^' },
         delete       = { text = 'x' },
@@ -139,11 +140,10 @@ vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", 
 -- Update the winhl option to use this new highlight group
 -- vim.api.nvim_win_set_option(win, 'winhl', 'Normal:MyLargeFont')
 
--- LOCAL LEADER 
+-- LOCAL LEADER
 -- the localleader is a variable that provides a
 -- way to define custom key mappings in a buffer-local
 -- context. It allows users to create mappings that are
 -- specific to a particular filetype or buffer.
 -- ex: we could have   ,r     to run python files...
 vim.g.maplocalleader = ','
-
