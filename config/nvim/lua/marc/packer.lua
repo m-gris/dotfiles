@@ -17,7 +17,7 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    -- TELESCOPE SORTER 
+    -- TELESCOPE SORTER
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
     -- TELESCOPE FILE BROWER (to be able to search and land in dirs)
@@ -25,8 +25,8 @@ return require('packer').startup(function(use)
         "nvim-telescope/telescope-file-browser.nvim",
         requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
     }
-   
-    -- OIL (to manipulate file systems like text 
+
+    -- OIL (to manipulate file systems like text
     -- i.e delete a file with 'dd' then save with :w
     use {
         'stevearc/oil.nvim',
@@ -38,8 +38,8 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-tree/nvim-web-devicons', -- optional
         },
-    }   
-    
+    }
+
     -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     -- FILE EXPLORATION: End
     -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -47,22 +47,22 @@ return require('packer').startup(function(use)
     -- COLOR-THEMES
     use { "catppuccin/nvim", as = "catppuccin" }
     use "rebelot/kanagawa.nvim"
-    -- Melange was designed with one idea in mind: 
-    -- Control flow should use warm colors 
-    -- and data should use cold colors; 
+    -- Melange was designed with one idea in mind:
+    -- Control flow should use warm colors
+    -- and data should use cold colors;
     use "savq/melange-nvim"
     use({ 'rose-pine/neovim', as = 'rose-pine' })
     use "EdenEast/nightfox.nvim"
     use "romainl/Apprentice"
 
 
-    -- PYTHON VIRTUAL ENV SWITCHER 
+    -- PYTHON VIRTUAL ENV SWITCHER
     use 'AckslD/swenv.nvim'
 
     -- TREE-SITTER
     use {
         'nvim-treesitter/nvim-treesitter',
-        -- IF BREAKING CHANGE... ROLL BACK TO 
+        -- IF BREAKING CHANGE... ROLL BACK TO
         -- commit = f636d58c8d5780
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
@@ -70,7 +70,7 @@ return require('packer').startup(function(use)
         end,}
 
     -- TREE-SITTER PLAYGROUND
-    -- Gives access to the entire AST of the code 
+    -- Gives access to the entire AST of the code
     -- with ':TSPlaygroundToggle
     use('nvim-treesitter/playground')
 
@@ -108,12 +108,12 @@ return require('packer').startup(function(use)
         }
     }
 
-    -- MARC ADD: for databases etc... 
+    -- MARC ADD: for databases etc...
     -- Ass seen on: https://www.youtube.com/watch?v=NhTPVXP8n7w
     use {'tpope/vim-dadbod'}
     use {'kristijanhusak/vim-dadbod-ui'}
     use {'kristijanhusak/vim-dadbod-completion'}
-   
+
     use {'tpope/vim-commentary'}
 
 
@@ -123,8 +123,8 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     }
-    
-    
+
+
     -- STATUS BAR FOR NVIM
     use {
         'nvim-lualine/lualine.nvim',
@@ -132,9 +132,9 @@ return require('packer').startup(function(use)
     }
     -- Embed your vim statusline in the tmux statusline!
     use 'vimpostor/vim-tpipeline'
-    
 
-    -- trigger: s   
+
+    -- trigger: s
     -- 'sab' will move the cursor to the first occurence of 'ab'
     -- use 'justinmk/vim-sneak'
 
@@ -158,24 +158,24 @@ return require('packer').startup(function(use)
     -- use "lukas-reineke/indent-blankline.nvim"
 
     use "akinsho/toggleterm.nvim"
-    
+
     use "christoomey/vim-tmux-navigator"
 
     use {
         'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end 
+        run = function() vim.fn['firenvim#install'](0) end
     }
 
     -- FOR MARKDOWN PREVIEW
-    --  COMMENTED => check if conflict with something else 
+    --  COMMENTED => check if conflict with something else
     -- use({
     --     "iamcco/markdown-preview.nvim",
     --     run = function() vim.fn["mkdp#util#install"]() end,
     -- })
     -- use "masukomi/vim-markdown-folding"
-    
+
     -- use {
-    --     -- displays a popup with possible keybindings 
+    --     -- displays a popup with possible keybindings
     --     -- of the command you started typing
     --     "folke/which-key.nvim",
     --     config = function()
@@ -212,29 +212,29 @@ return require('packer').startup(function(use)
             }
         end
     }
-    
-    -- search text on the web 
+
+    -- search text on the web
     -- :BrowserSearch
     -- custom binding:  <learder>w
    use 'voldikss/vim-browser-search'
-    
+
 
    use {
-       'francoiscabrol/ranger.vim', 
+       'francoiscabrol/ranger.vim',
        requires = { {'rbgrouleff/bclose.vim'} }
    }
 
    -- STARTIFY => "PROJECT Management for vim" (recent files etc...)
    use 'mhinz/vim-startify'
 
-    -- @@@@@@@@@@@ NOTEBOOK STYLE 
+    -- @@@@@@@@@@@ NOTEBOOK STYLE
     use {'jpalardy/vim-slime', ft = 'python'} use {'hanschen/vim-ipython-cell', ft = 'python'}
 
 
     --- GLOW: for markdown rendering
     use {"ellisonleao/glow.nvim", config = function() require("glow").setup() end}
-    
-    -- DEBUGGER Setup (fomr DevopsToolbox)  
+
+    -- DEBUGGER Setup (fomr DevopsToolbox)
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
     use 'theHamsta/nvim-dap-virtual-text'
     use 'mfussenegger/nvim-dap-python'
@@ -244,7 +244,7 @@ return require('packer').startup(function(use)
     -- SURROUNDS (quotes, parens etc...)
     use 'machakann/vim-sandwich'
 
-    -- TO CHANGE DIRS WITH TELESCOPE / FZF 
+    -- TO CHANGE DIRS WITH TELESCOPE / FZF
     use 'zane-/cder.nvim'
     use({
         "princejoogie/dir-telescope.nvim",
@@ -262,36 +262,36 @@ return require('packer').startup(function(use)
 
     -- FOR CSV PREVIEW
     -- use 'mechatroner/rainbow_csv'
-    -- use 'chrisbra/csv.vim' 
+    -- use 'chrisbra/csv.vim'
     use 'VidocqH/data-viewer.nvim'
     use 'dhruvasagar/vim-table-mode'
-    
+
     -- FOR DOCUMENTATIONS
     use 'rizzatti/dash.vim'
-    
+
     -- SC-IM  (only for markdown in VIM for now, not csv etc...)
     use 'mipmip/vim-scimark'
 
 
-    -- FOR CLOJURE 
+    -- FOR CLOJURE
     use 'Olical/conjure'
     -- Structural editing, optional
     use 'guns/vim-sexp'
     use 'tpope/vim-sexp-mappings-for-regular-people'
     use 'tpope/vim-repeat'
-    
 
-    -- TODOS highlighs etc... 
+
+    -- TODOS highlighs etc...
     use({
         'folke/todo-comments.nvim',
-        requires = {'nvim-lua/plenary.nvim'}, 
+        requires = {'nvim-lua/plenary.nvim'},
     })
 
     use ({"folke/trouble.nvim",
         requires = { "nvim-tree/nvim-web-devicons" },
  })
 
-   -- AUTOSAVING 
+   -- AUTOSAVING
    use({
 	"Pocco81/auto-save.nvim",
 	config = function()
@@ -302,10 +302,10 @@ return require('packer').startup(function(use)
 	end,
 })
 
--- USEFULL Paired-mappings by T-Popehttps://github.com/ 
+-- USEFULL Paired-mappings by T-Popehttps://github.com/
 use 'tpope/vim-unimpaired'
 
--- -- 
+-- --
 use 'folke/flash.nvim'
 -- -- easymotion for neovim
 -- use {
@@ -313,13 +313,5 @@ use 'folke/flash.nvim'
     --     requires = { {'tpope/vim-repeat'} }
     -- }
 
-
-    -- TRIM WHITESPACES 
-    use({
-        "cappyzawa/trim.nvim",
-        config = function()
-            require("trim").setup({})
-        end
-    })
 
 end)
