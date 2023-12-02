@@ -8,6 +8,8 @@ alias bbd='brew bundle dump --force --describe'
 alias sshdodo='ssh dodomac@192.168.100.60'
 alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
 alias ppath='<<<${(F)path}' # pretty print PATH variable
+alias ssh_vm2_in_dodomac='ssh -t dodomac@172.36.0.5 "ssh dodolinux2@192.168.64.4"'
+alias ssh_dodomac='ssh -t dodomac@172.36.0.5'
 
 # PYTHON VENVS
 alias venv='source .venv/bin/activate'
