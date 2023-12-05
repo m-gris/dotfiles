@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 toggleterm.setup({
-	size = 20,
+	size = 10,
 	open_mapping = [[<c-\>]],
 	hide_numbers = true,
 	shade_filetypes = {},
@@ -45,7 +45,11 @@ local Terminal = require("toggleterm.terminal").Terminal
 local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
 local htop = Terminal:new({ cmd = "htop", hidden = true })
 local python = Terminal:new({ cmd = "ipython", hidden = true })
+local ranger = Terminal:new({ cmd = "ranger", hidden = true })
 
+function _RANGER_TOGGLE()
+	ranger:toggle()
+end
 function _NCDU_TOGGLE()
 	ncdu:toggle()
 end

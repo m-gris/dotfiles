@@ -219,13 +219,29 @@ return require('packer').startup(function(use)
    use 'voldikss/vim-browser-search'
 
 
+   -- @@@ RANGER PLUGINS - Start
    use {
        'francoiscabrol/ranger.vim',
        requires = { {'rbgrouleff/bclose.vim'} }
    }
 
+   use "kevinhwang91/rnvimr"
+   -- @@@ RANGER PLUGINS - End
+
+   -- @@@@@ PROJECT MANAGEMENT @@@@@@@@@@@@@@@
    -- STARTIFY => "PROJECT Management for vim" (recent files etc...)
-   use 'mhinz/vim-startify'
+   -- use 'mhinz/vim-startify'
+    use {
+      "ahmedkhalf/project.nvim",
+      config = function()
+        require("project_nvim").setup {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        }
+      end
+}
+   -- #######################################
 
     -- @@@@@@@@@@@ NOTEBOOK STYLE
     use {'jpalardy/vim-slime', ft = 'python'} use {'hanschen/vim-ipython-cell', ft = 'python'}
@@ -302,16 +318,87 @@ return require('packer').startup(function(use)
 	end,
 })
 
--- USEFULL Paired-mappings by T-Popehttps://github.com/
-use 'tpope/vim-unimpaired'
+    -- USEFULL Paired-mappings by T-Popehttps://github.com/
+    use 'tpope/vim-unimpaired'
 
--- --
-use 'folke/flash.nvim'
--- -- easymotion for neovim
--- use {
-    --     'ggandor/leap.nvim',
-    --     requires = { {'tpope/vim-repeat'} }
+    -- --
+    use 'folke/flash.nvim'
+    -- -- easymotion for neovim
+    -- use {
+        --     'ggandor/leap.nvim',
+        --     requires = { {'tpope/vim-repeat'} }
+        -- }
+
+    -- TO VIEW DEFINITION (HOVER...)
+    use({
+        "dnlhc/glance.nvim",
+        config = function()
+            require('glance').setup({
+                -- your configuration
+            })
+        end,
+    })
+    
+    -- @@@@@@@ ZEN / FOCUS MODE PLUGINS - Start @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    use 'junegunn/goyo.vim'
+    use 'pocco81/true-zen.nvim'
+    use 'folke/zen-mode.nvim'
+    -- use {"shortcuts/no-neck-pain.nvim", tag = "*" }
+    -- @@@@@@@ ZEN / FOCUS MODE PLUGINS - End @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+    
+    -- @@@@@@ DIFFING - Start @@@@@@@@@@@@@@@@@@
+    -- 1 ) To compare files "in general"
+    use({
+    "jemag/telescope-diff.nvim",
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+    }
+  })
+  -- 2) for GIT in particular
+  use "sindrets/diffview.nvim"
+
+
+  -- 3) for directories 
+  use "will133/vim-dirdiff"
+    -- @@@@@@ DIFFING - End @@@@@@@@@@@@@@@@@@
+    
+
+    -- @@@@@ FOLDS @@@@@@@@@@
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
+    -- use {
+    --     "chrisgrieser/nvim-origami",
+    --     config = function () 
+    --         require("origami").setup ({}) -- setup call needed
+    --     end,
     -- }
+
+    use { 'anuvyklack/fold-preview.nvim',
+    requires = 'anuvyklack/keymap-amend.nvim',
+    config = function()
+        require('fold-preview').setup({
+            auto=1000
+            -- Your configuration goes here.
+        })
+    end
+}   
+    -- ######################
+
+    -- @@@@ YAML @@@@
+
+    use { "dapc11/telescope-yaml.nvim", 
+         dependencies = { "nvim-telescope/telescope.nvim" } 
+     }
+    
+    use {"cuducos/yaml.nvim",}
+        -- ft = { "yaml" }, -- optional
+        -- requires = {
+        --     "nvim-treesitter/nvim-treesitter",
+        --     "nvim-telescope/telescope.nvim" -- optional
+        -- }
+    -- } 
+
 
 
 end)

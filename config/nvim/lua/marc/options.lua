@@ -10,6 +10,7 @@ vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 --------------------------------------
 -- visual line helpers 
 vim.opt.cursorline = true -- highlight the current line
+vim.opt.cursorcolumn = true -- highlight the current line
 vim.opt.showtabline = 2 -- always show tabs
 --------------------------------------
 
@@ -251,9 +252,12 @@ vim.cmd('syntax on')
 vim.g.vimwiki_list = {{path = '~/Documents/Obsidian/obsidian-test', syntax = 'markdown', ext = '.md'}}
 -- !!!!!! FOR VIMWIKI
 
--- FOLDER FILES BY DEFAULT
--- vim.opt.foldlevel = 1
--- vim.opt.foldmethod = 'indent'
+-- @@@@ FOLDS @@@@@@@@@@@@@@@@@@@
+vim.opt.foldcolumn="1"
+vim.opt.foldmethod = 'syntax'
+vim.opt.foldlevel = 1 -- OPEN FILE WITH CLOSE FOLDS (AS A REMINDER TO USE FOLDS)
+
+-- ##############################
 
 -- For OCAML 
 vim.opt.rtp:prepend("~/.opam/default/share/ocp-indent/vim")
@@ -275,7 +279,9 @@ vim.cmd("autocmd VimEnter * DiagnosticToggle")
 
 --- trying to make neovim "transparent", by inheriting Kitty's settings
 vim.cmd[[hi Normal guibg=NONE ctermbg=NONE]]
-
+--- but make pop-up windows opaque 
+-- vim.opt.pumblend=0
+-- vim.opt.winblend=100
 
 vim.o.timeoutlen = 2000
 

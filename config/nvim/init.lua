@@ -6,8 +6,14 @@ require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension('cder')
 require("telescope").load_extension("dir")
+require("telescope").load_extension("diff")
+require("telescope").load_extension("telescope-yaml")
+require('telescope').load_extension('projects')
 
-require("oil").setup()
+require("yaml_nvim").setup()
+
+--
+-- require("oil").setup()
 
 require("todo-comments").setup()
 
@@ -34,7 +40,6 @@ require("mason").setup({
 -- empty setup using defaults
 require("nvim-tree").setup()
 
-require('lualine').setup()
 
 -- for 'indentation blank lines' (i.e vertical gray lines to show indent lvls)
 -- require("ibl").setup() -- to thick and white-ish...
@@ -136,7 +141,7 @@ require('gitsigns').setup {
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 -- FOR FLOATING WINDOW WITH PROJECT NAME
 -- Create a new highlight group
-vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", false)
+-- vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", false)
 -- Update the winhl option to use this new highlight group
 -- vim.api.nvim_win_set_option(win, 'winhl', 'Normal:MyLargeFont')
 
@@ -146,4 +151,4 @@ vim.api.nvim_exec("highlight MyLargeFont guifg=#ffffff guibg=#333333 gui=bold", 
 -- context. It allows users to create mappings that are
 -- specific to a particular filetype or buffer.
 -- ex: we could have   ,r     to run python files...
-vim.g.maplocalleader = ','
+-- vim.g.maplocalleader = ','

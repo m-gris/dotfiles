@@ -130,11 +130,18 @@ vim.api.nvim_set_keymap('n', '<leader>tr',
 -- vim.keymap.set({mode='n', lhs='<leader>gg', rhs=':LazyGit<CR>', options={silent=true, noremap=true}})
 vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
 
+-- Toggle Rnvimr with 'leader + r'
+vim.api.nvim_set_keymap('n', '<leader>rr', ':RnvimrToggle<CR>', { noremap = true, silent = true })
+
+-- Resize Rnvimr with 'leader + R'
+vim.api.nvim_set_keymap('n', '<leader>R', ':RnvimrResize<CR>', { noremap = true, silent = true })
+
+
 
 -- Vinegar like behavior for oil plugin
 -- Pressing dash while in normal mode will open the dir where the file is.
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
+-- vim.keymap.set("n", "-", "<CMD>NvimTreeFindFile<CR>", { desc = "Open parent directory" })
 
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -192,6 +199,7 @@ vim.api.nvim_set_keymap("n", "<leader>dk", ":lua require('dapui').close()<CR>", 
 vim.api.nvim_set_keymap('n', '<leader>sd', '<cmd>lua _NCDU_TOGGLE()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>lua _HTOP_TOGGLE()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sp', '<cmd>lua _PYTHON_TOGGLE()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>rr', '<cmd>lua _RANGER_TOGGLE()<CR>', { noremap = true, silent = true })
 
 
 -- TODO navigation  
@@ -199,6 +207,12 @@ vim.keymap.set("n", "]t", function() require("todo-comments").jump_next() end, {
 vim.keymap.set("n", "[t", function() require("todo-comments").jump_prev() end, { desc = "Previous todo comment" })
 
 -- BUFFER NAVIGATION 
-vim.keymap.set("n", "<leader>bn", ":bnext<CR>")
-vim.keymap.set("n", "<leader>bp", ":bprevious<CR>")
-vim.keymap.set("n", "<leader>bd", ":bd<CR>")
+vim.keymap.set("n", "<leader>n", ":bnext<CR>")
+vim.keymap.set("n", "<leader>p", ":bprevious<CR>")
+vim.keymap.set("n", "<leader>db", ":bd<CR>")
+
+-- GLANCE (hover etc...) 
+vim.keymap.set('n', '<leader>gD', '<CMD>Glance definitions<CR>')
+vim.keymap.set('n', '<leader>gR', '<CMD>Glance references<CR>')
+vim.keymap.set('n', '<leader>gY', '<CMD>Glance type_definitions<CR>')
+vim.keymap.set('n', '<leader>gM', '<CMD>Glance implementations<CR>')

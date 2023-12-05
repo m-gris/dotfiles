@@ -9,10 +9,11 @@ end, {})
 
 -- GPT suggestion:   to search only dirs
 vim.keymap.set('n', '<leader>fd', function()
-  builtin.find_files({ find_command = {'fd', '--type', 'd'} })
+  builtin.find_files({ find_command = {'fd', '--type', 'd', '--hidden'} })
 end, {})
 
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+--
 -- TO QUICKLY ACCESS VIM DOCUMENTATION !!!!
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 --
