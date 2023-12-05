@@ -2,7 +2,7 @@ alias ls='exa -laFh --git --group-directories-first --sort=name'
 alias exa='exa -laFh --git --group-directories-first --sort=name'
 alias man=batman # for syntax highlighted manuals
 alias sed=gsed # macOs sed != GNU-sed on other UNIX systems. Let's homogeneize
-alias cd=z
+alias cd=zcd
 alias youtube-dl="yt-dlp"  # better fork
 alias bbd='brew bundle dump --force --describe'
 alias sshdodo='ssh dodomac@192.168.100.60'

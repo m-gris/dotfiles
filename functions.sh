@@ -65,3 +65,24 @@ auto_change_background_color() {
     fi
 }
 
+function zcd() {
+    if [[ $1 == -* ]] || [[ -z $1 ]]; then
+        # Use zoxide for flags or no arguments
+        zoxide "$@"
+    elif [[ -d $1 ]] || [[ $1 == /* ]] || [[ $1 == ~* ]]; then
+        # Fallback to builtin cd for absolute, home, and existing paths
+        builtin cd "$@"
+    else
+        # Use zoxide query for other cases, fallback to builtin cd if no result
+        local dir=$(zoxide query "$@" 2> /dev/null)
+        if [[ -n $dir ]]; then
+            builtin cd "$dir"
+        else
+            echo "zoxide: no match found for $@"
+        fi
+    fi
+}
+
+
+
+
