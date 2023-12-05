@@ -128,7 +128,7 @@ min_time = 2000
 format = "took [$duration]($style) "
 style = "yellow bold"
 show_milliseconds = false
-disabled = false
+disabled = true
 show_notifications = false
 min_time_to_notify = 45000
 
@@ -1031,7 +1031,7 @@ detect_folders = [".terraform"]
 format = "at [$time]($style) "
 style = "bold yellow"
 use_12hr = false
-disabled = false
+disabled = true
 utc_time_offset = "local"
 time_range = "-"
 
@@ -1071,6 +1071,7 @@ detect_files = [
     ".vpkg-lock.json",
 ]
 detect_folders = []
+
 
 [zig]
 format = "via [$symbol($version )]($style)"
