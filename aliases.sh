@@ -5,12 +5,19 @@ alias sed=gsed # macOs sed != GNU-sed on other UNIX systems. Let's homogeneize
 alias cd=zcd
 alias youtube-dl="yt-dlp"  # better fork
 alias bbd='brew bundle dump --force --describe'
-alias sshdodo='ssh dodomac@192.168.100.60'
-alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
 alias ppath='<<<${(F)path}' # pretty print PATH variable
-alias ssh_vm2_in_dodomac='ssh -t dodomac@172.36.0.5 "ssh dodolinux2@192.168.64.4"'
-alias ssh_dodomac='ssh -t dodomac@172.36.0.5'
 
+# DODO STUFFS
+alias dodo_vm_ssh='ssh -t dodomac@172.36.0.5 "ssh dodolinux2@192.168.64.4"'
+alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
+alias sshdodo='ssh dodomac@192.168.100.60'
+alias dodo_mac_ssh='ssh -t dodomac@172.36.0.5'
+alias dodo_airflow="open http://192.168.64.4:8081/"
+alias dodo_gpt="http://172.36.0.4:3080/"
+alias cdomac="cd /Users/marc/Library/Group Containers/G69SCX94XU.duck/Library/Application Support/duck/Volumes.noindex/dodo-pipelines/pipelines"
+alias sudocker="sudo docker"
+
+#
 # PYTHON VENVS
 alias venv='source .venv/bin/activate'
 alias mkv='python -m venv .venv && venv'
