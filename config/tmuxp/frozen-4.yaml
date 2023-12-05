@@ -1,0 +1,100 @@
+session_name: MY-SESSION
+windows:
+- focus: 'true'
+  layout: 242c,240x73,0,0{69x73,0,0,57,170x73,70,0[170x47,70,0,51,170x25,70,48{90x25,70,48,55,79x25,161,48,58}]}
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /Users/marc/.dotfiles/config/tmuxp
+    - Python
+  - shell_command:
+    - cd /Users/marc/DODOBIRD/DODO_CODE/kedro-etl
+    - nvim
+  - shell_command:
+    - cd /Users/marc/DODOBIRD/DODO_CODE/kedro-etl
+    - zsh
+  - shell_command:
+    - cd /Users/marc/DODOBIRD/DODO_CODE/kedro-etl
+    - zsh
+  window_name: WORK - Data Validation
+- layout: f1af,240x73,0,0[240x55,0,0,4,240x17,0,56{107x17,0,56,28,132x17,108,56,29}]
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  - zsh
+  - zsh
+  start_directory: /Users/marc/.dotfiles
+  window_name: $$$$$$$$$$$$$$$$   DOTFILES  $$$$$$$$$$$$$$$$$$$$
+- layout: 20e4,272x82,0,0{179x82,0,0,5,92x82,180,0,50}
+  options: {}
+  panes:
+  - Python
+  - focus: 'true'
+    shell_command: Python
+  start_directory: /Users/marc/DODOBIRD/DODO_CODE/kedro-etl
+  window_name: TASK WARRIOR
+- layout: bbc3,139x43,0,0,6
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/marc/dummy
+  window_name: NEOVIM FROM SCRATCH
+- layout: 14d8,139x43,0,0[139x25,0,0,7,139x17,0,26{63x17,0,26,8,75x17,64,26,9}]
+  options: {}
+  panes:
+  - shell_command:
+    - cd /Users/marc/DODOBIRD/DODO_CODE/geoparsing
+    - nvim
+  - focus: 'true'
+    shell_command:
+    - cd /Users/marc/DODOBIRD/DODO_CODE/geoparsing/es-geonames
+    - zsh
+  - shell_command:
+    - cd /
+    - zsh
+  window_name: GEOPARSING - morceai & geonames elastic search
+- layout: 5e0f,139x43,0,0,10
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/marc
+  window_name: NEOMUTT Emails
+- layout: 5e10,139x43,0,0,11
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/marc/Documents/DATA_PROG/SC-IM/tutorial
+  window_name: OLLAMA.AI
+- layout: 5e11,139x43,0,0,12
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/marc
+  window_name: BOOT DOT DEV
+- layout: 5ee2,272x82,0,0,13
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/marc/DODOBIRD/DODO_CODE/kedro-etl/data/01_raw
+  window_name: VISIDATA
+- layout: e39c,240x73,0,0[240x40,0,0,14,240x32,0,41{113x32,0,41,15,126x32,114,41,16}]
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /Users/marc
+    - zsh
+  - shell_command:
+    - cd /Users/marc
+    - zsh
+  - shell_command:
+    - cd /Users/marc/.dotfiles
+    - zsh
+  window_name: tmuxp
