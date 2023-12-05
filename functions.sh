@@ -59,3 +59,9 @@ function rebel-clj() {
 function rebel-cljs() {
   clojure -Sdeps "{:deps {com.bhauman/figwheel-main {:mvn/version \"0.1.7\"} com.bhauman/rebel-readline-cljs {:mvn/version \"0.1.4\"} $@}}" -m figwheel.main
 }
+auto_change_background_color() {
+    if [[ -f "$PWD/.background_color.sh" ]]; then
+        source "$PWD/.background_color.sh"
+    fi
+}
+
