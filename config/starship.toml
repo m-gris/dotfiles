@@ -39,7 +39,7 @@ charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
 unknown_symbol = "󰁽 "
 empty_symbol = "󰂎 "
-disabled = false
+disabled = true
 format = "[$symbol$percentage]($style) "
 
 [[battery.display]]
@@ -51,7 +51,7 @@ format = "with [$symbol($version )]($style)"
 version_format = "v${raw}"
 symbol = "🐃 "
 style = "bold blue"
-disabled = false
+disabled = true
 detect_extensions = []
 detect_files = [
     "buf.yaml",
@@ -65,7 +65,7 @@ format = "via [$symbol($version )]($style)"
 version_format = "v${raw}"
 symbol = "🍞 "
 style = "bold red"
-disabled = false
+disabled = true
 detect_extensions = []
 detect_files = [
     "bun.lockb",
@@ -394,7 +394,7 @@ staged = "+"
 untracked = "?"
 typechanged = ""
 ignore_submodules = false
-disabled = false
+disabled = true
 
 [golang]
 format = "via [$symbol($version )]($style)"
@@ -703,7 +703,7 @@ disabled = false
 [os]
 format = "[$symbol]($style)"
 style = "bold white"
-disabled = false
+disabled = true
 
 [os.symbols]
 Alpaquita = "🔔 "
