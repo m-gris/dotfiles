@@ -1,0 +1,1738 @@
+
+# 2023-11-08 07:36:01.436383
++hello
+
+# 2023-11-08 07:36:15.669592
++EOM
+
+# 2023-11-08 07:37:07.874296
++def create_error_report(df: pd.DataFrame, 
++                        schema: pa.DataFrameSchema,
++                        primary_key: str)-> pd.DataFrame:
++    error_report = pd.DataFrame()
++    n_invalid_rows = 0 
++    try:
++        schema.validate(df, lazy=True)
++    except pa.errors.SchemaErrors as err:
++
++        failure_cases = err.failure_cases.copy()
++
++        n_invalid_rows = failure_cases['index'].nunique()
++
++        failure_cases[primary_key] = failure_cases['index'].dropna().map(
++                lambda idx: str(df.iloc[idx][primary_key]))
++
++        failure_cases.rename(columns={'check' :'failed_check'}, inplace=True)
++
++        error_report = failure_cases.groupby(primary_key).apply(
++                lambda x: x.to_dict('records')).reset_index(name='invalid_data')
++
++        error_report['invalid_data'] = error_report['invalid_data'].apply(
++            lambda lst: OrderedDict(
++                sorted(
++                {d['column']: f"Failed check '{d['failed_check']}' with case '{d['failure_case']}'"
++                 for d in lst}.items()
++                )
++                )
++        )
++
++        error_report['error_id'] = error_report.apply(
++                lambda row: 
++                hashlib.sha256((str(row[0]) 
++                + str(row[1]))
++               .encode()).hexdigest(), 
++                axis=1
++                )
++
++    if len(error_report)>0:
++        logger.warn(f"Invalid Data !")
++        logger.warn(f" {n_invalid_rows} rows filtered out")
++
++    return error_report
++
++
++
+
+# 2023-11-08 07:38:07.157558
++/q
+
+# 2023-11-08 07:43:55.923676
++Hello buddy
+
+# 2023-11-08 07:46:32.540719
++hello
+
+# 2023-11-08 08:41:27.170447
++what is the localleader in neovim ? 
+
+# 2023-11-08 08:57:54.069987
++clj -X first-project.core/-main
++Error building classpath. Could not find artifact org.clojure:clojure:jar:1.11.1  in central (https://repo1.maven.org/maven2/)
++
++
+
+# 2023-11-08 09:14:29.493748
++        error_report['invalid_data'] = error_report['invalid_data'].apply(
++            lambda lst: OrderedDict(
++                sorted(
++                {d['column']: f"Failed check '{d['failed_check']}' with case '{d['failure_case']}'"
++                 for d in lst}.items()
++                )
++                )
++        )
++
++Results in 
++
++{'ACCOUNT_NUMBER': {'failed_check': "str_matches('^GR[\\d]+$')", 'failure_case': 'GRSP29'}, 'ABS_CUSTOMER_NUMBER': {'failed_check': "str_matches('^[0]{3}')", 'failure_case': 'YES'}}
++
++What I would like 
++
++
++{'ACCOUNT_NUMBER': " GRSP29 failed check str_matches('^GR[\\d]+$') ", 
++ 'ABS_CUSTOMER_NUMBER': " YES failed check str_matches('^[0]{3}')"
++ }
++
++
+
+# 2023-11-08 09:24:09.098468
++actually i think that we could make it better / simpler : instead of 
++
++{'ACCOUNT_NUMBER': " GRSP29 failed check str_matches('^GR[\\d]+$')}
++
++let's simply have 
++
++["GRSP29 in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')"]
++
+
+# 2023-11-08 09:47:55.164146
++I'm getting the following error: DatasetError: <class 'pandera.api.pandas.container.DataFrameSchema'> was not
++serialised due to: Can't pickle <function custom_check_is_valid_barcode at
++0x11e5aa5e0>: it's not the same object as
++data_validation.pipelines.validate.nodes.custom_check_is_valid_barcode
++
+
+# 2023-11-08 09:48:03.748610
++clear
+
+# 2023-11-08 09:49:41.378805
++I'm getting the following error: 
++DatasetError: <class 'pandera.api.pandas.container.DataFrameSchema'> was not
++serialised due to: Can't pickle <function custom_check_is_valid_barcode at
++0x11e5aa5e0>: it's not the same object as
++data_validation.pipelines.validate.nodes.custom_check_is_valid_barcode
++
++someone suggested: 
++Maybe you can avoid deep copying by persisting the schema with another pickle backend to see if it fixes the issue?
++
++i've tried Pickle & Joblib
++
++Any other possiblities ? 
++
++
+
+# 2023-11-08 09:50:30.337664
++the schema is a pandera schema object. any suggestion ? 
+
+# 2023-11-08 09:55:58.736229
++this is exactly my problem: It's important to note that custom functions used in the schema checks might
++not be serializable using these methods. In that case, you would need to
++recreate or re-register the custom functions after deserializing the schema
++object.
++
++i had registered my custom function though... why is it still a problem ? 
+
+# 2023-11-08 09:58:41.499074
++my problem is that I use kedro... i guess i must create a custom dataset to be able to import the module when deserializing the schema... can you help with this ? 
+
+# 2023-11-08 10:02:37.644329
++shouldn't the custom_dataset.py contain an import to the module where the custom pandera check functions are defined ? isn't it crucial for the deserialization to work? 
+
+# 2023-11-08 11:00:25.630798
++cannot import name 'custom_check_is_valid_barcode' from
++'data_validation.pipelines.validate.nodes'
++(/Users/marc/DODOBIRD/DODO_CODE/data-validation/src/data_validation/pipelines/validat
++e/nodes.py)
++
+
+# 2023-11-08 11:13:40.975186
++I'm confused by this error message 
++
++DatasetError:
++Can't instantiate abstract class PickledPanderaSchema with abstract method _describe.
++Dataset 'items_schema' must only contain arguments valid for the constructor of
++'data_validation.extras.datasets.pandera_schema.PickledPanderaSchema'.
++
++
++here is my custom dataset
++
++import pickle
++import pandas as pd
++from kedro.io import AbstractDataSet
++
++# Import the modules containing the custom pandera check functions
++from data_validation.pipelines.validate import nodes
++
++class PickledPanderaSchema(AbstractDataSet):
++    def __init__(self, filepath):
++        self._filepath = filepath
++
++    def _load(self) -> pd.DataFrame:
++        # Import the custom check functions when deserializing
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "rb") as file:
++            return pickle.load(file)
++
++    def _save(self, data: pd.DataFrame) -> None:
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "wb") as file:
++            pickle.dump(data, file)
++
++
++
++
+
+# 2023-11-08 11:15:30.906054
++I'm still getting this error
++
++DatasetError: Failed while saving data to data set
++PickledPanderaSchema(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/02_
++intermediate/items_schema.pkl).
++Can't pickle <function custom_check_is_valid_barcode at 0x123b57670>: it's not the
++same object as
++data_validation.extras.custom_pandera_checks.custom_check_is_valid_barcode
++
++
++
++yet, i have followed you're advice and imported custom_check_is_valid_barcode: 
++
++from typing import Dict, Any
++import pickle
++import pandas as pd
++from kedro.io import AbstractDataSet
++
++# Import the modules containing the custom pandera check functions
++from data_validation.pipelines.validate import nodes
++
++class PickledPanderaSchema(AbstractDataSet):
++    def __init__(self, filepath):
++        self._filepath = filepath
++
++    def _load(self) -> pd.DataFrame:
++        # Import the custom check functions when deserializing
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "rb") as file:
++            return pickle.load(file)
++
++    def _save(self, data: pd.DataFrame) -> None:
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "wb") as file:
++            pickle.dump(data, file)
++
++    def _describe(self) -> Dict[str, Any]:
++         return {
++             "filepath": self._filepath,
++         }
++
++
++
++
++
++
++
+
+# 2023-11-08 11:17:04.398748
++DatasetError: Failed while saving data to data set
++PickledPanderaSchema(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/02_
++intermediate/items_schema.pkl).
++'DataFrameSchema' object has no attribute 'to_pickle'
++
++
++(i'm using pandera fyi)
++
+
+# 2023-11-08 11:17:48.175146
++how can i re-register the custom check function ?
++
+
+# 2023-11-08 11:19:09.391013
++in our previous conversation about custom pandera checks  you said: 
++```
++Please note that when using the deserialized DataFrameSchema, you may need to
++re-register the custom check functions
++```
++i know how to register the function. 
++i do i re-register it ???
+
+# 2023-11-08 11:20:02.481211
++why pd.api.types ??? aren't we working with pandera ?
+
+# 2023-11-08 11:21:26.116584
++ok... please re-register custom_check_is_valid_barcode in the code below
++
++from typing import Dict, Any
++import pickle
++import pandas as pd
++from kedro.io import AbstractDataSet
++
++# Import the modules containing the custom pandera check functions
++from data_validation.pipelines.validate import nodes
++from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++
++class PickledPanderaSchema(AbstractDataSet):
++    def __init__(self, filepath):
++        self._filepath = filepath
++
++    def _load(self) -> pd.DataFrame:
++        # Import the custom check functions when deserializing
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "rb") as file:
++            return pickle.load(file)
++
++    def _save(self, data: pd.DataFrame) -> None:
++        from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++        with open(self._filepath, "wb") as file:
++            pickle.dump(data, file)
++
++    def _describe(self) -> Dict[str, Any]:
++         return {
++             "filepath": self._filepath,
++         }
++
++
++
++
++
++
+
+# 2023-11-08 11:23:44.619186
++DatasetError: Failed while saving data to data set
++PickledPanderaSchema(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/02_
++intermediate/items_schema.pkl).
++module 'pandera' has no attribute 'register_check'
++
++
+
+# 2023-11-08 11:26:30.974494
++I've checked the pandera latest doc. registration is done via pd.extensions.register_check_method
++
++i've used it as you can see below
++
++from typing import Dict, Any
++import pickle
++import pandas as pd
++from kedro.io import AbstractDataSet
++
++# Import the modules containing the custom pandera check functions
++from data_validation.pipelines.validate import nodes
++from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++import pandera as pa
++
++class PickledPanderaSchema(AbstractDataSet):
++ def __init__(self, filepath):
++     self._filepath = filepath
++
++ def _load(self) -> pd.DataFrame:
++     # Re-register the custom check function after deserialization
++     pa.extensions.register_check_method("custom_check_is_valid_barcode")(custom_check_is_valid_barcode)
++
++     with open(self._filepath, "rb") as file:
++         return pickle.load(file)
++
++ def _save(self, data: pd.DataFrame) -> None:
++     # Re-register the custom check function before serialization
++     pa.extensions.register_check_method("custom_check_is_valid_barcode")(custom_check_is_valid_barcode)
++
++     with open(self._filepath, "wb") as file:
++         pickle.dump(data, file)
++
++ def _describe(self) -> Dict[str, Any]:
++      return {
++          "filepath": self._filepath,
++      }
++
++how now I'm getting
++
++DatasetError: Failed while saving data to data set
++PickledPanderaSchema(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/02_
++intermediate/items_schema.pkl).
++'custom_check_is_valid_barcode' is not a callable object
++
++
+
+# 2023-11-08 11:36:55.569144
++Here is my class
++
++class PickledPanderaSchema(AbstractDataset):
++
++ def __init__(self, filepath):
++     self._filepath = filepath
++
++ def _load(self) -> pd.DataFrame:
++     # Re-register the custom check function after deserialization
++     from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++     pa.extensions.register_check_method(custom_check_is_valid_barcode)
++
++     with open(self._filepath, "rb") as file:
++         return pickle.load(file)
++
++ def _save(self, data: pd.DataFrame) -> None:
++     # Re-register the custom check function before serialization
++     from data_validation.extras.custom_pandera_checks import custom_check_is_valid_barcode
++     pa.extensions.register_check_method(custom_check_is_valid_barcode)
++
++     with open(self._filepath, "wb") as file:
++         pickle.dump(data, file)
++
++ def _describe(self) -> Dict[str, Any]:
++      return {
++          "filepath": self._filepath,
++      }
++
++
++but now i'm getting
++
++DatasetError: Failed while saving data to data set
++PickledPanderaSchema(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/02_
++intermediate/items_schema.pkl).
++method with name 'custom_check_is_valid_barcode' already defined. Check methods must
++have a unique method name.
++
++
++I'm starting to become crazy...
++
+
+# 2023-11-08 11:39:38.854048
++\q
++
+
+# 2023-11-08 11:39:47.334232
++/q
+
+# 2023-11-08 11:40:48.403178
++i use zsh tmux and neovim 
++
++1st thing: How can I make it more visually obvious which tmux pane the focus currently is on ? 
+
+# 2023-11-08 11:41:28.476648
++set -g   is for the activate pane ?
+
+# 2023-11-08 11:44:03.990997
++I will go with 
++
++set -g pane-active-border-style 'fg=colour202'
++
++
++tell me more about the available colours .... could we may be change the transparency instead ? 
++
+
+# 2023-11-08 11:44:57.126010
++let's make the border of the activate pane orange
++
+
+# 2023-11-08 11:46:33.020235
++what are other pane-active-xxxxxxxx options ? 
+
+# 2023-11-08 11:48:02.513833
++what are the available border-styles ?
++
+
+# 2023-11-08 11:49:16.220462
++at 11:48:38 🍎 zsh ❯ tconf
++invalid option: pane-active-status-attr
++invalid style: bold,underline
++
++
+
+# 2023-11-08 11:54:15.143872
++how can i get a list of all the variable that can be set for tmux ?
+
+# 2023-11-08 11:56:19.539761
++ok... let's move to customizing neovim 
++
++is there are visual cue to indicate that a file has been modified and not yet written / saved ? 
+
+# 2023-11-08 12:02:51.860117
++status line are too subtle for me ... could there be something more obvious ? 
++
+
+# 2023-11-08 12:04:26.500223
++I use lua for my neovim config. please suggest whatever will be most obvious...
++
++
+
+# 2023-11-08 12:05:50.035401
++Error detected while processing :source (no file):
++E5108: Error executing lua vim/_editor.lua:0: :source (no file)..nvim_exec2() called at :source (no file):0: Vim:E492: Not an editor command:  guibg=#ff0000
++stack traceback:
++        [C]: in function 'nvim_exec2'
++        vim/_editor.lua: in function 'cmd'
++        [string ":source (no file)"]:138: in main chunk
++
++
+
+# 2023-11-08 12:08:07.190031
++ok it worked but a little too obvious. it highlighted all the code in red... not just the changed part. 
++
++let's try something slightly different... 
++
++i use a vertical bar to indicate 80 char long lines. 
++
++could we change the colour of this vertical bar / line when a file has been changed but not saved ? 
++
+
+# 2023-11-08 12:08:42.909710
++in our previous conversation you suggested 
++
++ -- Add this to your init.lua
++
++ -- Highlight modified lines with a different background color
++ vim.cmd([[
++ augroup ModifiedLines
++   autocmd!
++   autocmd TextChanged,TextChangedI * highlight ModifiedLine guibg=#ff0000
++   autocmd InsertEnter * match ModifiedLine /./
++   autocmd InsertLeave * call clearmatches()
++ augroup END
++ ]])
++
++
+
+# 2023-11-08 12:08:52.514847
++ it worked but a little too obvious. it highlighted all the code
++            in red... not just the changed part.
++
++            let's try something slightly different...
++
++            i use a vertical bar to indicate 80 char long lines.
++
++            could we change the colour of this vertical bar / line when a file
++            has been changed but not saved ?
++
+
+# 2023-11-08 12:10:24.396260
++i'm not noticing anything. let's first identify where in my config do i setup this vertical bar... i can't remember the name of the option
+
+# 2023-11-08 12:11:57.247187
++correct it's exactly as you printed. so, please try again to dynamically change the color of the colorcolumn to reflect the state of the buffer
++
+
+# 2023-11-08 12:12:36.105979
++ok so, what other obvious cue could i use to see that a buffer is changed but not yet saved ? 
++
+
+# 2023-11-08 12:14:35.886053
++/q
++
+
+# 2023-11-08 12:14:44.193669
++\q
+
+# 2023-11-08 12:18:53.086491
++i use taskwarrior 
++
++could i create a custom script that scans / parse my repos to look for comments containing TODO-WARRIOR and create a task for whatever comes right after it ? 
+
+# 2023-11-08 12:19:29.717357
++does this looks like a good approach ? or would you recommend something very different ? 
+
+# 2023-11-08 13:13:26.223142
++when saving a pandas dataframe to csv is there a way to specify the types of the columns ? the idea / goald is to ensure that IDs like 177892345 will be saved and reloaded as strings (currently when using excel to load the csv the IDs are interpreted as ints)
+
+# 2023-11-08 13:14:13.135378
++is there way to say all column as str (to avoid having to create the dtype dict)
+
+# 2023-11-08 13:15:12.555250
++DatasetError: Failed while saving data to data set
++CSVDataset(filepath=/Users/marc/DODOBIRD/DODO_CODE/data-validation/data/03_primary/it
++ems_error_report.csv, load_args={}, protocol=file, save_args={'dtype': object,
++'index': False}).
++to_csv() got an unexpected keyword argument 'dtype'
++
++
+
+# 2023-11-08 13:27:57.446368
++from the cli how to i open a csv with excel ?
+
+# 2023-11-08 14:44:29.047060
++i have this table with 2 columns USER_ID and ERROR_REPORT 
++
++USER_01	["'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness"]
++
++
++I'd like to explode("?") the list and have 1 line per error (the user_id will therefore be duplicated as many times as there are errors) 
++
+
+# 2023-11-08 14:44:48.212777
++i have this table with 2 columns USER_ID and ERROR_REPORT 
++
++USER_01	["'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check str_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness", "'100000001021835' in PARTY_ID failed check field_uniqueness"]
++
++
++I'd like to explode("?") the list and have 1 line per error (the user_id will therefore be duplicated as many times as there are errors) 
++
++
+
+# 2023-11-08 14:45:15.732291
++i have this table with 2 columns USER_ID and ERROR_REPORT
++
++           USER_01^I["'SWENTERPRISE' in CUSTOMER_CLASS_CODE failed check isin([
++           'SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', '
++            VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS',
++           ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL',
++           ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL
++           ', ' INTERMART', ' MARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTR
++           IBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE'
++           in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTERPRISE
++           ', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR',
++           ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', '
++           VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD
++            DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIV
++           A', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BA
++           SKET', ' KING SAVERS'])", "'SWCIM' in ACCOUNT_NUMBER failed check st
++           r_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check st
++           r_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check st
++           r_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check st
++           r_matches('^GR[\\d]+$')", "'SWCIM' in ACCOUNT_NUMBER failed check fi
++           eld_uniqueness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqu
++           eness", "'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "
++           'SWCIM' in ACCOUNT_NUMBER failed check field_uniqueness", "'SWENTERP
++           RISE' in CUSTOMER_CLASS_CODE failed check isin(['SALESREP', ' SWENTE
++           RPRISE', ' SWGROUP', ' WHOLESALER', ' PUBLIC', ' VIP', ' FIRMES', '
++           GSR', ' INDIVIDUAL', ' BEACHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNER
++           S', ' VERANDA', ' SUPER U', ' SANDS', ' SHELL', ' WAY', ' COS DEAL',
++            ' BCD DEAL', ' SUN', ' LUX', ' INDIGO', ' TOTAL', ' INTERMART', ' M
++           ARADIVA', ' CASUARINA', ' LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OC
++           EAN BASKET', ' KING SAVERS'])", "'SWENTERPRISE' in CUSTOMER_CLASS_CO
++           DE failed check isin(['SALESREP', ' SWENTERPRISE', ' SWGROUP', ' WHO
++           LESALER', ' PUBLIC', ' VIP', ' FIRMES', ' GSR', ' INDIVIDUAL', ' BEA
++           CHCOMBER', ' SOMAGS', ' PAYROLL', ' WINNERS', ' VERANDA', ' SUPER U'
++           , ' SANDS', ' SHELL', ' WAY', ' COS DEAL', ' BCD DEAL', ' SUN', ' LU
++           X', ' INDIGO', ' TOTAL', ' INTERMART', ' MARADIVA', ' CASUARINA', '
++           LA PALMERAIE', ' DISTRIBUTEUR GRAYS', ' OCEAN BASKET', ' KING SAVERS
++           '])", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uniqu
++           eness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_uni
++           queness", "'100000001039224' in CUST_ACCOUNT_ID failed check field_u
++           niqueness", "'100000001039224' in CUST_ACCOUNT_ID failed check field
++           _uniqueness", "'100000001021835' in PARTY_ID failed check field_uniq
++           ueness", "'100000001021835' in PARTY_ID failed check field_uniquenes
++           s", "'100000001021835' in PARTY_ID failed check field_uniqueness", "
++           '100000001021835' in PARTY_ID failed check field_uniqueness"]
++
++
++           I'd like to explode("?") the list and have 1 line per error (the use
++           r_id will therefore be duplicated as many times as there are errors)
++
++
++
+
+# 2023-11-08 14:51:54.053041
++in excel how do i avoid 100000000652885 being represented as 1E+14... it should be a normal string of digits
++
+
+# 2023-11-08 15:16:47.880027
++I'm getting this error
++
++                             "/Users/marc/DODOBIRD/DODO_CODE/data-validation/src/dat
++                             a_validation/pipelines/validate/nodes.py", line 168
++                                 lambda lst: [fail_dict['failure_case'],
++                             fail_dict['column'], fail_dict['failed_check'] for
++                             fail_dict in lst]
++
++                                                                  ^
++                             SyntaxError: invalid syntax
++
++
++here is the code 
++
++
++what is wrong ? 
++
++
+
+# 2023-11-08 16:11:35.782981
++are you here ? 
++
+
+# 2023-11-08 17:49:21.294379
++clear
++
+
+# 2023-11-08 17:49:33.734375
++Hello
++
++
+
+# 2023-11-08 17:51:04.635510
++give me some interesting python code 
++
+
+# 2023-11-08 18:09:43.300159
++ how do i change the remote of a git repo ? 
++ 
+
+# 2023-11-08 18:17:04.120733
++how do i empty the quick fix list in neovim ? 
+
+# 2023-11-08 18:28:28.873562
++fd cli question 
++
++i have this file in my dir 
++
++EVENTS_REPORT_xdo_2023-11-06T11_50_34.116Z.csv
++
++but when i do 
++
++fd '_xdo_' . 
++
++nothing is found 
+
+# 2023-11-08 18:29:10.572269
++but since the filename is EVENTS_REPORT_xdo_2023-11-06T11_50_34.116Z.csv
++
++shouldn't 
++
++fd xdo . 
++
++work and find it ?
+
+# 2023-11-08 18:29:27.853270
++it does not find it...
+
+# 2023-11-08 18:34:14.247885
++look at his 
++
++
++marc@kedro-etl   main [✘?] via 🐍 pyenv 3.9.7 (.venv)
++at 18:33:16 ❌1 🍎 zsh ❯ fd . data/01_raw
++data/01_raw/.gitkeep
++
++marc@kedro-etl   main [✘?] via 🐍 pyenv 3.9.7 (.venv)
++at 18:33:25 🍎 zsh ❯ ls data/01_raw
++Permissions Size User Date Modified Git Name
++drwxr-xr-x     - marc  8 Nov 18:25   -- ./
++drwxr-xr-x     - marc 24 Oct 08:06   -- ../
++.rw-r--r--     0 marc 24 Oct 08:06   -- .gitkeep
++.rw-r--r--   68k marc  7 Nov 10:01   -I cities_and_zip_codes_mauritius.csv
++.rw-r--r--   128 marc  3 Nov 16:03   -I dummy.csv
++.rw-r--r--@ 8.9k marc 26 Oct 09:32   -I dummy_legal_values.xlsx
++.rw-r--r--@ 4.0M marc  6 Nov 13:19   -I EVENTS_REPORT_xdo_2023-11-06T11_50_34.116Z.csv
++.rw-r--r--@  16M marc  6 Nov 13:19   -I ITEM_REPORT_xdo_2023-11-06T11_49_22.923Z.csv
++.rw-r--r--@ 118k marc  3 Nov 13:42   -I item_validation_rules.xlsx
++.rw-r--r--@ 2.4M marc 31 Oct 17:34   -I items.csv
++.rw-r--r--  2.8k marc  6 Nov 13:07   -I items_for_barcode_query.csv
++.rw-r--r--@ 118k marc  8 Nov 09:29   -I items_validation_rules.xlsx
++.rw-r--r--   115 marc  6 Nov 13:03   -I recognized_barcodes.csv
++.rw-r--r--@  12k marc  7 Nov 09:22   -I test.html
++.rw-r--r--@ 690k marc 23 Oct 13:37   -I users.csv
++.rw-r--r--@ 270k marc  6 Nov 13:19   -I USERS_REPORT_xdo_2023-11-06T11_50_58.887Z.csv
++.rw-r--r--@  40k marc  8 Nov 15:08   -I users_validation_rules.xlsx
++
++isn't that super strange ? 
++tell me what you notice as "odd"
+
+# 2023-11-08 18:36:31.203683
++but fd is actually finding 'nothing'... 
++
+
+# 2023-11-09 07:35:40.895163
++hello are you here ? 
++
+
+# 2023-11-09 07:36:33.059910
++i am using neovim todo-comments plugins. todos are parsed / recognized (ex: they show up in TodoTelescope) however they are not highlighted 
+
+# 2023-11-09 07:38:38.319035
++actually it probably is a colorscheme conflict. any suggestion.
+
+# 2023-11-09 07:55:27.621384
++in neovim what is keybinding to cycle through open buffers ?
+
+# 2023-11-09 08:00:08.625305
++how do i set a color scheme ?
+
+# 2023-11-09 08:00:32.129403
++I use lua
+
+# 2023-11-09 08:01:21.317186
++i had a dynamic / per language colorscheme 
++
++i want to experiment with something simpler.
++
++how do i set (with lua) a single color scheme for my nvim config ? 
+
+# 2023-11-09 08:05:39.764782
++thx . i want binding to go to the next buffer 
++
++vim.keymap.set("n", "<C-S>^", "bnext<CR>")
++
++
++what is wrong with it ? 
+
+# 2023-11-09 08:07:08.990324
++i would like Control + shift + 6 to go to the next buffer
+
+# 2023-11-09 08:39:08.699651
++please highligh the usage / complementarity of the following cli tools 
++
++ncdu
++dust
++duf 
+
+# 2023-11-09 08:49:55.040413
++in neovim how do i close a buffer without closing neovim ? 
+
+# 2023-11-09 08:59:03.735762
++hello
+
+# 2023-11-09 11:47:26.717744
++in neovim is there an autosave feature ? 
+
+# 2023-11-09 11:53:44.540947
++it does not work... 
+
+# 2023-11-09 12:34:01.901927
++if my dataframe has a multi-index how do i select a column ? df.iloc[[col]] breaks...
+
+# 2023-11-09 14:11:22.265290
++how do i find the documentation for vim-unimpaired. there is not much in github's README...
+
+# 2023-11-09 14:40:43.454144
++here is an install instruction for lazy 
+
+# 2023-11-09 14:40:46.393737
++lazy.nvim:
+
+# 2023-11-09 14:40:52.860158
++{
+
+# 2023-11-09 14:40:54.988927
++  "folke/flash.nvim",
+
+# 2023-11-09 14:40:57.512219
++  event = "VeryLazy",
+
+# 2023-11-09 14:41:02.765122
++  ---@type Flash.Config
+
+# 2023-11-09 14:41:04.835704
++  opts = {},
+
+# 2023-11-09 14:41:05.546475
++  -- stylua: ignore
+
+# 2023-11-09 14:41:06.112502
++  keys = {
+
+# 2023-11-09 14:41:06.604861
++    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+
+# 2023-11-09 14:41:06.746031
++    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+
+# 2023-11-09 14:41:06.877617
++    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+
+# 2023-11-09 14:41:06.996217
++    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+
+# 2023-11-09 14:41:07.118015
++    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+
+# 2023-11-09 14:41:07.251844
++  },
+
+# 2023-11-09 14:41:07.388659
++}
+
+# 2023-11-09 14:41:26.232198
++here is the install instruction for flash.nvim using lazy
+
+# 2023-11-09 14:41:32.600561
++lazy.nvim:
+
+# 2023-11-09 14:41:45.707979
++{
+
+# 2023-11-09 14:41:47.213886
++  "folke/flash.nvim",
+
+# 2023-11-09 14:41:54.285986
++  event = "VeryLazy",
+
+# 2023-11-09 14:41:54.362819
++  ---@type Flash.Config
+
+# 2023-11-09 14:41:58.258455
++  opts = {},
+
+# 2023-11-09 14:42:01.383098
++  -- stylua: ignore
+
+# 2023-11-09 14:42:02.471497
++  keys = {
+
+# 2023-11-09 14:42:02.582361
++    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+
+# 2023-11-09 14:42:02.719016
++    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+
+# 2023-11-09 14:42:05.920348
++    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+
+# 2023-11-09 14:42:07.554451
++    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+
+# 2023-11-09 14:42:07.838598
++    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+
+# 2023-11-09 14:42:07.980367
++  },
+
+# 2023-11-09 14:42:08.120101
++}
+
+# 2023-11-09 14:45:20.297060
++here is the install instruction for flash.nvim  
+
+# 2023-11-09 14:45:32.470659
++```lua
+
+# 2023-11-09 14:45:34.234437
++lazy.nvim:
+
+# 2023-11-09 14:45:45.949877
++{
+
+# 2023-11-09 14:45:47.402152
++  "folke/flash.nvim",
+
+# 2023-11-09 14:45:59.194015
++  event = "VeryLazy",
+
+# 2023-11-09 14:46:04.357177
++  ---@type Flash.Config
+
+# 2023-11-09 14:46:10.805218
++  opts = {},
+
+# 2023-11-09 14:46:18.191287
++  -- stylua: ignore
+
+# 2023-11-09 14:46:26.789655
++  keys = {
+
+# 2023-11-09 14:46:34.182982
++    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+
+# 2023-11-09 14:46:44.024019
++    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+
+# 2023-11-09 14:46:53.229573
++    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+
+# 2023-11-09 14:47:03.070242
++    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+
+# 2023-11-09 14:47:14.442379
++    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+
+# 2023-11-09 14:47:15.908592
++  },
+
+# 2023-11-09 15:04:59.515175
++please complete the following function 
++
++```python 
++def custom_check_min_year(
++    dates: "pd.Series[datetime]", 
++    min_year: int
++) -> "pd.Series[bool]":
++
++    if not isinstance(active_check, bool):
++        raise ValueError(f"`check` should be `bool` not {type(check)}")
++
++
++```
+
+# 2023-11-09 15:16:36.905404
++when creating pd.Series can i specify datatypes ? 
+
+# 2023-11-09 15:18:02.250155
++>               npdtype = np.dtype(dtype)
++E               TypeError: data type 'datetime' not understood
++
+
+# 2023-11-09 15:19:23.824251
++let me rephrase when constructin a df or series how can i specify datetime as a type ? 
+
+# 2023-11-09 15:21:35.675981
++        dates = pd.Series(['2018-07-21T08:05:33.091+00:00', '2025-07-21T08:05:33.091+00:00'], dtype='datetime64[ns]')
++
++E                   ValueError: Cannot convert timezone-aware data to timezone-naive dtype. Use pd.Series(values).dt.tz_localize(None) instead.
++
+
+# 2023-11-09 15:22:10.538455
++please rewrite my datetime strings without timezone infos
+
+# 2023-11-09 15:59:29.018229
++please explain what, to me at least, appears as a strange behavior 
++
++        print(f"{params=}")
++        columns[col] = pa.Column(**params)
++        print(f"{columns=}")
++       
++
++         
++
++params={'dtype': 'datetime', 'coerce': True, 'required': True, 'unique': False, 'nullable': False, 'checks': [<Check custom_check_min_year>]}
++columns={'CREATION_DATE': <Schema Column(name=None, type=DataType(datetime64[ns]))>}
++
+
+# 2023-11-09 16:00:26.332974
++what i don't understand is why all the params unpacked are not found in the column object... (ex: checks)
+
+# 2023-11-09 16:01:39.854693
++if checks was not in the signature of pa.Column it would raise an error... so why are the checks used to construct the column
+
+# 2023-11-09 16:02:54.059498
++from pandera's docs 
++
++class pandera.api.pandas.components.Column(dtype=None, checks=None, nullable=False, unique=False, report_duplicates='all', coerce=False, required=True, name=None, regex=False, title=None, description=None, default=None, metadata=None, drop_invalid_rows=False)[source]
++
+
+# 2023-11-09 16:50:06.927671
++do you understand the error traceback below ??? 
++
++
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandera/api/base/schema.py:39 in   │
++│ __init__                                                                                         │
++│                                                                                                  │
++│    36 │   │   drop_invalid_rows=False,                                                           │
++│    37 │   ):                                                                                     │
++│    38 │   │   """Abstract base schema initializer."""                                            │
++│ ❱  39 │   │   self.dtype = dtype                                                                 │
++│    40 │   │   self.checks = checks                                                               │
++│    41 │   │   self.coerce = coerce                                                               │
++│    42 │   │   self.name = name                                                                   │
++│                                                                                                  │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandera/api/pandas/array.py:139 in │
++│ dtype                                                                                            │
++│                                                                                                  │
++│   136 │   @dtype.setter                                                                          │
++│   137 │   def dtype(self, value: Optional[PandasDtypeInputTypes]) -> None:                       │
++│   138 │   │   """Set the pandas dtype"""                                                         │
++│ ❱ 139 │   │   self._dtype = pandas_engine.Engine.dtype(value) if value else None                 │
++│   140 │                                                                                          ││   141 │   def coerce_dtype(                                                                      │
++│   142 │   │   self,                                                                              │
++│                                                                                                  │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandera/engines/pandas_engine.py:2 │
++│ 08 in dtype                                                                                      │
++│                                                                                                  │
++│    205 │   │   │   else:                                                                         │
++│    206 │   │   │   │   # let pandas transform any acceptable value                               │
++│    207 │   │   │   │   # into a numpy or pandas dtype.                                           │
++│ ❱  208 │   │   │   │   np_or_pd_dtype = pd.api.types.pandas_dtype(data_type)                     │
++│    209 │   │   │   │   if isinstance(np_or_pd_dtype, np.dtype):                                  │
++│    210 │   │   │   │   │   # cast alias to platform-agnostic dtype                               │
++│    211 │   │   │   │   │   # e.g.: np.intc -> np.int32                                           │
++│                                                                                                  │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/dtypes/common.py:1636  │
++│ in pandas_dtype                                                                                  │
++│                                                                                                  │
++│   1633 │   │   │   # numpy deprecation warning of np.integer                                     │
++│   1634 │   │   │   # Hence enabling DeprecationWarning                                           │
++│   1635 │   │   │   warnings.simplefilter("always", DeprecationWarning)                           │
++│ ❱ 1636 │   │   │   npdtype = np.dtype(dtype)                                                     │
++│   1637 │   except SyntaxError as err:                                                            │
++│   1638 │   │   # np.dtype uses `eval` which can raise SyntaxError                                │
++│   1639 │   │   raise TypeError(f"data type '{dtype}' not understood") from err                   │
++│                                                                                                  │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/numpy/core/_internal.py:62 in      │
++│ _usefields                                                                                       │
++│                                                                                                  │
++│    59 │   except KeyError:                                                                       │
++│    60 │   │   names = None                                                                       │
++│    61 │   if names is None:                                                                      │
++│ ❱  62 │   │   names, formats, offsets, titles = _makenames_list(adict, align)                    │
++│    63 │   else:                                                                                  │
++│    64 │   │   formats = []                                                                       │
++│    65 │   │   offsets = []                                                                       │
++│                                                                                                  │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/numpy/core/_internal.py:32 in      │
++│ _makenames_list                                                                                  │
++│                                                                                                  │
++│    29 │   for fname, obj in adict.items():                                                       │
++│    30 │   │   n = len(obj)                                                                       │
++│    31 │   │   if not isinstance(obj, tuple) or n not in (2, 3):                                  │
++│ ❱  32 │   │   │   raise ValueError("entry not a 2- or 3- tuple")                                 │
++│    33 │   │   if n > 2 and obj[2] == fname:                                                      │
++│    34 │   │   │   continue                                                                       │
++│    35 │   │   num = int(obj[1])                                                                  │
++╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
++ValueError: entry not a 2- or 3- tuple
++
++
+
+# 2023-11-09 17:55:47.267889
++ ❱ 217 │   │   error_report = failure_cases.groupby(primary_key).apply(                 │
++│   218 │   │   │   │   lambda x: x.to_dict('records')).reset_index(name='invalid_data') │
++│   219 │   │                                                                            │
++│   220 │   │   error_report = error_report.explode('invalid_data')['invalid_data'].appl │
++╰────────────────────────────────────────────────────────────────────────────────────────╯
++TypeError: reset_index() got an unexpected keyword argument 'name'
++
+
+# 2023-11-09 18:22:29.290723
++python isinstance: how to check if a value is a number (int, float, complex...) ?
+
+# 2023-11-09 18:51:52.463118
++in neovim how can i efficiently remove all the trailing whitespaces at the begining and end of each line ?
+
+# 2023-11-09 18:57:50.859094
++after pasting some excel cells in vim 
++
++each of the lines end with the symbols ^M
++
++any idea what that is / means ? 
+
+# 2023-11-09 19:37:44.293099
++in pandas how can i update a dataframe with another dataframe ? i.e the assumption is that the columns should be the same, on the rows of the new df is added to the older df
+
+# 2023-11-09 19:42:39.336923
++is multi line like this ok 
++
++        raise ValueError(
++                "Columns should be same in both DFs" 
++                f"\n{remote_error_report.columns=}"
++                f"\n{error_report.columns=}"
++                         )
++
+
+# 2023-11-10 05:25:38.812495
++given 2 dataframes that mostly contain identical rows, how can i return a new df containing the rows that are unique to one of those dfs ?
+
+# 2023-11-10 05:26:48.268080
++what would be the output of `merged` 
+
+# 2023-11-10 07:15:12.443858
++what is the simplest cli command to check that i have a working internet connection ? 
+
+# 2023-11-10 07:15:29.093421
++what is the -c 4 ? 
+
+# 2023-11-10 07:46:42.257489
++how do i install sklearn in my venv with pip ?
+
+# 2023-11-10 10:49:43.857933
++ConnectionError: HTTPSConnectionPool(host='api.upcitemdb.com', port=443): Max
++retries exceeded with url: /prod/trial/lookup?upc=3386460097994 (Caused by
++NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1387c4100>:
++Failed to establish a new connection: [Errno 8] nodename nor servname provided,
++or not known'))
++
++
+
+# 2023-11-10 10:58:18.594001
++            
++BARCODE_QUERIES = {
++    "barcode_lookup": lambda api_key, barcode: f"https://api.barcodelookup.com/v3/products?barcode={barcode}&formatted=y&key={api_key}",
++    'upcitemdb': lambda api_key, barcode: f"https://api.upcitemdb.com/prod/trial/lookup?upc={barcode}"
++    # Add more data_provider-specific URL formats as needed
++}
++
++
++please make this an ordered dict with upcitemdb first (it provides free queries)
+
+# 2023-11-10 10:58:38.200360
++ BARCODE_QUERIES = {
++                "barcode_lookup": lambda api_key, barcode: f"https://
++            api.barcodelookup.com/v3/products?barcode={barcode}&forma
++            tted=y&key={api_key}",
++                'upcitemdb': lambda api_key, barcode: f"https://api.u
++            pcitemdb.com/prod/trial/lookup?upc={barcode}"
++                # Add more data_provider-specific URL formats as need
++            ed
++            }
++
++
++            please make this an ordered dict with upcitemdb first (it
++             provides free queries)
++
+
+# 2023-11-10 11:18:10.177380
++def enrich_image_urls(
++    items: pd.DataFrame,
++    image_url_col: str = "IMAGE_URL",
++    extra_data_col: str = "EXTRA_DATA",
++    barcode_col: str = "BARCODE",
++) -> pd.DataFrame:
++    
++    if image_url_col not in items:
++        items[image_url_col] = pd.NA
++    if extra_data_col not in items:
++        items[extra_data_col] = pd.NA 
++
++    has_image_url = items[image_url_col].notnull()
++    has_extra_data = items[extra_data_col].notnull()
++    
++    def get_image(barcode, BARCODE_QUERIES: OrderedDict):
++
++        for data_provider in BARCODE_QUERIES.keys():
++            print(f'getting image from {data_provider} for {barcode}')
++            response = requests.get(BARCODE_QUERIES[data_provider](None, barcode))
++
++            if response.ok:
++
++                ############ HACKY ############ 
++                # WARNING: MUTATING items DF 
++                # collect data and not to waste api-calls
++                is_current_item = items[barcode_col] == barcode                   
++                items[is_current_item][extra_data_col] = response.json() 
++                ############ HACKY ############ 
++
++                items = response.json()['items']
++                if items:
++                    if len(items) > 1: 
++                        # could return the wrong image...
++                        logger.warn("more than 1 items matches barcode: {barcode}:\n{items}")
++                    images = items[0]['images']
++                    for img in images:
++                        if validators.url(img):
++                            return img
++
++    items[image_url_col] = items[barcode_col].apply(lambda barcode: get_image(barcode, BARCODE_QUERIES))
++    
++    return items    
++
++>>> UnboundLocalError: local variable 'items' referenced before assignment
++
+
+# 2023-11-10 11:20:10.670207
++but since get_image is a closure... shouldn't it have access to the namespace of enrich_image_urls ?
+
+# 2023-11-10 11:23:38.881944
++I'm getting a setting copy with warning 
++
++[11/10/23 11:22:11] WARNING  /Users/marc/DODOBIRD/DODO_CODE/ked warnings.py:109
++                             ro-etl/src/kedro_etl/pipelines/enr
++                             ich/nodes.py:202:
++                             SettingWithCopyWarning:
++                             A value is trying to be set on a
++                             copy of a slice from a DataFrame.
++                             Try using
++                             .loc[row_indexer,col_indexer] =
++                             value instead
++
++                             See the caveats in the
++                             documentation:
++                             https://pandas.pydata.org/pandas-d
++                             ocs/stable/user_guide/indexing.htm
++                             l#returning-a-view-versus-a-copy
++                               items[is_current_item][extra_dat
++                             a_col] = response.json()
++
++
++and the EXTRA_DATA is left empty (whereas since a image urls has been extracted, we know that we had extra data) 
++
++what went wrong ? 
++
+
+# 2023-11-10 11:24:49.931327
++still getting the warning and extra_data still empty... 
+
+# 2023-11-10 11:43:29.845174
++in neovim how do i delete all empty lines between line 7 and line 36 ?
+
+# 2023-11-10 11:44:23.480011
++or from the current line to 34 lines below... ? 
+
+# 2023-11-10 13:50:11.232055
++non related 
++
++ items[~has_image_url, image_url_col] = items[~has_image_url, barcode_col].ap │
++│    90 │   │   │   lambda barcode: get_image(barcode, BARCODE_QUERIES))    
++
++
++results in 
++
++>>> InvalidIndexError: (0    True
++1    True
++2    True
++3    True
++4    True
++5    True
++Name: IMAGE_URL, dtype: bool, 'BARCODE')
++
++
+
+# 2023-11-10 13:53:13.587436
++
++def enrich_image_urls(
++    items: pd.DataFrame,
++    primary_key: str, 
++    image_url_col: str = "IMAGE_URL",
++    extra_data_col: str = "EXTRA_DATA",
++    barcode_col: str = "BARCODE",
++) -> pd.DataFrame:
++
++    items = items.copy()  
++
++    if image_url_col not in items:
++        items[image_url_col] = pd.NA
++
++    if extra_data_col not in items:
++        items[extra_data_col] = pd.NA 
++
++    has_image_url = items[image_url_col].notnull()
++    
++    # TODO 
++    def get_image(barcode, BARCODE_QUERIES: OrderedDict):
++
++        for data_provider in BARCODE_QUERIES.keys():
++            print(f'getting image from {data_provider} for {barcode}')
++            response = requests.get(BARCODE_QUERIES[data_provider](None, barcode))
++
++            if response.ok:
++                # WARNING: named `products` to avoid collision / overshadowing `items` DF !!!
++                products = response.json()['items']
++                if products:
++                    ############ HACKY ############ 
++                    # WARNING: MUTATING items DF 
++                    # collect data and not to waste api-calls
++                    is_current_item = items[barcode_col] == barcode                   
++                    items.loc[is_current_item, extra_data_col] = products
++                    ############ HACKY ############ 
++                    if len(products) > 1: 
++                        # could return the wrong image...
++                        logger.warn("more than 1 items matches barcode: {barcode}:\n{items}")
++                    images = products[0]['images']
++                    for img in images:
++                        if validators.url(img):
++                            return img
++
++    global BARCODE_QUERIES
++    items[~has_image_url, image_url_col] = items.loc[~has_image_url, barcode_col].apply(
++            lambda barcode: get_image(barcode, BARCODE_QUERIES))
++    
++    return items[[primary_key, image_url_col]], items[[primary_key, extra_data_col]]
++
++
++>>>│                                                                                        │
++│ /Users/marc/DODOBIRD/DODO_CODE/kedro-etl/src/kedro_etl/pipelines/enrich/nodes.py:91 in │
++│ <lambda>                                                                               │
++│                                                                                        │
++│    88 │                                                                                │
++│    89 │   global BARCODE_QUERIES                                                       │
++│    90 │   items[~has_image_url, image_url_col] = items.loc[~has_image_url, barcode_col │
++│ ❱  91 │   │   │   lambda barcode: get_image(barcode, BARCODE_QUERIES))                 │
++│    92 │                                                                                │
++│    93 │   return items[[primary_key, image_url_col]], items[[primary_key, extra_data_c │
++│    94                                                                                  │
++╰────────────────────────────────────────────────────────────────────────────────────────╯
++NameError: name 'BARCODE_QUERIES' is not defined
++
+
+# 2023-11-10 14:32:13.151522
++progress bar with tqdm in a df.apply() ? :-) 
+
+# 2023-11-10 14:35:47.995459
++oh... can you please add an extra has_barcode boolean mask ? to avoid wasting api-calls for missing barcodes...
++
++
+
+# 2023-11-10 14:42:35.046996
++
++In [9]: new_items = nodes.enrich_image_urls(items.sample(2), "ITEM_NUMBER")
++Enriching Image URLs:   0%|                              | 0/2 [00:00<?, ?it/s]
++╭───────────────────── Traceback (most recent call last) ─────────────────────╮
++│ in <module>:1                                                               │
++│                                                                             │
++│ /Users/marc/DODOBIRD/DODO_CODE/kedro-etl/src/kedro_etl/pipelines/enrich/nod │
++│ es.py:105 in enrich_image_urls                                              │
++│                                                                             │
++│   102 │   │   │    barcode = row[barcode_col]                               │
++│   103 │   │   │    return get_image(barcode, BARCODE_QUERIES)               │
++│   104 │   │                                                                 │
++│ ❱ 105 │   │    items.loc[is_enrichable, image_url_col] = items.loc[is_enric │
++│   106 │                                                                     │
++│   107 │    return items[[primary_key, image_url_col]], items[[primary_key,  │
++│   108                                                                       │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/s │
++│ eries.py:4753 in apply                                                      │
++│                                                                             │
++│   4750 │   │   Helsinki    2.484907                                         │
++│   4751 │   │   dtype: float64                                               │
++│   4752 │   │   """                                                          │
++│ ❱ 4753 │   │   return SeriesApply(                                          │
++│   4754 │   │   │   self,                                                    │
++│   4755 │   │   │   func,                                                    │
++│   4756 │   │   │   convert_dtype=convert_dtype,                             │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/a │
++│ pply.py:1207 in apply                                                       │
++│                                                                             │
++│   1204 │   │   │   return self.apply_compat()                               │
++│   1205 │   │                                                                │
++│   1206 │   │   # self.func is Callable                                      │
++│ ❱ 1207 │   │   return self.apply_standard()                                 │
++│   1208 │                                                                    │
++│   1209 │   def agg(self):                                                   │
++│   1210 │   │   result = super().agg()                                       │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/a │
++│ pply.py:1287 in apply_standard                                              │
++│                                                                             │
++│   1284 │   │   # TODO: remove the `na_action="ignore"` when that default ha │
++│   1285 │   │   #  Categorical (GH51645).                                    │
++│   1286 │   │   action = "ignore" if isinstance(obj.dtype, CategoricalDtype) │
++│ ❱ 1287 │   │   mapped = obj._map_values(                                    │
++│   1288 │   │   │   mapper=curried, na_action=action, convert=self.convert_d │
++│   1289 │   │   )                                                            │
++│   1290                                                                      │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/b │
++│ ase.py:921 in _map_values                                                   │
++│                                                                             │
++│    918 │   │   if isinstance(arr, ExtensionArray):                          │
++│    919 │   │   │   return arr.map(mapper, na_action=na_action)              │
++│    920 │   │                                                                │
++│ ❱  921 │   │   return algorithms.map_array(arr, mapper, na_action=na_action │
++│    922 │                                                                    │
++│    923 │   @final                                                           │
++│    924 │   def value_counts(                                                │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/a │
++│ lgorithms.py:1814 in map_array                                              │
++│                                                                             │
++│   1811 │   # we must convert to python types                                │
++│   1812 │   values = arr.astype(object, copy=False)                          │
++│   1813 │   if na_action is None:                                            │
++│ ❱ 1814 │   │   return lib.map_infer(values, mapper, convert=convert)        │
++│   1815 │   else:                                                            │
++│   1816 │   │   return lib.map_infer_mask(                                   │
++│   1817 │   │   │   values, mapper, mask=isna(values).view(np.uint8), conver │
++│                                                                             │
++│ in pandas._libs.lib.map_infer:2920                                          │
++│                                                                             │
++│ /Users/marc/.pyenv/versions/3.9.7/lib/python3.9/site-packages/pandas/core/a │
++│ pply.py:1276 in curried                                                     │
++│                                                                             │
++│   1273 │   │   if self.args or self.kwargs:                                 │
++│   1274 │   │   │   # _map_values does not support args/kwargs               │
++│   1275 │   │   │   def curried(x):                                          │
++│ ❱ 1276 │   │   │   │   return func(x, *self.args, **self.kwargs)            │
++│   1277 │   │                                                                │
++│   1278 │   │   else:                                                        │
++│   1279 │   │   │   curried = func                                           │
++╰─────────────────────────────────────────────────────────────────────────────╯
++TypeError: apply_get_image() got an unexpected keyword argument 'axis'
++
+
+# 2023-11-10 14:43:50.495992
++│                                                                             │
++│    99 │    with tqdm(total=total_rows, desc="Enriching Image URLs") as pbar │
++│   100 │   │    def apply_get_image(row):                                    │
++│   101 │   │   │    pbar.update(1)  # Update the progress bar                │
++│ ❱ 102 │   │   │    barcode = row[barcode_col]                               │
++│   103 │   │   │    return get_image(barcode, BARCODE_QUERIES)               │
++│   104 │   │                                                                 │
++│   105 │   │    items.loc[is_enrichable, image_url_col] = items.loc[is_enric │
++╰─────────────────────────────────────────────────────────────────────────────╯
++TypeError: 'int' object is not subscriptable
++
++
+
+# 2023-11-10 14:52:08.893086
++
++
++def enrich_image_urls(
++     items: pd.DataFrame,
++     primary_key: str,
++     image_url_col: str = "IMAGE_URL",
++     extra_data_col: str = "EXTRA_DATA",
++     barcode_col: str = "BARCODE",
++ ) -> pd.DataFrame:
++
++     items = items.copy()
++
++     if image_url_col not in items:
++         items[image_url_col] = pd.NA
++
++     if extra_data_col not in items:
++         items[extra_data_col] = pd.NA
++
++     has_image_url = items[image_url_col].notnull()
++     has_barcode = items[barcode_col].notnull()
++
++     def get_image(barcode):
++         for data_provider in BARCODE_QUERY_BUILDERS.keys():
++             response = requests.get(BARCODE_QUERY_BUILDERS[data_provider](barcode))
++             if response.ok:
++                 # WARNING: named `products` to avoid collision / overshadowing `items` DF !!!
++                 products = PRODUCT_EXTRACTORS[data_provider](response.json())
++                 if products:
++                     ############ HACKY ############
++                     # WARNING: MUTATING items DF
++                     # collect data and not to waste api-calls
++                     is_current_item = items[barcode_col] == barcode
++                     items.loc[is_current_item, extra_data_col] = products
++                     ############ HACKY ############
++                     if len(products) > 1:
++                         # could return the wrong image...
++                         logger.warn(f"more than 1 items matches barcode: {barcode}:\n{items}")
++                     images = products[0]['images']
++                     for img in images:
++                         if validators.url(img):
++                             return img
++
++     # Get the number of rows in the DataFrame
++     is_enrichable = has_barcode & ~has_image_url
++     total_rows = len(items[is_enrichable])
++
++     # Create a tqdm progress bar
++     with tqdm(total=total_rows, desc="Enriching Image URLs") as pbar:
++         def apply_get_image(barcode):
++             pbar.update(1)  # Update the progress bar
++             return get_image(barcode) 
++
++         items.loc[is_enrichable, image_url_col] = items.loc[is_enrichable, barcode_col].apply(apply_get_image)
++
++     return items[[primary_key, image_url_col]], items[[primary_key, extra_data_col]]
++
++
++
++please create a tqdmify decorator instead of the inner func
++
+
+# 2023-11-10 15:38:01.990526
++
++
++
++ValueError: You are trying to merge on float64 and object columns for key
++'failure_case'. If you wish to proceed you should use pd.concat
++because of 
++
++
++│ /Users/marc/DODOBIRD/DODO_CODE/kedro-etl/src/kedro_etl/pipelines/validate/nodes.py:2 │
++│ 83 in merge_error_reports                                                            │
++│                                                                                      │
++│   280 │   │   │   │   f"\n{remote_error_report.columns=}"                            │
++│   281 │   │   │   │   f"\n{error_report.columns=}"                                   │
++│   282 │   │   │   │   │   │    )                                                     │
++│ ❱ 283 │   merged_report = remote_error_report.merge(error_report, how='outer', indic │
++│   284 │                                                                              │
++│   285 │   if new_rows_only:                                                          │
++│   286 │   │   new_rows = merged_report.query('_merge == "right_only"')\   
++
++
++
++
++
++
+
+# 2023-11-10 15:39:08.550338
++how can i specify the type of df loaded from xl files (from the load method)
+
+# 2023-11-10 15:40:39.780848
++is there a param in read_excel that allows to load every col as str ? 
+
+# 2023-11-10 16:32:02.385652
++does pandas read functions have a parameters like n_sample to avoid loading the full dataset ? 
++
+
+# 2023-11-10 16:32:40.745114
++ no other built-in option ?
++ 
++ 
+
+# 2023-11-10 17:02:30.934745
++using ranger cli how do i get a list of its shortcuts / bindings ?
+
+# 2023-11-10 17:53:21.158105
++in pd.read_csv how to i select only some cols ? 
+
+# 2023-11-10 17:53:38.820811
++by name ?
+
+# 2023-11-11 08:31:11.760366
++here is the content of my data folder 
++
++00_dump
++01_raw
++02_intermediate
++03_primary
++04_feature
++05_model_input
++06_models
++07_model_output
++08_reporting
++
++
++please give me a bash script that empties all dirs greater than 01 
++
++(it should not delete hidden files like .gitkeep though)
++
++thx
+
+# 2023-11-11 08:34:32.652354
++ok let's turn it into an executable python script. please use pathlib and or shutil
++
+
+# 2023-11-11 08:36:53.126927
++it should not destroy the top level dirs in data it should instead crawl the file structure and delete files 
++
++sorry for not having been clear
++
+
+# 2023-11-11 08:37:25.336125
++use pathlib instead of os if possible
++
+
+# 2023-11-11 08:42:26.877367
++hmmm there is a problem 
++
++for dir_path in data_dir.glob("**/*"):
++    if dir_path.is_dir() and dir_path.name > "01" and not dir_path.name.startswith("."):
++        print(f"Emptying {dir_path}...")
++        for file_path in dir_path.glob("*"):
++            if not file_path.name.startswith("."):
++                file_path.unlink()
++                print("\t\tDeleted", file_path.name)
++                
++                
++                
++it delete the content of 00_dump and 01_raw
++
++do you understand why I'm sayin this a problem ?
+
+# 2023-11-11 08:43:48.501661
++should be much simpler... traverse data dir, and skip anythin that is less that 02... 
++
+
+# 2023-11-11 08:45:49.844542
++can we ensure that dirs are empties in alpha-numeric order ? (02, then 03 etc...) 
+
+# 2023-11-11 08:46:17.402315
++can we ensure that dirs are empties in alpha-numeric order ? (02, then 03 etc...) 
++
++
++ from pathlib import Path
++
++ data_dir = Path("path/to/your/data/folder")
++
++ def empty_directories(root):
++     for dir_path in root.iterdir():
++         if dir_path.is_dir() and dir_path.name < "02":
++             continue  # Skip directories less than "02"
++
++         if dir_path.is_dir() and not dir_path.name.startswith("."):
++             print(f"Emptying {dir_path}...")
++             for file_path in dir_path.iterdir():
++                 if file_path.is_file() and not
++ file_path.name.startswith("."):
++                     file_path.unlink()
++                     print("\t\tDeleted", file_path.name)
++
++ empty_directories(data_dir)
++
+
+# 2023-11-11 08:48:35.269424
++but... it should not delete any file that is in a dir less than 02 
+
+# 2023-11-11 09:34:53.609184
++from pandera's documnetation
++
++Groupby Checks
++In this groupby check, we’re verifying that the values of one column for group_a are, on average, greater than those of group_b:
++
++from typing import Dict
++
++@extensions.register_check_method(
++    statistics=["group_a", "group_b"],
++    check_type="groupby",
++)
++def groupby_check(dict_groups: Dict[str, pd.Series], *, group_a, group_b):
++    return dict_groups[group_a].mean() > dict_groups[group_b].mean()
++
++data = pd.DataFrame({
++    "values": [20, 10, 1, 15],
++    "groups": list("xxyy"),
++})
++
++schema = pa.DataFrameSchema({
++    "values": pa.Column(
++        int,
++        pa.Check.groupby_check(group_a="x", group_b="y", groupby="groups"),
++    ),
++    "groups": pa.Column(str),
++})
++
++print(schema(data))
++   values groups
++0      20      x
++1      10      x
++2       1      y
++3      15      y
++
++
++please create a custom groupby check 
++
++it shall group-by column 'COUNTRY' and verify that 'CITY' is in a list of legal values for rows whose 'COUNTRY' == 'MU' 
+
+# 2023-11-12 06:04:56.186061
++please give me some good example of .transform() in pandas
+
+# 2023-11-12 06:27:11.593240
++how do i strip and uppcase all the columns in a df ?
+
+# 2023-11-12 06:27:42.416583
++sorry... i meant all the values in all the columns...
+
+# 2023-11-12 06:30:02.106410
++given this df 
++
++        main_town                sub-locality zipcode
++0     16EME MILLE               CITE ANOUSHKA   52601
++1     16EME MILLE               CITE MON BOIS   52602
++2     16EME MILLE                    CORIOLIS   52603
++3     16EME MILLE  MON BOIS(CNT+UBS+LAITERIE)   52604
++4     16EME MILLE                  MORC DOMAH   52605
++...           ...                         ...     ...
++2026  VILLE BAGUE                  MONC V.R.S   21603
++2027  VILLE BAGUE                   NICOLIERE   21604
++2028  VILLE BAGUE                PETITE JULIE   21605
++2029  VILLE BAGUE           VILLE BAGUE LOWER   21607
++2030  VILLE BAGUE           VILLE BAGUE UPPER   21606
++
++
++
++how do i create a "condensed" / simper DF 
++
++
++with 2 columns locality and zipcode 
++
++(nota: it is possible and ok that some 'main_town' do not have a zipcode)
+
+# 2023-11-12 06:30:55.822611
++is this what i asked for ???? 
++
+
+# 2023-11-13 17:35:19.484514
++i have a dict in which some keys are named legal_cities_by_country, legal_zip_code_by_country, legal_name_by_gender etc... what would be the regex pattern for legal_*._by_*. ?
+
+# 2023-11-14 07:12:00.445735
++from the CLI how do i copy data.zip to my clipboard ?
+
+# 2023-11-14 07:12:44.232314
++i am on macos
+
+# 2023-11-14 11:20:42.428111
++how do i create a copy of a df but set all values to True 
++
+
+# 2023-11-14 11:22:51.708752
++how do i create a copy of a df but set all values to True 
++
++

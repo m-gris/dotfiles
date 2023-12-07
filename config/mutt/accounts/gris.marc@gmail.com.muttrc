@@ -1,0 +1,19 @@
+# vim: filetype=neomuttrc
+# muttrc file for account gris.marc@gmail.com
+set realname = "gris.marc"
+set from = "gris.marc@gmail.com"
+set sendmail = "msmtp -a gris.marc@gmail.com"
+alias me gris.marc <gris.marc@gmail.com>
+set folder = "/Users/marc/.local/share/mail/gris.marc@gmail.com"
+set header_cache = "/Users/marc/.cache/mutt-wizard/gris.marc_gmail.com/headers"
+set message_cachedir = "/Users/marc/.cache/mutt-wizard/gris.marc_gmail.com/bodies"
+set mbox_type = Maildir
+set hostname = "gmail.com"
+source /usr/local/share/mutt-wizard/switch.muttrc
+set spoolfile = "+INBOX"
+set postponed = "+Drafts"
+set trash = "+Trash"
+set record = "+Sent"
+
+macro index o "<shell-escape>mailsync gris.marc@gmail.com<enter>" "sync gris.marc@gmail.com"
+mailboxes "=A - 1 - To Answer" "=A - 2- Follow-Up" "=A - 3- Current/Bertil" "=A - 3- Current/Laurent" "=A - 3- Current/MARIAGE" "=A - 3- Current/Succession Dad" "=A - 3- Current/Travels and Trips" "=A - 4 - Filling/Admin/Banking &- Finances/BR" "=A - 4 - Filling/Admin/Banking &- Finances/BullionVault" "=A - 4 - Filling/Admin/Banking &- Finances/CEX.IO" "=A - 4 - Filling/Admin/Banking &- Finances/Danamon" "=A - 4 - Filling/Admin/Banking &- Finances/Interactive Brokers" "=A - 4 - Filling/Admin/Banking &- Finances/MCB" "=A - 4 - Filling/Admin/Banking &- Finances/Revolut" "=A - 4 - Filling/Admin/Banking &- Finances/SAXO Bank" "=A - 4 - Filling/Admin/Banking &- Finances/Swiss Quote" "=A - 4 - Filling/Admin/Car" "=A - 4 - Filling/Admin/HEALTH" "=A - 4 - Filling/Admin/Software and Keyes" "=A - 4 - Filling/Admin/TAXES" "=A - 4 - Filling/Body and Fitness" "=A - 4 - Filling/Dharma/Asso SHENTEN" "=A - 4 - Filling/Dharma/Tibetan" "=A - 4 - Filling/Family &- Friends" "=A - 4 - Filling/Invoices &- Bills" "=A - 4 - Filling/MAKIDOO" "=A - 4 - Filling/MATH" "=A - 4 - Filling/Musique/Berlin" "=A - 4 - Filling/Musique/Compo" "=A - 4 - Filling/Musique/Concerts" "=A - 4 - Filling/Musique/Cours" "=A - 4 - Filling/Musique/Gears" "=A - 4 - Filling/Musique/Marina" "=A - 4 - Filling/Musique/Opera" "=A - 4 - Filling/Quantified Self" "=A - 4 - Filling/Shopping" "=A - 4 - Filling/Udacity-Mentoring" "=A - 4 - Filling/Website/My Private Crooner" "=A - 4 - Filling/Website/SEO" "=A - 4 - Filling/Website/SEO / Marketing Stuffs" "=A - 4 - Filling/Website/greysmatters &- mindfulstoic" "=A - 4 - Filling/Website/icantmeditate.com" "=A - 4 - Filling/Website/marcgris.com" "=A - 5 - Check out/Computer Programming" "=A - 5 - Check out/Dharma News" "=A - 5 - Check out/EDUCATION" "=A - 5 - Check out/Health Newsletters" "=A - 5 - Check out/Marketing Mails" "=A - 5 - Check out/Music News &- Auditions" "=A - 5 - Check out/Productivity &- Intellectual Stims" "=ASSURANCE - SEARCH" "=Archive" "=Deleted Messages" "=Drafts" "=INBOX" "=Starred" "=[Airmail]/Done" "=[Airmail]/Memo" "=[Airmail]/Send Later" "=[Airmail]/Snooze" "=[Airmail]/To Do" "=[Gmail]/Corbeille" "=[Gmail]/Messages envoy&AOk-s" "=[Gmail]/Spam"

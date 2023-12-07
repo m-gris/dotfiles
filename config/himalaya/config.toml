@@ -1,0 +1,34 @@
+######################################
+# GLOBAL CONFIG - Start 
+######################################
+
+display-name = "Marc GRIS"
+downloads-dir = "~/Downloads"
+signature = "Best regards, MG."
+email-listing-page-size = 50
+
+######################################
+# GLOBAL CONFIG - End 
+######################################
+
+[gmail]
+default = true
+email = "gris.marc@gmail.com"
+
+backend = "imap"
+imap-host = "imap.gmail.com"
+imap-port = 993
+imap-login = "gris.marc@gmail.com"
+imap-auth = "passwd"
+
+sender = "smtp"
+smtp-host = "smtp.gmail.com"
+smtp-port = 465
+smtp-login = "gris.marc@gmail.com"
+smtp-auth = "passwd"
+
+[gmail.folder-aliases]
+inbox = "INBOX"
+sent = "[Gmail]/Sent Mail"
+drafts = "[Gmail]/Drafts"
+trash = "[Gmail]/Trash"

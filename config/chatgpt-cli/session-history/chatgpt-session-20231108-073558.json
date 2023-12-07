@@ -1,0 +1,35 @@
+{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+        {
+            "role": "system",
+            "content": "Always use code blocks with the appropriate language tags. If asked for a table always format it using Markdown syntax."
+        },
+        {
+            "role": "user",
+            "content": "hello"
+        },
+        {
+            "role": "assistant",
+            "content": "Hello! How can I assist you today?"
+        },
+        {
+            "role": "user",
+            "content": "EOM"
+        },
+        {
+            "role": "assistant",
+            "content": "I assume you mean \"End of Message\" (EOM). Is there anything specific you would like assistance with?"
+        },
+        {
+            "role": "user",
+            "content": "def create_error_report(df: pd.DataFrame, \n                        schema: pa.DataFrameSchema,\n                        primary_key: str)-> pd.DataFrame:\n    error_report = pd.DataFrame()\n    n_invalid_rows = 0 \n    try:\n        schema.validate(df, lazy=True)\n    except pa.errors.SchemaErrors as err:\n\n        failure_cases = err.failure_cases.copy()\n\n        n_invalid_rows = failure_cases['index'].nunique()\n\n        failure_cases[primary_key] = failure_cases['index'].dropna().map(\n                lambda idx: str(df.iloc[idx][primary_key]))\n\n        failure_cases.rename(columns={'check' :'failed_check'}, inplace=True)\n\n        error_report = failure_cases.groupby(primary_key).apply(\n                lambda x: x.to_dict('records')).reset_index(name='invalid_data')\n\n        error_report['invalid_data'] = error_report['invalid_data'].apply(\n            lambda lst: OrderedDict(\n                sorted(\n                {d['column']: f\"Failed check '{d['failed_check']}' with case '{d['failure_case']}'\"\n                 for d in lst}.items()\n                )\n                )\n        )\n\n        error_report['error_id'] = error_report.apply(\n                lambda row: \n                hashlib.sha256((str(row[0]) \n                + str(row[1]))\n               .encode()).hexdigest(), \n                axis=1\n                )\n\n    if len(error_report)>0:\n        logger.warn(f\"Invalid Data !\")\n        logger.warn(f\" {n_invalid_rows} rows filtered out\")\n\n    return error_report\n\n\n"
+        },
+        {
+            "role": "assistant",
+            "content": "The code you provided is a function named `create_error_report` that takes in a DataFrame (`df`), a DataFrame schema (`schema`), and a primary key column name (`primary_key`). This function aims to create an error report for the invalid data present in the provided DataFrame.\n\nHere's a breakdown of the function's steps:\n\n1. Initialize an empty DataFrame called `error_report` and set the initial count of invalid rows, `n_invalid_rows`, to zero.\n\n2. Use the DataFrame schema to validate the DataFrame (`df`) with lazy validation enabled.\n\n3. If there are any schema errors (caught in the `except` block), perform the following steps:\n\n   a. Create a copy of the failure cases from the schema errors.\n\n   b. Update the `n_invalid_rows` count by finding the number of unique indices in the failure cases.\n\n   c. Add a new column to the failure cases DataFrame called `primary_key` by mapping the index values to the corresponding primary key values in the original DataFrame (`df`).\n\n   d. Rename the 'check' column to 'failed_check' in the failure cases DataFrame.\n\n   e. Group the failure cases DataFrame by the primary key column and convert each group into a dictionary representation. This is done using the `apply` function with a lambda function. The resulting DataFrame is assigned to `error_report`, with a column named 'invalid_data'.\n\n   f. Further process each entry in the 'invalid_data' column using another lambda function. This lambda function uses an `OrderedDict` to store the invalid data column and the corresponding error message. The resulting processed 'invalid_data' column replaces the original one in `error_report`.\n\n   g. Generate an 'error_id' column in `error_report` by applying a lambda function to each row. The 'error_id' is computed by hashing the concatenation of the primary key value and the 'invalid_data' value for each row.\n\n4. If the `error_report` DataFrame has any rows (indicating invalid data), log a warning message indicating the presence of invalid data and the number of filtered out rows.\n\n5. Finally, return the `error_report` DataFrame.\n\nIt's worth noting that this code assumes the presence of the necessary dependencies, such as the `pandas` library for working with DataFrames and the `hashlib` library for generating the error ID. It also assumes that `logger` is a valid logger object for logging messages.\n\nLet me know if there's anything else I can assist you with!"
+        }
+    ],
+    "prompt_tokens": 477,
+    "completion_tokens": 543
+}

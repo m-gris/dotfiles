@@ -11,6 +11,7 @@ tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
 tap "microsoft/git"
 tap "microsoft/mssql-release"
+tap "noahgorstein/tap"
 tap "saulpw/vd"
 tap "scalacenter/bloop"
 tap "snyk/tap"
@@ -28,8 +29,8 @@ brew "xz"
 brew "harfbuzz"
 # Library to render SVG files using Cairo
 brew "librsvg"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1"
+# C parser in Python
+brew "pycparser", link: false
 # Library for command-line editing
 brew "readline"
 # Interpreted, interactive, object-oriented programming language
@@ -44,12 +45,16 @@ brew "aom"
 brew "grpc"
 # Framework for scalable cross-language services development
 brew "thrift"
+# Clean C library for processing UTF-8 Unicode data
+brew "utf8proc"
 # Columnar in-memory analytics layer designed to accelerate big data
 brew "apache-arrow"
 # Development kit for the Java programming language
 brew "openjdk@17"
 # Engine for large-scale data processing
 brew "apache-spark"
+# Record and share terminal sessions
+brew "asciinema"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
 # Text processing scripting language
@@ -82,6 +87,8 @@ brew "broot"
 brew "busted"
 # Text-based personal organizer
 brew "calcurse"
+# CLI Swiss Army Knife for ChatGPT
+brew "chatblade"
 # Ruby environment tool
 brew "chruby"
 # Cross-platform make
@@ -94,6 +101,8 @@ brew "ctop"
 brew "curl"
 # Load/unload environment variables based on $PWD
 brew "direnv"
+# Disk Usage/Free Utility - a better 'df' alternative
+brew "duf"
 # More intuitive version of du in rust
 brew "dust"
 # GNU compiler collection
@@ -102,6 +111,10 @@ brew "gcc"
 brew "pygit2"
 # Git for data science projects
 brew "dvc"
+# Generic library support script
+brew "libtool"
+# Functional metaprogramming aware language built on Erlang VM
+brew "elixir"
 # Spellchecker wrapping library
 brew "enchant"
 # Run arbitrary commands when files change
@@ -132,8 +145,6 @@ brew "ffmpeg"
 brew "figlet"
 # Collection of GNU find, xargs, and locate
 brew "findutils"
-# Generic library support script
-brew "libtool"
 # Libraries to talk to Microsoft SQL Server and Sybase databases
 brew "freetds"
 # Monitor a directory for changes and run a shell command
@@ -182,8 +193,6 @@ brew "krb5"
 brew "lastpass-cli"
 # Lazier way to manage everything docker
 brew "lazydocker"
-# Build tool for Clojure
-brew "leiningen"
 # Pager program similar to more
 brew "less"
 # Portable Foreign Function Interface library
@@ -226,8 +235,12 @@ brew "neovim"
 brew "nim"
 # Manage multiple Node.js versions
 brew "nvm"
+# Create, run, and share large language models (LLMs)
+brew "ollama"
 # OCaml package manager
 brew "opam"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@1.1"
 # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
 brew "openvpn"
 # Display directories as trees (with optional color/HTML output)
@@ -256,6 +269,8 @@ brew "pyenv-virtualenv"
 brew "python@3.9"
 # File browser
 brew "ranger"
+# Tools to work with human-editable, plain text data files
+brew "recutils"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Install Ruby, JRuby, Rubinius, TruffleRuby, or mruby
@@ -284,6 +299,8 @@ brew "tasksh"
 brew "taskwarrior-tui"
 # Code-search similar to ack
 brew "the_silver_searcher"
+# Command-line time tracking application
+brew "timewarrior"
 # Simplified and community-driven man pages
 brew "tldr"
 # Terminal multiplexer
@@ -312,6 +329,8 @@ brew "yamllint"
 brew "yarn"
 # Download YouTube videos from the command-line
 brew "youtube-dl", args: ["HEAD"], link: false
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
 # Shell extension to navigate your filesystem faster
@@ -339,8 +358,8 @@ brew "koekeishiya/formulae/yabai"
 brew "microsoft/mssql-release/msodbcsql18"
 # Sqlcmd and Bcp for Microsoft(R) SQL Server(R)
 brew "microsoft/mssql-release/mssql-tools18"
-# Terminal utility for exploring and arranging tabular data
-brew "saulpw/vd/visidata"
+# a TUI playground to experiment and play with jq
+brew "noahgorstein/tap/jqp"
 # Installs the Bloop CLI for Bloop, a build server to compile, test and run Scala fast
 brew "scalacenter/bloop/bloop"
 # Find & fix known vulnerabilities in open-source dependencies
@@ -350,14 +369,20 @@ brew "yakitrak/yakitrak/obs"
 brew "zegervdv/zathura/zathura"
 # MuPDF backend plugin for zathura
 brew "zegervdv/zathura/zathura-pdf-mupdf"
+# Time tracker
+cask "activitywatch"
 # GPU-accelerated terminal emulator
 cask "alacritty"
 # Application launcher and productivity software
 cask "alfred"
 # Memory training application
 cask "anki"
+# Chromium based browser
+cask "arc"
 # Graphical configurator for Dygma Raise keyboards
 cask "bazecor"
+# Utility that prevents the system from going to sleep
+cask "caffeine"
 # Browser for SQLite databases
 cask "db-browser-for-sqlite"
 # Universal database tool and SQL client
@@ -386,6 +411,8 @@ cask "karabiner-elements"
 cask "keycastr"
 # Screen and video recording software
 cask "loom"
+# Native desktop app for Messenger (formerly Facebook Messenger)
+cask "messenger"
 # Minimal installer for conda
 cask "miniconda"
 # Knowledge base that works on top of a local folder of plain text Markdown files
@@ -400,8 +427,12 @@ cask "qutebrowser"
 cask "skype"
 # Music streaming service
 cask "spotify"
+# Backup, recovery and cloning software
+cask "superduper"
 # Open-source code editor
 cask "visual-studio-code"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Active space menu bar icon
 cask "whichspace"
 # Compatibility layer to run Windows applications

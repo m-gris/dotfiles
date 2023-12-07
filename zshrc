@@ -17,7 +17,16 @@ export NULLCMD=bat
 export OPENAI_API_KEY=$(pass "api-keys/openai/for-chatblade-cli")
 
 ###########################################
-# SET VARIABLES - End
+# FOR POSTGRESQL  - Start
+# source: https://www.highgo.ca/2023/06/23/setup-postgresql-development-environment-on-macos/
+###########################################
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/icu4c/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/icu4c/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
+###########################################
+# FOR POSTGRESQL - End
 ###########################################
 
 
@@ -227,6 +236,13 @@ eval "$(starship init zsh)"
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # CUSTOMIZE PROMPTS - End
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# PROJECT BASED BACKGROUND COLOR  - Start
+chpwd_functions+=(auto_change_background_color)
+# PROJECT BASED BACKGROUND COLOR - End
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 

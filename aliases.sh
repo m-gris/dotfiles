@@ -8,7 +8,7 @@ alias bbd='brew bundle dump --force --describe'
 alias ppath='<<<${(F)path}' # pretty print PATH variable
 
 # DODO STUFFS
-alias dodo_vm_ssh='ssh -t dodomac@172.36.0.5 "ssh dodolinux2@192.168.64.4"'
+alias dodo_vm_ssh='ssh -t dodomac@172.36.0.5 "ssh dodomac@192.168.64.4"'
 alias moshdodo="mosh --ssh='ssh -vv' --server='/opt/homebrew/bin/mosh-server' dodomac@192.168.100.60"
 alias sshdodo='ssh dodomac@192.168.100.60'
 alias dodo_mac_ssh='ssh -t dodomac@172.36.0.5'

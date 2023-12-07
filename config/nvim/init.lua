@@ -12,9 +12,6 @@ require('telescope').load_extension('projects')
 
 require("yaml_nvim").setup()
 
---
--- require("oil").setup()
-
 require("todo-comments").setup()
 
 require("flash").setup( {
@@ -52,92 +49,6 @@ require("dapui").setup()
 require('dap-python').setup('~/.pyenv/versions/debugpy/bin/python')
 -- require('nvim-dap-repl-highlights').setup()
 
-require('gitsigns').setup {
-    signs = {
-        add          = { text = '+' },
-        change       = { text = '^' },
-        delete       = { text = 'x' },
-        topdelete    = { text = '‾' },
-        changedelete = { text = '~' },
-        untracked    = { text = '┆' },
-    },
-    signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-    numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-    linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-    word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-    watch_gitdir = {
-        follow_files = true
-    },
-    attach_to_untracked = true,
-    current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-    current_line_blame_opts = {
-        virt_text = true,
-        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-        delay = 1000,
-        ignore_whitespace = false,
-    },
-    current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-    sign_priority = 6,
-    update_debounce = 100,
-    status_formatter = nil, -- Use default
-    max_file_length = 40000, -- Disable if file is longer than this (in lines)
-    preview_config = {
-        -- Options passed to nvim_open_win
-        border = 'single',
-        style = 'minimal',
-        relative = 'cursor',
-        row = 0,
-        col = 1
-    },
-    yadm = {
-        enable = false
-    },
-
-    -- KEYMAP SECTION
-    on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
-
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
-
-        -- Navigation
-        map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-
-        map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-
-        -- Actions
-        map('n', '<leader>hs', gs.stage_hunk)
-        map('n', '<leader>hr', gs.reset_hunk)
-        map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-        map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-        map('n', '<leader>hS', gs.stage_buffer)
-        map('n', '<leader>hu', gs.undo_stage_hunk)
-        map('n', '<leader>hR', gs.reset_buffer)
-        map('n', '<leader>hp', gs.preview_hunk)
-        map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-        map('n', '<leader>tb', gs.toggle_current_line_blame)
-        map('n', '<leader>hd', gs.diffthis)
-        map('n', '<leader>hD', function() gs.diffthis('~') end)
-    map('n', '<leader>td', gs.toggle_deleted)
-
-    -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-  end
-}
-
-
-
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 -- FOR FLOATING WINDOW WITH PROJECT NAME
 -- Create a new highlight group
@@ -152,3 +63,142 @@ require('gitsigns').setup {
 -- specific to a particular filetype or buffer.
 -- ex: we could have   ,r     to run python files...
 -- vim.g.maplocalleader = ','
+
+
+
+require("oil").setup({
+  -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
+  -- Set to false if you still want to use netrw.
+  default_file_explorer = true,
+  -- Id is automatically added at the beginning, and name at the end
+  -- See :help oil-columns
+  columns = {
+    "icon",
+    -- "permissions",
+    -- "size",
+    -- "mtime",
+  },
+  -- Buffer-local options to use for oil buffers
+  buf_options = {
+    buflisted = false,
+    bufhidden = "hide",
+  },
+  -- Window-local options to use for oil buffers
+  win_options = {
+    wrap = false,
+    signcolumn = "no",
+    cursorcolumn = false,
+    foldcolumn = "0",
+    spell = false,
+    list = false,
+    conceallevel = 3,
+    concealcursor = "nvic",
+  },
+  -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
+  delete_to_trash = false,
+  -- Skip the confirmation popup for simple operations
+  skip_confirm_for_simple_edits = false,
+  -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
+  prompt_save_on_select_new_entry = true,
+  -- Oil will automatically delete hidden buffers after this delay
+  -- You can set the delay to false to disable cleanup entirely
+  -- Note that the cleanup process only starts when none of the oil buffers are currently displayed
+  cleanup_delay_ms = 2000,
+  -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
+  -- options with a `callback` (e.g. { callback = function() ... end, desc = "", mode = "n" })
+  -- Additionally, if it is a string that matches "actions.<name>",
+  -- it will use the mapping at require("oil.actions").<name>
+  -- Set to `false` to remove a keymap
+  -- See :help oil-actions for a list of all available actions
+  keymaps = {
+    ["g?"] = "actions.show_help",
+    ["<CR>"] = "actions.select",
+    ["<C-s>"] = "actions.select_vsplit",
+    ["<C-h>"] = "actions.select_split",
+    ["<C-t>"] = "actions.select_tab",
+    ["<C-p>"] = "actions.preview",
+    ["<C-c>"] = "actions.close",
+    ["<C-l>"] = "actions.refresh",
+    ["-"] = "actions.parent",
+    ["_"] = "actions.open_cwd",
+    ["`"] = "actions.cd",
+    ["~"] = "actions.tcd",
+    ["gs"] = "actions.change_sort",
+    ["gx"] = "actions.open_external",
+    ["g."] = "actions.toggle_hidden",
+    ["g\\"] = "actions.toggle_trash",
+  },
+  -- Set to false to disable all of the above keymaps
+  use_default_keymaps = true,
+  view_options = {
+    -- Show files and directories that start with "."
+    show_hidden = true,
+    -- This function defines what is considered a "hidden" file
+    is_hidden_file = function(name, bufnr)
+      return vim.startswith(name, ".")
+    end,
+    -- This function defines what will never be shown, even when `show_hidden` is set
+    is_always_hidden = function(name, bufnr)
+      return false
+    end,
+    sort = {
+      -- sort order can be "asc" or "desc"
+      -- see :help oil-columns to see which columns are sortable
+      { "type", "asc" },
+      { "name", "asc" },
+    },
+  },
+  -- Configuration for the floating window in oil.open_float
+  float = {
+    -- Padding around the floating window
+    padding = 2,
+    max_width = 0,
+    max_height = 0,
+    border = "rounded",
+    win_options = {
+      winblend = 0,
+    },
+    -- This is the config that will be passed to nvim_open_win.
+    -- Change values here to customize the layout
+    override = function(conf)
+      return conf
+    end,
+  },
+  -- Configuration for the actions floating preview window
+  preview = {
+    -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+    -- min_width and max_width can be a single value or a list of mixed integer/float types.
+    -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
+    max_width = 0.9,
+    -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
+    min_width = { 40, 0.4 },
+    -- optionally define an integer/float for the exact width of the preview window
+    width = nil,
+    -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+    -- min_height and max_height can be a single value or a list of mixed integer/float types.
+    -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
+    max_height = 0.9,
+    -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
+    min_height = { 5, 0.1 },
+    -- optionally define an integer/float for the exact height of the preview window
+    height = nil,
+    border = "rounded",
+    win_options = {
+      winblend = 0,
+    },
+  },
+  -- Configuration for the floating progress window
+  progress = {
+    max_width = 0.9,
+    min_width = { 40, 0.4 },
+    width = nil,
+    max_height = { 10, 0.9 },
+    min_height = { 5, 0.1 },
+    height = nil,
+    border = "rounded",
+    minimized_border = "none",
+    win_options = {
+      winblend = 0,
+    },
+  },
+})

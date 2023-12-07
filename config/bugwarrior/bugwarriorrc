@@ -1,0 +1,39 @@
+# Example bugwarriorrc
+
+# General stuff.
+[general]
+# Here you define a comma separated list of targets.  
+# Each of them must have a section below determining their properties, 
+# how to query them, etc.  
+# The name is just a symbol, and doesn't have any functional importance.
+targets = my_github 
+
+# If unspecified, the default taskwarrior config will be used.
+taskrc = ~/.taskrc
+
+# This section is for configuring notifications when bugwarrior-pull runs,
+# and when issues are created, updated, or deleted by bugwarrior-pull.
+# Three backends are currently supported:
+#
+#  - growlnotify (v2)   Mac OS X   "gntp" must be installed
+#  - gobject            Linux      python gobject must be installed
+#
+# To configure, adjust the settings below.  Note that neither of the #
+# "sticky" options have any effect on Linux.  They only work for
+# growlnotify.
+#[notifications]
+#notifications = True
+#backend = growlnotify
+#finished_querying_sticky = False
+#task_crud_sticky = True
+#only_on_new_tasks = True
+
+
+log.level = ERROR
+
+[my_github]
+service = github
+github.login = m-gris
+github.token = #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
+github.username = m-gris
+github.include_repos = personal,dotfiles

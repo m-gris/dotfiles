@@ -1,0 +1,11 @@
+account gris.marc@gmail.com
+host smtp.gmail.com
+port 465
+from gris.marc@gmail.com
+user gris.marc@gmail.com
+passwordeval "pass gris.marc@gmail.com"
+auth on
+tls on
+tls_trust_file	/etc/ssl/cert.pem
+logfile /Users/marc/.local/state/msmtp/msmtp.log
+tls_starttls off
