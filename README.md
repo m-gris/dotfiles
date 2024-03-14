@@ -1,5 +1,7 @@
 # dotfiles
 
+- remove ~/.zshrc  (unless already symlink to our dotfiles)
+- remove ~/.tmux (unless already symlink to our dotfiles)
 - how shall we install `zap` plugin manager for `zsh`: the command is
 
 ```
