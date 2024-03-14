@@ -47,7 +47,7 @@ alias pass='PASSWORD_STORE_ENABLE_EXTENSIONS=true pass'
 
 # SOURCE configs Aliases
 alias zrc='source ~/.zshrc' 
-alias tconf='tmux source-file ~/.config/tmux/tmux.conf'
+alias tconf='tmux source-file ~/.tmux/tmux.conf'
 
 alias deskhide='defaults write com.apple.finder CreateDesktop false; killall Finder'
 alias deskshow='defaults write com.apple.finder CreateDesktop false; killall Finder'
