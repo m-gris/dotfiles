@@ -147,7 +147,7 @@ fi
 
 #### POETRY
 # export PATH="$HOME/.local/bin/poetry:$PATH"    # $HOME not interpolated properly
-export PATH="/Users/marc/.local/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
 ######
 
 
@@ -160,7 +160,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 
-export PATH="$PATH:/Users/marc/Documents/DATA_PROG/SCRIPTS_AND_AUTOMATIONS"
+export PATH="$PATH:~/Documents/DATA_PROG/SCRIPTS_AND_AUTOMATIONS"
 
 
 ## CUSTOMER ENV VARIABLES 
@@ -178,13 +178,13 @@ replace_whitespace() {
 eval "$(direnv hook zsh)"
 
 # Created by `pipx` on 2023-10-12 05:12:32
-export PATH="$PATH:/Users/marc/.local/bin"
+export PATH="$PATH:~/.local/bin"
 
 # for fzf key-bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # opam configuration
-[[ ! -r /Users/marc/.opam/opam-init/init.zsh ]] || source /Users/marc/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+[[ ! -r ~/.opam/opam-init/init.zsh ]] || source ~/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 
 source ~/.dotfiles/zoxide-config.sh
@@ -206,7 +206,7 @@ export DISABLE_AUTO_TITLE='true'
 
 
 # for broot (fuzzy / dynamic tree / file explorer)
-source /Users/marc/.config/broot/launcher/bash/br
+source ~/.config/broot/launcher/bash/br
 
 plug "zsh-users/zsh-syntax-highlighting"
 
