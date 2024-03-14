@@ -62,3 +62,6 @@ alias tldrf="tldr --list | fzf --preview 'tldr {1} --color-always' --preview-win
 alias fd="fd -HI"   # for hidden files and "git-ignored" files to be included.
 
 alias XL='open -a "Microsoft Excel"'
+
+alias python=python3
+alias pip=pip3
