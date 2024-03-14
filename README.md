@@ -1,6 +1,16 @@
 # dotfiles
 
+- how shall we install `zap` plugin manager for `zsh`: the command is
+
+```
+zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+```
+
 Inspired by [dotfiles.eieio.xyz](http://dotfiles.eieio.xyz).
+
+
+
+
 
 ## TODO (i.e to automate !!!)
 - Terminal Preferences
