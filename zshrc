@@ -251,3 +251,7 @@ chpwd_functions+=(auto_change_background_color)
 add-zsh-hook chpwd auto_activate_venv
 auto_activate_venv
 
+
+# done because lunar vim is installed in the USER's .local/bin 
+export PATH="$PATH:$HOME/.local/bin"
+
