@@ -98,7 +98,7 @@ bindkey '^x^x' edit-command-line
 setopt extendedglob
 
 # LAUNCH TMUX AUTOMATICALLY
-if [ "$TMUX" = "" ]; then tmux; fi
+# if [ "$TMUX" = "" ]; then tmux; fi
 
 ###############################################################################
 ########### NEOVIM CONFIG SWITCHER - Start
