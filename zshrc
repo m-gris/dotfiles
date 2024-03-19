@@ -206,7 +206,7 @@ export DISABLE_AUTO_TITLE='true'
 
 
 # for broot (fuzzy / dynamic tree / file explorer)
-source ~/.config/broot/launcher/bash/br
+# source ~/.config/broot/launcher/bash/br
 
 plug "zsh-users/zsh-syntax-highlighting"
 
