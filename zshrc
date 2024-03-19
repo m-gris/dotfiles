@@ -196,9 +196,9 @@ autoload -Uz compinit
 compinit
 
 # for pipx autocompletion
-autoload -U bashcompinit
-bashcompinit
-eval "$(register-python-argcomplete pipx)"
+# autoload -U bashcompinit
+# bashcompinit
+# eval "$(register-python-argcomplete pipx)"
 
 
 # for tmuxp (tmux session manager in pyton )
