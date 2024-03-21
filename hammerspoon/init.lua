@@ -61,7 +61,7 @@ end
 -- --- quick open applications
 hs.hotkey.bind({"alt", "ctrl"}, "T", open_app("Kitty"))
 hs.hotkey.bind({"alt", "ctrl"}, "K", open_app("Slack")) 
-hs.hotkey.bind({"alt", "ctrl"}, "A", open_app("Arc")) 
+hs.hotkey.bind({"alt", "ctrl"}, "A", open_app("Safari")) 
 hs.hotkey.bind({"alt", "ctrl"}, "D", open_app("Discord")) 
 hs.hotkey.bind({"alt", "ctrl"}, "G", open_app("Google Chrome")) 
 hs.hotkey.bind({"alt", "ctrl"}, "X", open_app("Microsfot Excel")) 
