@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -99,10 +99,10 @@ vim.g.have_nerd_font = false
 --  For more options, you can see `:help option-list`
 
 -- Make line numbers default
-vim.opt.number = true
+-- vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -126,10 +126,12 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+-- i.e, a dedicated column for displaying signs
+-- like breakpoints or Git markers,
+vim.opt.signcolumn = 'yes' -- for debuggers etc...
 
 -- Decrease update time
-vim.opt.updatetime = 250
+vim.opt.updatetime = 250 -- save the buffer to disk in case of crash
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
@@ -151,12 +153,87 @@ vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
+-- Show which column your cursor is on
+vim.opt.cursorcolumn = true
+
+-- Show tabline (i.e the name of the different nvim windows opened)
+vim.opt.showtabline = 2
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+--------------------------------------
+-- 4 SPACE INDENTING
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+--------------------------------------
+
+--------------------------------------
+-- enables smart indentation in NeoVim,
+-- automatically indenting new lines based on
+-- the previous line's indentation and language-specific rules.
+vim.opt.smartindent = true
+
+-- disables line wrapping
+-- making long lines appear as
+-- a single, horizontally-scrollable line
+-- instead of breaking onto multiple lines.
+vim.opt.wrap = false
+
+--------------------------------------
+-- BACKUPS & UNDOS
+vim.opt.swapfile = false
+vim.opt.backup = false
+-- to allow super long undo trees (go back days ago...)
+vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
+vim.opt.undofile = true
+--------------------------------------
+
+-- REALLY USEFULL
+-- Incremental Search
+-- will progressively highlight
+-- cool when unsure about the search pattern !!!
+vim.opt.incsearch = true
+--------------------------------------
+
+-- include the "@" and "-" characters
+-- as part of what's considered a filename
+-- Useful for navigating or manipulating filenames with these characters.
+vim.opt.isfname:append '@-@'
+--------------------------------------
+
+--------------------------------------
+-- TERMINAL COLORS
+-- enables 24-bit RGB color support
+-- in the terminal for NeoVim,
+-- allowing for a richer color experience.
+vim.opt.termguicolors = true
+--------------------------------------
+
+-- sets the time (in milliseconds) NeoVim waits
+-- before triggering the CursorHold event and updating the swap file.
+-- Lower values make these updates more frequent.
+vim.opt.updatetime = 50
+
+--sets a vertical line at the 80th column in NeoVim,
+--often used as a visual aid for code line length.
+vim.opt.colorcolumn = '80'
+
+-- FOLDS
+vim.opt.foldcolumn = '1'
+vim.opt.foldmethod = 'syntax'
+vim.opt.foldlevel = 1 -- OPEN FILE WITH CLOSE FOLDS (AS A REMINDER TO USE FOLDS)
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -190,6 +267,17 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- vim.keymap.set('i', '<C-h>', '<BS>', { desc = 'Delete previous Character' })
+
+-- Select all text in current file / buffer
+vim.keymap.set('n', '<leader>a', ':keepjumps normal! ggVG<cr>')
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -206,12 +294,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+-- THIS WILL BOOTSTRAP / AUTO-INSTALL LAZY IF IT IS NOT ALREADY INSTALLED...
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
+
+-- to toggle inline linting errors etc...
+-- source:
+-- https://www.reddit.com/r/neovim/comments/13wcqdr/disable_hintslsperrors_etc/
+vim.api.nvim_create_user_command('DiagnosticToggle', function()
+  local config = vim.diagnostic.config
+  local vt = config().virtual_text
+  config {
+    virtual_text = not vt,
+    underline = not vt,
+    signs = not vt,
+  }
+end, { desc = 'toggle diagnostic' })
+-- Disable diagnostic by default
+vim.cmd 'autocmd VimEnter * DiagnosticToggle'
 
 -- [[ Configure and install plugins ]]
 --
@@ -239,6 +343,8 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
+
+  { 'rebelot/kanagawa.nvim', opts = {} }, -- earger loading
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
@@ -862,3 +968,5 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+vim.cmd 'colorscheme kanagawa'
