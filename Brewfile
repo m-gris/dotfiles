@@ -216,6 +216,8 @@ brew "pkgxdev/made/pkgx"
 brew "scalacenter/bloop/bloop"
 # GPU-accelerated terminal emulator
 cask "alacritty"
+# Application launcher and productivity software
+cask "alfred"
 # Automatic tiling window manager similar to xmonad
 cask "amethyst"
 # Browser for SQLite databases
