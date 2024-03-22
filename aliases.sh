@@ -17,6 +17,7 @@ alias dodo_gpt="http://172.36.0.4:3080/"
 alias cdomac="cd /Users/marc/Library/Group Containers/G69SCX94XU.duck/Library/Application Support/duck/Volumes.noindex/dodo-pipelines/pipelines"
 alias sudocker="sudo docker"
 
+
 #
 # PYTHON VENVS
 alias venv='source .venv/bin/activate'
@@ -65,3 +66,6 @@ alias XL='open -a "Microsoft Excel"'
 
 alias python=python3
 alias pip=pip3
+
+alias lzg=lazygit
+alis lzd=lazydocker
