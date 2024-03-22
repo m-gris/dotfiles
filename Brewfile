@@ -8,6 +8,7 @@ tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "microsoft/git"
 tap "microsoft/mssql-release"
+tap "pkgxdev/made"
 tap "scalacenter/bloop"
 # YAML Parser
 brew "libyaml"
@@ -171,6 +172,8 @@ brew "python@3.10"
 brew "python@3.11"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# File browser
+brew "ranger"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Install Ruby, JRuby, Rubinius, TruffleRuby, or mruby
@@ -207,6 +210,8 @@ brew "d12frosted/emacs-plus/emacs-plus@28"
 brew "hashicorp/tap/vault"
 # A simple terminal UI for git commands, written in Go
 brew "jesseduffield/lazygit/lazygit"
+# Run Anything
+brew "pkgxdev/made/pkgx"
 # Installs the Bloop CLI for Bloop, a build server to compile, test and run Scala fast
 brew "scalacenter/bloop/bloop"
 # GPU-accelerated terminal emulator
@@ -219,6 +224,10 @@ cask "db-browser-for-sqlite"
 cask "dbeaver-community"
 # Utilities designed to make common development tasks easier
 cask "devtoys"
+# Voice and text chat software
+cask "discord"
+# App to build and share containerised applications and microservices
+cask "docker"
 # Web browser
 cask "firefox"
 # Developer targeted fonts with a high number of glyphs
