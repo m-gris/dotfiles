@@ -54,6 +54,8 @@ brew "bat-extras"
 brew "bfg"
 # Parser generator
 brew "bison"
+# New way to see and navigate directory trees
+brew "broot"
 # Ruby environment tool
 brew "chruby"
 # Cross-platform make
@@ -186,6 +188,8 @@ brew "ranger"
 brew "ripgrep"
 # Install Ruby, JRuby, Rubinius, TruffleRuby, or mruby
 brew "ruby-install"
+# Safe, concurrent, practical language
+brew "rust"
 # JVM-based programming language
 brew "scala"
 # Cross-shell prompt for astronauts
