@@ -281,6 +281,8 @@ cask "whatsapp"
 cask "whichspace"
 # Compatibility layer to run Windows applications
 cask "wine-stable"
+# Collect, organise, cite, and share research sources
+cask "zotero"
 mas "1Blocker", id: 1365531024
 mas "1Password 7", id: 1333542190
 mas "Apnea Trainer", id: 1216253186
