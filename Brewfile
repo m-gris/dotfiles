@@ -56,6 +56,8 @@ brew "bfg"
 brew "bison"
 # New way to see and navigate directory trees
 brew "broot"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
 # Ruby environment tool
 brew "chruby"
 # Cross-platform make
@@ -261,6 +263,8 @@ cask "gitkraken"
 cask "gstreamer-runtime"
 # Desktop automation application
 cask "hammerspoon"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
 # Keyboard customiser
 cask "karabiner-elements"
 # GPU-based terminal emulator
