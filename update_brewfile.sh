@@ -4,11 +4,11 @@
 cd ~/.dotfiles
 
 # Update Brewfile
-brew bundle dump --force --describe
+/opt/homebrew/bin/brew bundle dump --force --describe
 
 # Check if Brewfile has changes
 if git diff --exit-code Brewfile >/dev/null; then
-    echo "No changes to Brewfile."
+    : # This is a no-op, acting as a placeholder
 else
     # Add the Brewfile to staging
     git add Brewfile
