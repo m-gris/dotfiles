@@ -1,5 +1,6 @@
 alias ls='eza -ahHl --classify --git --group-directories-first --sort=name'
 alias exa='eza -ahHl --classify --git --group-directories-first --sort=name'
+alias cat='bat'
 alias man=batman # for syntax highlighted manuals
 alias sed=gsed # macOs sed != GNU-sed on other UNIX systems. Let's homogeneize
 alias cd=zcd
