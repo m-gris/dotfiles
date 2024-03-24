@@ -116,6 +116,10 @@ brew "gobject-introspection"
 brew "librsvg"
 # Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
+# Text-based UI library
+brew "ncurses"
+# Improved top (interactive process viewer)
+brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Platform built on V8 to build network applications
@@ -142,8 +146,6 @@ brew "luv"
 brew "magic-wormhole"
 # Mac App Store command-line interface
 brew "mas"
-# Text-based UI library
-brew "ncurses"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Small build system for use with gyp or CMake
