@@ -1,0 +1,4 @@
+* * * * * /bin/bash /Users/marc/.dotfiles/update_brewfile.sh >> /Users/marc/cron.log 2>&1 
+
+
+
