@@ -1,4 +1,7 @@
-* * * * * /bin/bash /Users/marc/.dotfiles/update_brewfile.sh >> /Users/marc/cron.log 2>&1 
+# 8 times per day
+0 6,9,12,15,18,0 * * * /bin/bash /Users/marc/.dotfiles/update_brewfile.sh >> /Users/marc/cron.log 2>&1 
+
+* * * * * crontab -l > /Users/marc/.dotfiles/cronjobs
 
 
 
