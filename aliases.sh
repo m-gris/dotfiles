@@ -7,6 +7,8 @@ alias cd=zcd
 alias youtube-dl="yt-dlp"  # better fork
 alias bbd='brew bundle dump --force --describe'
 alias ppath='<<<${(F)path}' # pretty print PATH variable
+alias mm="h-m-m --conf=~/.dotfiles/config/h-m-m.conf ~/Documents/Obsidian/obsidian-test/h-m-m.md"
+alias cronlogs="cat ~/cron.log"
 
 # DODO STUFFS
 alias dodo_vm_ssh='ssh -t dodomac@172.36.0.5 "ssh dodomac@192.168.64.4"'
