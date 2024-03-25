@@ -204,6 +204,8 @@ brew "timewarrior"
 brew "tldr"
 # Terminal multiplexer
 brew "tmux"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
 # Internet file retriever
 brew "wget"
 # Fast CSV toolkit written in Rust
@@ -277,6 +279,8 @@ cask "obsidian"
 cask "postbird"
 # Collaboration platform for API development
 cask "postman"
+# Spaced-repetition powered note-taking tool
+cask "remnote"
 # App that enables mouse-free UI interaction
 cask "shortcat"
 # Open-source code editor
@@ -322,3 +326,4 @@ mas "Time Out", id: 402592703
 mas "Toggl Track", id: 1291898086
 mas "Transcriptions", id: 911974149
 mas "Trello", id: 1278508951
+mas "Twingate", id: 1501592214
