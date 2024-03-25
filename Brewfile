@@ -110,6 +110,8 @@ brew "gdbm"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Tcl/Tk UI for the git revision control system
+brew "git-gui"
 # Manage compile and link flags for libraries
 brew "pkg-config"
 # Generate introspection data for GObject libraries
@@ -283,6 +285,8 @@ cask "postman"
 cask "remnote"
 # App that enables mouse-free UI interaction
 cask "shortcat"
+# Music streaming service
+cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
