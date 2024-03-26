@@ -273,6 +273,10 @@ cask "iterm2"
 cask "karabiner-elements"
 # GPU-based terminal emulator
 cask "kitty"
+# Provides updates to various Microsoft products
+cask "microsoft-auto-update"
+# Meet, chat, call, and collaborate in just one place
+cask "microsoft-teams"
 # Minimal installer for conda
 cask "miniconda"
 # Knowledge base that works on top of a local folder of plain text Markdown files
