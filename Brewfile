@@ -136,6 +136,8 @@ brew "jq"
 brew "krb5"
 # LastPass command-line interface tool
 brew "lastpass-cli"
+# Lazier way to manage everything docker
+brew "lazydocker"
 # Build tool for Clojure
 brew "leiningen"
 # Portable Foreign Function Interface library
